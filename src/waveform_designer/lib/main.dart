@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:waveform_designer/screens/WaveformDesigner.dart';
 import 'package:window_manager/window_manager.dart';
 
 void main() async {
@@ -20,7 +21,7 @@ class MyApp extends StatelessWidget {
       color: Color.fromARGB(255, 45, 45, 45),
       home: Container(
         decoration: const BoxDecoration(color: Color.fromARGB(255, 45, 45, 45)),
-        child: null,
+        child: Waveformdesigner(),
       ),
       pageRouteBuilder: <T>(RouteSettings settings, WidgetBuilder builder) =>
           PageRouteBuilder<T>(
