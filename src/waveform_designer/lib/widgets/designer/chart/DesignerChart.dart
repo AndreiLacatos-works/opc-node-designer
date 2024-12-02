@@ -1,15 +1,14 @@
 import 'package:flutter/widgets.dart';
+import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:waveform_designer/state/waveform/waveform.dart';
 import 'package:waveform_designer/widgets/designer/chart/TickPainter.dart';
 import 'package:waveform_designer/widgets/designer/chart/TransitionHoverDetector.dart';
 import 'package:waveform_designer/widgets/designer/chart/WaveForm.dart';
 
-class DesignerChart extends StatelessWidget {
-  final duration = 100;
-  final tickFrequency = 5;
-  final transitionPoints = [10, 15, 30, 45, 55, 80];
-
+class DesignerChart extends ConsumerWidget {
   @override
-  Widget build(BuildContext context) {
+  Widget build(BuildContext context, WidgetRef ref) {
+    final waveformState = ref.watch(waveFormStateProvider);
     return Expanded(
       child: Padding(
         padding: EdgeInsets.fromLTRB(40, 0, 40, 0),
@@ -22,21 +21,18 @@ class DesignerChart extends StatelessWidget {
                 aspectRatio: 2.7,
                 child: CustomPaint(
                   painter: WaveFormPainter(
-                    duration: duration,
-                    transitionPoints: transitionPoints,
+                    duration: waveformState.duration,
+                    transitionPoints: waveformState.transitionPoints,
                   ),
                 ),
               ),
               AspectRatio(
                 aspectRatio: 2.7,
                 child: TransitionHoverDetector(
-                  duration: duration,
-                  tickFrequency: tickFrequency,
-                  transitionPoints: transitionPoints,
                   child: CustomPaint(
                     painter: TickPainter(
-                      duration: duration,
-                      frequency: tickFrequency,
+                      duration: waveformState.duration,
+                      frequency: waveformState.tickFrequency,
                     ),
                   ),
                 ),

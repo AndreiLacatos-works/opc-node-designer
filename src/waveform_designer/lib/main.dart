@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:waveform_designer/screens/WaveformDesigner.dart';
 import 'package:window_manager/window_manager.dart';
 
@@ -19,9 +20,12 @@ class MyApp extends StatelessWidget {
     return WidgetsApp(
       title: 'Waveform designer',
       color: Color.fromARGB(255, 45, 45, 45),
-      home: Container(
-        decoration: const BoxDecoration(color: Color.fromARGB(255, 45, 45, 45)),
-        child: Waveformdesigner(),
+      home: ProviderScope(
+        child: Container(
+          decoration:
+              const BoxDecoration(color: Color.fromARGB(255, 45, 45, 45)),
+          child: Waveformdesigner(),
+        ),
       ),
       pageRouteBuilder: <T>(RouteSettings settings, WidgetBuilder builder) =>
           PageRouteBuilder<T>(

@@ -1,27 +1,24 @@
 import 'package:flutter/gestures.dart';
 import 'package:flutter/widgets.dart';
+import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:waveform_designer/state/waveform/waveform.dart';
 import 'package:waveform_designer/widgets/designer/chart/SnapPainter.dart';
 import 'package:window_manager/window_manager.dart';
 
-class TransitionHoverDetector extends StatefulWidget {
+class TransitionHoverDetector extends ConsumerStatefulWidget {
   final Widget child;
-  final int duration;
-  final int tickFrequency;
-  final List<int> transitionPoints;
 
   TransitionHoverDetector({
-    required this.duration,
-    required this.tickFrequency,
-    required this.transitionPoints,
     required this.child,
   });
 
   @override
-  State<StatefulWidget> createState() => _TransitionHoverDetectorState();
+  ConsumerState<ConsumerStatefulWidget> createState() =>
+      _TransitionHoverDetectorState();
 }
 
-class _TransitionHoverDetectorState extends State<TransitionHoverDetector>
-    with WindowListener {
+class _TransitionHoverDetectorState
+    extends ConsumerState<TransitionHoverDetector> with WindowListener {
   bool _isHovering = false;
   bool isDragConsidered = false;
   final GlobalKey _widgetKey = GlobalKey();
@@ -54,13 +51,23 @@ class _TransitionHoverDetectorState extends State<TransitionHoverDetector>
       return;
     }
 
-    final mapped = mapValueToNewRange(0, _widgetSize!.width,
-        event.localPosition.dx, 0, widget.duration.toDouble());
+    final mapped = mapValueToNewRange(
+        0,
+        _widgetSize!.width,
+        event.localPosition.dx,
+        0,
+        ref.read(waveFormStateProvider).duration.toDouble());
     final mappedTolerance = mapValueToNewRange(
-        0, _widgetSize!.width, tolerancePixels, 0, widget.duration.toDouble());
+        0,
+        _widgetSize!.width,
+        tolerancePixels,
+        0,
+        ref.read(waveFormStateProvider).duration.toDouble());
 
-    for (var i = 0; i < widget.transitionPoints.length; i++) {
-      final point = widget.transitionPoints[i];
+    for (var i = 0;
+        i < ref.read(waveFormStateProvider).transitionPoints.length;
+        i++) {
+      final point = ref.read(waveFormStateProvider).transitionPoints[i];
       if ((point - mapped).abs() <= mappedTolerance) {
         setState(() => _isHovering = true);
         return;
@@ -88,14 +95,17 @@ class _TransitionHoverDetectorState extends State<TransitionHoverDetector>
   }
 
   void snapToTick(double position) {
-    final mapped = mapValueToNewRange(
-            0, _widgetSize!.width, position, 0, widget.duration.toDouble())
+    final mapped = mapValueToNewRange(0, _widgetSize!.width, position, 0,
+            ref.read(waveFormStateProvider).duration.toDouble())
         .toInt();
 
     // determine the closest tick
-    final tickCount = widget.duration ~/ widget.tickFrequency + 1;
-    final ticks =
-        List.generate(tickCount, (i) => i * widget.tickFrequency).toList();
+    final tickCount = ref.read(waveFormStateProvider).duration ~/
+            ref.read(waveFormStateProvider).tickFrequency +
+        1;
+    final ticks = List.generate(
+            tickCount, (i) => i * ref.read(waveFormStateProvider).tickFrequency)
+        .toList();
     final closestTick =
         ticks.reduce((a, b) => (a - mapped).abs() < (b - mapped).abs() ? a : b);
     setState(() {
@@ -136,7 +146,7 @@ class _TransitionHoverDetectorState extends State<TransitionHoverDetector>
           child: CustomPaint(
             painter: SnapPainter(
               tick: tickToSnap,
-              duration: widget.duration,
+              duration: ref.read(waveFormStateProvider).duration,
             ),
           ),
         ),

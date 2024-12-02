@@ -1,10 +1,11 @@
 import 'package:flutter/widgets.dart';
+import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:waveform_designer/widgets/designer/TransitionPointControl.dart';
 import 'package:waveform_designer/widgets/input/MultiLabeledInput.dart';
 
-class FineTuner extends StatelessWidget {
+class FineTuner extends ConsumerWidget {
   @override
-  Widget build(BuildContext context) {
+  Widget build(BuildContext context, WidgetRef ref) {
     var stuff = List.generate(20, (i) => i).toList();
     return Container(
       decoration: const BoxDecoration(color: Color.fromARGB(255, 74, 144, 226)),
