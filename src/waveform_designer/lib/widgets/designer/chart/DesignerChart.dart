@@ -2,7 +2,7 @@ import 'package:flutter/widgets.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:waveform_designer/state/waveform/waveform.dart';
 import 'package:waveform_designer/widgets/designer/chart/TickPainter.dart';
-import 'package:waveform_designer/widgets/designer/chart/TransitionHoverDetector.dart';
+import 'package:waveform_designer/widgets/designer/chart/InteractionHandler.dart';
 import 'package:waveform_designer/widgets/designer/chart/WaveForm.dart';
 
 class DesignerChart extends ConsumerWidget {
@@ -28,7 +28,7 @@ class DesignerChart extends ConsumerWidget {
               ),
               AspectRatio(
                 aspectRatio: 2.7,
-                child: TransitionHoverDetector(
+                child: InteractionHandler(
                   child: CustomPaint(
                     painter: TickPainter(
                       duration: waveformState.duration,

@@ -1,10 +1,12 @@
 import 'package:flutter/widgets.dart';
 
 class TickPainter extends CustomPainter {
-  final int frequency;
-  final int duration;
+  final int _frequency;
+  final int _duration;
 
-  TickPainter({required this.frequency, required this.duration});
+  TickPainter({required int frequency, required int duration})
+      : _duration = duration,
+        _frequency = frequency;
 
   @override
   void paint(Canvas canvas, Size size) {
@@ -14,7 +16,7 @@ class TickPainter extends CustomPainter {
       ..strokeWidth = 2.0
       ..style = PaintingStyle.stroke;
 
-    final tickCount = (duration / frequency + 1).toInt();
+    final tickCount = (_duration / _frequency + 1).toInt();
     final distance = size.width / (tickCount - 1);
     for (var i = 0; i < tickCount; i++) {
       final bottomOffset = Offset(i * distance, size.height);
@@ -31,7 +33,7 @@ class TickPainter extends CustomPainter {
         fontSize: 14,
       );
       var textSpan = TextSpan(
-        text: (i * frequency).toString(),
+        text: (i * _frequency).toString(),
         style: textStyle,
       );
       final textPainter = TextPainter(

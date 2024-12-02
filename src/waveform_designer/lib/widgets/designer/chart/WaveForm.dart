@@ -1,4 +1,5 @@
 import 'package:flutter/widgets.dart';
+import 'package:waveform_designer/calc/ValueRangeMapper.dart';
 
 class Range {
   final int start;
@@ -7,7 +8,7 @@ class Range {
   Range({required this.start, required this.stop});
 }
 
-class WaveFormPainter extends CustomPainter {
+class WaveFormPainter extends CustomPainter with ValueRangeMapper {
   final List<int> transitionPoints;
   final int duration;
 
@@ -21,17 +22,6 @@ class WaveFormPainter extends CustomPainter {
     }
 
     return ranges;
-  }
-
-  double mapValueToNewRange(double originalRangeStart, double originalRangeEnd,
-      double value, double newRangeStart, double newRangeEnd) {
-    double proportion =
-        (value - originalRangeStart) / (originalRangeEnd - originalRangeStart);
-
-    double mappedValue =
-        newRangeStart + proportion * (newRangeEnd - newRangeStart);
-
-    return mappedValue;
   }
 
   @override

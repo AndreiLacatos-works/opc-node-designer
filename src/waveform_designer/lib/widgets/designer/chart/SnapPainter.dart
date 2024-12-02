@@ -1,25 +1,17 @@
 import 'package:flutter/widgets.dart';
+import 'package:waveform_designer/calc/ValueRangeMapper.dart';
 
-class SnapPainter extends CustomPainter {
-  final int? tick;
-  final int duration;
+class SnapPainter extends CustomPainter with ValueRangeMapper {
+  final int? _tick;
+  final int _duration;
 
-  SnapPainter({required this.tick, required this.duration});
-
-  double mapValueToNewRange(double originalRangeStart, double originalRangeEnd,
-      double value, double newRangeStart, double newRangeEnd) {
-    double proportion =
-        (value - originalRangeStart) / (originalRangeEnd - originalRangeStart);
-
-    double mappedValue =
-        newRangeStart + proportion * (newRangeEnd - newRangeStart);
-
-    return mappedValue;
-  }
+  SnapPainter({required int? tick, required int duration})
+      : _duration = duration,
+        _tick = tick;
 
   @override
   void paint(Canvas canvas, Size size) {
-    if (tick == null) {
+    if (_tick == null) {
       return;
     }
 
@@ -29,7 +21,7 @@ class SnapPainter extends CustomPainter {
       ..style = PaintingStyle.stroke;
 
     final dx = mapValueToNewRange(
-        0, duration.toDouble(), tick!.toDouble(), 0, size.width);
+        0, _duration.toDouble(), _tick.toDouble(), 0, size.width);
     final topOffset = Offset(dx, 0);
     final bottomOffset = Offset(dx, size.height);
     canvas.drawLine(topOffset, bottomOffset, paint);
