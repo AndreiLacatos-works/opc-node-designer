@@ -1,12 +1,12 @@
 import 'package:flutter/widgets.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
-import 'package:waveform_designer/widgets/designer/TransitionPointControl.dart';
+import 'package:waveform_designer/widgets/fine_tuner/TransitionPointControl.dart';
+import 'package:waveform_designer/widgets/fine_tuner/controls/DurationControl.dart';
 import 'package:waveform_designer/widgets/input/MultiLabeledInput.dart';
 
 class FineTuner extends ConsumerWidget {
   @override
   Widget build(BuildContext context, WidgetRef ref) {
-    var stuff = List.generate(20, (i) => i).toList();
     return Container(
       decoration: const BoxDecoration(color: Color.fromARGB(255, 74, 144, 226)),
       padding: const EdgeInsets.all(40),
@@ -18,11 +18,7 @@ class FineTuner extends ConsumerWidget {
           SizedBox(
             height: 80,
           ),
-          MultiLabeledInput(
-            onChanged: (value) {},
-            mainLabel: "Duration",
-            secondaryLabel: "ms",
-          ),
+          DurationControl(),
           SizedBox(
             height: 80,
           ),
@@ -47,7 +43,7 @@ class FineTuner extends ConsumerWidget {
           ),
           Expanded(
             child: ListView.builder(
-              itemCount: stuff.length,
+              itemCount: 0,
               itemBuilder: (context, index) => Padding(
                 padding: EdgeInsets.only(bottom: 6),
                 child: TransitionPointControl(

@@ -6,7 +6,7 @@ part of 'waveform.dart';
 // RiverpodGenerator
 // **************************************************************************
 
-String _$waveFormStateHash() => r'f5990333b119ca8722714b1815f753d3ab339408';
+String _$waveFormStateHash() => r'c4ecdf4368b5cc8db787f64eaf98efc9b695ebe2';
 
 /// See also [WaveFormState].
 @ProviderFor(WaveFormState)

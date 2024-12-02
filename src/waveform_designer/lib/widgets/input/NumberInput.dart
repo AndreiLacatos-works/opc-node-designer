@@ -2,12 +2,18 @@ import 'package:flutter/services.dart';
 import 'package:flutter/widgets.dart';
 
 class NumberInput extends StatefulWidget {
-  final Function(int?) onChanged;
+  final Function(int?)? onChanged;
+  final Function(int?)? onSubmitted;
+  final Function(int?)? onFocusLost;
   final double? width;
+  final int value;
 
   const NumberInput({
     required this.onChanged,
+    required this.value,
     this.width,
+    this.onSubmitted,
+    this.onFocusLost,
     Key? key,
   }) : super(key: key);
 
@@ -18,6 +24,12 @@ class NumberInput extends StatefulWidget {
 class _NumberInputState extends State<NumberInput> {
   final TextEditingController _controller = TextEditingController();
   FocusNode _focusNode = FocusNode();
+
+  @override
+  void initState() {
+    super.initState();
+    _controller.text = widget.value.toString();
+  }
 
   @override
   void dispose() {
@@ -42,9 +54,30 @@ class _NumberInputState extends State<NumberInput> {
           inputFormatters: [FilteringTextInputFormatter.digitsOnly],
           cursorColor: Color(0xFF000000),
           backgroundCursorColor: Color(0xFFFFFFFF),
-          onChanged: (String val) => widget.onChanged(
-            val.isEmpty ? null : int.parse(val),
-          ),
+          onChanged: (String val) {
+            if (widget.onChanged != null) {
+              widget.onChanged!(
+                val.isEmpty ? null : int.parse(val),
+              );
+            }
+          },
+          onSubmitted: (String val) {
+            _focusNode.unfocus();
+            if (widget.onSubmitted != null) {
+              widget.onSubmitted!(
+                val.isEmpty ? null : int.parse(val),
+              );
+            }
+          },
+          onTapOutside: (_) {
+            _focusNode.unfocus();
+            if (widget.onFocusLost != null) {
+              final val = _controller.text;
+              widget.onFocusLost!(
+                val.isEmpty ? null : int.parse(val),
+              );
+            }
+          },
           textAlign: TextAlign.right,
           style: TextStyle(
             color: Color(0xFF000000),

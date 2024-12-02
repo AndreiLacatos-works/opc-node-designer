@@ -13,4 +13,8 @@ class WaveFormState extends _$WaveFormState {
       transitionPoints: [500],
     );
   }
+
+  void updateDuration(int newDuration) {
+    state = state.copyWith(duration: newDuration);
+  }
 }

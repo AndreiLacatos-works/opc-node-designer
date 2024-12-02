@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:waveform_designer/widgets/designer/chart/DesignerChart.dart';
-import 'package:waveform_designer/widgets/designer/FineTuner.dart';
+import 'package:waveform_designer/widgets/fine_tuner/FineTuner.dart';
 
 class Waveformdesigner extends StatelessWidget {
   @override
