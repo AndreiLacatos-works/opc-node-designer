@@ -17,4 +17,8 @@ class WaveFormState extends _$WaveFormState {
   void updateDuration(int newDuration) {
     state = state.copyWith(duration: newDuration);
   }
+
+  void updateTickFrequency(int newTickFrequency) {
+    state = state.copyWith(tickFrequency: newTickFrequency);
+  }
 }

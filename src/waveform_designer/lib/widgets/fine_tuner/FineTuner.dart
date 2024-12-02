@@ -2,6 +2,7 @@ import 'package:flutter/widgets.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:waveform_designer/widgets/fine_tuner/TransitionPointControl.dart';
 import 'package:waveform_designer/widgets/fine_tuner/controls/DurationControl.dart';
+import 'package:waveform_designer/widgets/fine_tuner/controls/TickFrequencyControl.dart';
 import 'package:waveform_designer/widgets/input/MultiLabeledInput.dart';
 
 class FineTuner extends ConsumerWidget {
@@ -22,11 +23,7 @@ class FineTuner extends ConsumerWidget {
           SizedBox(
             height: 80,
           ),
-          MultiLabeledInput(
-            onChanged: (value) {},
-            mainLabel: "Tick frequency",
-            secondaryLabel: "ms",
-          ),
+          TickFrequencyControl(),
           SizedBox(
             height: 80,
           ),
