@@ -33,6 +33,12 @@ class TransitionPointControl extends ConsumerWidget {
           waveform.transitionPoints[pointIndex] + waveform.tickFrequency);
     }
 
+    void handleRemove() {
+      ref
+          .read(waveFormStateProvider.notifier)
+          .removeTransitionPoint(pointIndex);
+    }
+
     final transitionPoints = ref.watch(waveFormStateProvider).transitionPoints;
     if (pointIndex >= transitionPoints.length) {
       return SizedBox.shrink();
@@ -71,6 +77,19 @@ class TransitionPointControl extends ConsumerWidget {
               child: FaIcon(
                 FontAwesomeIcons.arrowRight,
                 color: Color.fromARGB(255, 87, 237, 67),
+              ),
+            ),
+          ),
+        ),
+        Padding(
+          padding: EdgeInsets.fromLTRB(8, 0, 8, 0),
+          child: MouseRegion(
+            cursor: SystemMouseCursors.click,
+            child: GestureDetector(
+              onTap: handleRemove,
+              child: FaIcon(
+                FontAwesomeIcons.solidTrashCan,
+                color: Color.fromARGB(255, 239, 73, 31),
               ),
             ),
           ),
