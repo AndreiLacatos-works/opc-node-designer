@@ -26,15 +26,17 @@ class _InteractionHandler extends ConsumerState<InteractionHandler>
         NeighboringTickCalculator,
         TickOverlapCalculator {
   final GlobalKey _widgetKey = GlobalKey();
-  bool _isHovering = false;
-  bool _isDragConsidered = false;
-  int? _tickToSnap;
+  late int? _hoveredTransitionPointIndex;
+  late bool _isDragConsidered;
+  late int? _tickToSnap;
 
   @override
   void initState() {
     super.initState();
     WidgetsBinding.instance.addPostFrameCallback((_) => _updateWidgetSize());
     windowManager.addListener(this);
+    _hoveredTransitionPointIndex = null;
+    _isDragConsidered = false;
     _tickToSnap = null;
   }
 
@@ -48,12 +50,13 @@ class _InteractionHandler extends ConsumerState<InteractionHandler>
 
   void _onHover(BuildContext context, PointerHoverEvent event) {
     setState(() {
-      _isHovering = isOverlapping(event.localPosition.dx);
+      _hoveredTransitionPointIndex =
+          getOverlappingTransitionPointIndex(event.localPosition.dx);
     });
   }
 
   void _onExit(PointerExitEvent event) {
-    setState(() => _isHovering = false);
+    setState(() => _hoveredTransitionPointIndex = null);
   }
 
   void handleDrag(double position) {
@@ -64,13 +67,7 @@ class _InteractionHandler extends ConsumerState<InteractionHandler>
 
   void _dragStart(DragStartDetails details) {
     setState(() {
-      _isDragConsidered = _isHovering;
-    });
-  }
-
-  void _dragEnd(DragEndDetails details) {
-    setState(() {
-      _tickToSnap = null;
+      _isDragConsidered = _hoveredTransitionPointIndex != null;
     });
   }
 
@@ -87,6 +84,18 @@ class _InteractionHandler extends ConsumerState<InteractionHandler>
 
   @override
   Widget build(BuildContext context) {
+    void _dragEnd(DragEndDetails details) {
+      if (_isDragConsidered) {
+        ref.read(waveFormStateProvider.notifier).updateTransitionPoint(
+              _hoveredTransitionPointIndex!,
+              _tickToSnap!,
+            );
+      }
+      setState(() {
+        _tickToSnap = null;
+      });
+    }
+
     waveForm = ref.watch(waveFormStateProvider);
 
     return Stack(
@@ -108,7 +117,7 @@ class _InteractionHandler extends ConsumerState<InteractionHandler>
               _onHover(context, e);
             },
             onExit: _onExit,
-            cursor: _isHovering
+            cursor: _hoveredTransitionPointIndex != null
                 ? SystemMouseCursors.resizeColumn
                 : SystemMouseCursors.basic,
             child: GestureDetector(

@@ -1,11 +1,11 @@
 import 'package:waveform_designer/calc/NeighboringTickCalculator.dart';
 
 mixin TickOverlapCalculator on NeighboringTickCalculator {
-  bool isOverlapping(double position) {
+  int? getOverlappingTransitionPointIndex(double position) {
     double tolerancePixels = 6.0;
 
     if (diagramWidth == 0) {
-      return false;
+      return null;
     }
 
     final mapped = mapValueToNewRange(
@@ -16,10 +16,10 @@ mixin TickOverlapCalculator on NeighboringTickCalculator {
     for (var i = 0; i < waveForm.transitionPoints.length; i++) {
       final point = waveForm.transitionPoints[i];
       if ((point - mapped).abs() <= mappedTolerance) {
-        return true;
+        return i;
       }
     }
 
-    return false;
+    return null;
   }
 }

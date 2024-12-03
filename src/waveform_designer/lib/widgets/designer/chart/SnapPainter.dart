@@ -16,8 +16,8 @@ class SnapPainter extends CustomPainter with ValueRangeMapper {
     }
 
     final paint = Paint()
-      ..color = const Color.fromARGB(255, 18, 173, 235)
-      ..strokeWidth = 2.0
+      ..color = const Color.fromARGB(255, 8, 176, 243)
+      ..strokeWidth = 3.0
       ..style = PaintingStyle.stroke;
 
     final dx = mapValueToNewRange(
