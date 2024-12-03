@@ -41,4 +41,10 @@ class WaveFormState extends _$WaveFormState {
     newPoints.removeAt(pointIndex);
     state = state.copyWith(transitionPoints: newPoints);
   }
+
+  void addTransitionPoint(int value) {
+    var newPoints = [...state.transitionPoints, value];
+    newPoints.sort();
+    state = state.copyWith(transitionPoints: newPoints);
+  }
 }
