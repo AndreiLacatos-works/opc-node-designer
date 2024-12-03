@@ -21,4 +21,14 @@ class WaveFormState extends _$WaveFormState {
   void updateTickFrequency(int newTickFrequency) {
     state = state.copyWith(tickFrequency: newTickFrequency);
   }
+
+  void updateTransitionPoint(int pointIndex, int newValue) {
+    if (pointIndex < 0 || pointIndex >= state.transitionPoints.length) {
+      return;
+    }
+
+    var newPoints = [...state.transitionPoints];
+    newPoints[pointIndex] = newValue;
+    state = state.copyWith(transitionPoints: newPoints);
+  }
 }

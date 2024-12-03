@@ -26,12 +26,6 @@ class _NumberInputState extends State<NumberInput> {
   FocusNode _focusNode = FocusNode();
 
   @override
-  void initState() {
-    super.initState();
-    _controller.text = widget.value.toString();
-  }
-
-  @override
   void dispose() {
     _controller.dispose();
     _focusNode.dispose();
@@ -40,6 +34,8 @@ class _NumberInputState extends State<NumberInput> {
 
   @override
   Widget build(BuildContext context) {
+    _controller.text = widget.value.toString();
+
     return SizedBox(
       width: widget.width ?? 100,
       child: Container(
