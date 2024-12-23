@@ -1,7 +1,7 @@
 import 'package:riverpod_annotation/riverpod_annotation.dart';
 import 'package:waveform_designer/state/waveform/waveform.model.dart';
 
-part 'waveform.g.dart';
+part 'waveform.state.g.dart';
 
 @riverpod
 class WaveFormState extends _$WaveFormState {
