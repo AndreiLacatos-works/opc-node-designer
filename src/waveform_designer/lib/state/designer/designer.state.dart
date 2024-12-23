@@ -23,4 +23,11 @@ class DesignerState extends _$DesignerState {
       sliceOffset: normalizedStart / state.designerWidth,
     );
   }
+
+  void updatePanOffset(double delta) {
+    var newOffset = state.sliceOffset + delta;
+    newOffset = min(newOffset, 1 - state.sliceRatio);
+    newOffset = max(newOffset, 0);
+    state = state.copyWith(sliceOffset: newOffset);
+  }
 }
