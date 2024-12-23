@@ -1,6 +1,7 @@
 import 'package:flutter/widgets.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:waveform_designer/state/waveform/waveform.state.dart';
+import 'package:waveform_designer/widgets/designer/chart/PanControls.dart';
 import 'package:waveform_designer/widgets/designer/chart/TickPainter.dart';
 import 'package:waveform_designer/widgets/designer/chart/InteractionHandler.dart';
 import 'package:waveform_designer/widgets/designer/chart/WaveForm.dart';
@@ -16,6 +17,12 @@ class DesignerChart extends ConsumerWidget {
         child: Column(
           mainAxisAlignment: MainAxisAlignment.center,
           children: [
+            Container(
+              width: double.infinity,
+              padding: EdgeInsets.fromLTRB(35, 12, 35, 12),
+              color: Color.fromARGB(255, 255, 255, 255),
+              child: PanControls(),
+            ),
             Container(
               padding: EdgeInsets.all(35),
               color: Color.fromARGB(255, 255, 255, 255),
