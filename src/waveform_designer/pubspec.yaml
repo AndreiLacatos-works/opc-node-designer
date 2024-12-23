@@ -28,8 +28,14 @@ environment:
 # the latest version available on pub.dev. To see which dependencies have newer
 # versions available, run `flutter pub outdated`.
 dependencies:
+  fl_chart: ^0.69.2
   flutter:
     sdk: flutter
+  flutter_riverpod: ^2.6.1
+  font_awesome_flutter: ^10.8.0
+  freezed: ^2.5.7
+  freezed_annotation: ^2.4.4
+  riverpod_annotation: ^2.6.1
   window_manager: ^0.4.3
 
 dev_dependencies:
@@ -42,6 +48,10 @@ dev_dependencies:
   # package. See that file for information about deactivating specific lint
   # rules and activating additional ones.
   flutter_lints: ^4.0.0
+  riverpod_generator: ^2.6.3
+  build_runner: ^2.4.13
+  custom_lint: ^0.7.0
+  riverpod_lint: ^2.6.3
 
 # For information on the generic Dart part of this file, see the
 # following page: https://dart.dev/tools/pub/pubspec
