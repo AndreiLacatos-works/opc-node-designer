@@ -84,7 +84,7 @@ class _InteractionHandler extends ConsumerState<InteractionHandler>
 
   @override
   Widget build(BuildContext context) {
-    void _dragEnd(DragEndDetails details) {
+    void dragEnd(DragEndDetails details) {
       if (_isDragConsidered) {
         ref.read(waveFormStateProvider.notifier).updateTransitionPoint(
               _hoveredTransitionPointIndex!,
@@ -94,6 +94,13 @@ class _InteractionHandler extends ConsumerState<InteractionHandler>
       setState(() {
         _tickToSnap = null;
       });
+    }
+
+    void onClickUp(TapUpDetails details) {
+      final neighbouringTick = getNeighboringTick(details.localPosition.dx);
+      ref
+          .read(waveFormStateProvider.notifier)
+          .addTransitionPoint(neighbouringTick);
     }
 
     waveForm = ref.watch(waveFormStateProvider);
@@ -122,8 +129,9 @@ class _InteractionHandler extends ConsumerState<InteractionHandler>
                 : SystemMouseCursors.basic,
             child: GestureDetector(
               onPanStart: _dragStart,
-              onPanEnd: _dragEnd,
+              onPanEnd: dragEnd,
               onPanUpdate: _onDragUpdate,
+              onTapUp: onClickUp,
               child: Container(
                 width: double.infinity,
                 height: double.infinity,
