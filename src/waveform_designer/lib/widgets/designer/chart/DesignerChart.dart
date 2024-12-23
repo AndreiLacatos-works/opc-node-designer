@@ -16,6 +16,7 @@ class DesignerChart extends ConsumerWidget {
         padding: EdgeInsets.fromLTRB(40, 0, 40, 0),
         child: Column(
           mainAxisAlignment: MainAxisAlignment.center,
+          mainAxisSize: MainAxisSize.min,
           children: [
             Container(
               width: double.infinity,
@@ -23,38 +24,44 @@ class DesignerChart extends ConsumerWidget {
               color: Color.fromARGB(255, 255, 255, 255),
               child: PanControls(),
             ),
-            Container(
-              padding: EdgeInsets.all(35),
-              color: Color.fromARGB(255, 255, 255, 255),
-              child: Stack(
-                children: [
-                  AspectRatio(
-                    aspectRatio: 2.7,
-                    child: CustomPaint(
-                      painter: WaveFormPainter(
-                        duration: waveformState.duration,
-                        transitionPoints: waveformState.transitionPoints,
-                      ),
-                    ),
-                  ),
-                  AspectRatio(
-                    aspectRatio: 2.7,
-                    child: InteractionHandler(
+            Transform.translate(
+              offset: Offset(0, -1),
+              child: Container(
+                padding: EdgeInsets.all(35),
+                color: Color.fromARGB(255, 255, 255, 255),
+                child: Stack(
+                  children: [
+                    AspectRatio(
+                      aspectRatio: 2.7,
                       child: CustomPaint(
-                        painter: TickPainter(
+                        painter: WaveFormPainter(
                           duration: waveformState.duration,
-                          frequency: waveformState.tickFrequency,
+                          transitionPoints: waveformState.transitionPoints,
                         ),
                       ),
                     ),
-                  ),
-                ],
+                    AspectRatio(
+                      aspectRatio: 2.7,
+                      child: InteractionHandler(
+                        child: CustomPaint(
+                          painter: TickPainter(
+                            duration: waveformState.duration,
+                            frequency: waveformState.tickFrequency,
+                          ),
+                        ),
+                      ),
+                    ),
+                  ],
+                ),
               ),
             ),
-            Container(
-              padding: EdgeInsets.fromLTRB(35, 12, 35, 12),
-              color: Color.fromARGB(255, 255, 255, 255),
-              child: PanIndicator(),
+            Transform.translate(
+              offset: Offset(0, -2),
+              child: Container(
+                padding: EdgeInsets.fromLTRB(35, 12, 35, 12),
+                color: Color.fromARGB(255, 255, 255, 255),
+                child: PanIndicator(),
+              ),
             ),
           ],
         ),
