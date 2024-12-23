@@ -56,7 +56,11 @@ class _InteractionHandler extends ConsumerState<InteractionHandler>
   }
 
   void _onExit(PointerExitEvent event) {
-    setState(() => _hoveredTransitionPointIndex = null);
+    setState(() {
+      _hoveredTransitionPointIndex = null;
+      _isDragConsidered = false;
+      _tickToSnap = null;
+    });
   }
 
   void handleDrag(double position) {
@@ -86,10 +90,12 @@ class _InteractionHandler extends ConsumerState<InteractionHandler>
   Widget build(BuildContext context) {
     void dragEnd(DragEndDetails details) {
       if (_isDragConsidered) {
-        ref.read(waveFormStateProvider.notifier).updateTransitionPoint(
-              _hoveredTransitionPointIndex!,
-              _tickToSnap!,
-            );
+        if (_tickToSnap != null && _hoveredTransitionPointIndex != null) {
+          ref.read(waveFormStateProvider.notifier).updateTransitionPoint(
+                _hoveredTransitionPointIndex!,
+                _tickToSnap!,
+              );
+        }
       }
       setState(() {
         _tickToSnap = null;
