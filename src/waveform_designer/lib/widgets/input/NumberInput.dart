@@ -5,6 +5,7 @@ class NumberInput extends StatefulWidget {
   final Function(int?)? onChanged;
   final Function(int?)? onSubmitted;
   final Function(int?)? onFocusLost;
+  final Function()? onFocus;
   final double? width;
   final int value;
 
@@ -14,6 +15,7 @@ class NumberInput extends StatefulWidget {
     this.width,
     this.onSubmitted,
     this.onFocusLost,
+    this.onFocus,
     Key? key,
   }) : super(key: key);
 
@@ -24,6 +26,16 @@ class NumberInput extends StatefulWidget {
 class _NumberInputState extends State<NumberInput> {
   final TextEditingController _controller = TextEditingController();
   FocusNode _focusNode = FocusNode();
+
+  @override
+  void initState() {
+    _focusNode.addListener(() {
+      if (_focusNode.hasFocus && widget.onFocus != null) {
+        widget.onFocus!();
+      }
+    });
+    super.initState();
+  }
 
   @override
   void dispose() {

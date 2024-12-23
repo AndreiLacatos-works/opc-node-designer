@@ -8,10 +8,12 @@ class LabeledInput extends StatelessWidget {
   final int value;
   final Function(int?)? onSubmitted;
   final Function(int?)? onFocusLost;
+  final Function()? onFocus;
 
   const LabeledInput({
     required this.label,
     this.onFocusLost,
+    this.onFocus,
     this.onChanged,
     this.width,
     this.onSubmitted,
@@ -27,6 +29,7 @@ class LabeledInput extends StatelessWidget {
           onChanged: onChanged,
           onFocusLost: onFocusLost,
           onSubmitted: onSubmitted,
+          onFocus: onFocus,
           width: width,
           value: value,
         ),

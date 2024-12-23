@@ -9,6 +9,7 @@ class MultiLabeledInput extends StatelessWidget {
   final Function(int?)? onChanged;
   final Function(int?)? onSubmitted;
   final Function(int?)? onFocusLost;
+  final Function()? onFocus;
 
   const MultiLabeledInput({
     super.key,
@@ -17,6 +18,7 @@ class MultiLabeledInput extends StatelessWidget {
     this.onChanged,
     this.onSubmitted,
     this.onFocusLost,
+    this.onFocus,
     this.value = 0,
     this.width = 160,
   });
@@ -41,6 +43,7 @@ class MultiLabeledInput extends StatelessWidget {
           onChanged: onChanged,
           onSubmitted: onSubmitted,
           onFocusLost: onFocusLost,
+          onFocus: onFocus,
           label: secondaryLabel,
           width: width,
           value: value,
