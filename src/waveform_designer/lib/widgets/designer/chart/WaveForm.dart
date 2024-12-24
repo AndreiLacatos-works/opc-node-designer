@@ -1,5 +1,6 @@
 import 'package:flutter/widgets.dart';
 import 'package:waveform_designer/calc/ValueRangeMapper.dart';
+import 'package:waveform_designer/widgets/designer/chart/PanningBehavior.dart';
 
 class Range {
   final int start;
@@ -8,11 +9,19 @@ class Range {
   Range({required this.start, required this.stop});
 }
 
-class WaveFormPainter extends CustomPainter with ValueRangeMapper {
+class WaveFormPainter extends CustomPainter
+    with ValueRangeMapper, PanningBehavior {
   final List<int> transitionPoints;
   final int duration;
+  final double slice;
+  final double offset;
 
-  WaveFormPainter({required this.transitionPoints, required this.duration});
+  WaveFormPainter({
+    required this.transitionPoints,
+    required this.duration,
+    required this.slice,
+    required this.offset,
+  });
 
   List<Range> mapToRanges(List<int> input) {
     List<Range> ranges = [];
@@ -26,9 +35,15 @@ class WaveFormPainter extends CustomPainter with ValueRangeMapper {
 
   @override
   void paint(Canvas canvas, Size size) {
-    final paint = Paint()
+    zoomAndPan(canvas, size, slice, offset);
+    final strokeWidth = 2.0;
+    final horizontalLinePainter = Paint()
       ..color = const Color.fromARGB(255, 0, 0, 0)
-      ..strokeWidth = 2;
+      ..strokeWidth = strokeWidth;
+    final zoomRatio = 1.0 / slice;
+    final verticalLinePainter = Paint()
+      ..color = const Color.fromARGB(255, 0, 0, 0)
+      ..strokeWidth = strokeWidth / zoomRatio;
 
     final intervals = mapToRanges([0, ...transitionPoints, duration]);
 
@@ -43,7 +58,7 @@ class WaveFormPainter extends CustomPainter with ValueRangeMapper {
           0, duration.toDouble(), intervals[i].stop.toDouble(), 0, size.width);
       var startOffset = Offset(paintStart, verticalOffset);
       var stopOffset = Offset(paintEnd, verticalOffset);
-      canvas.drawLine(startOffset, stopOffset, paint);
+      canvas.drawLine(startOffset, stopOffset, horizontalLinePainter);
 
       // draw vertical line
       if (i == intervals.length - 1) {
@@ -53,7 +68,7 @@ class WaveFormPainter extends CustomPainter with ValueRangeMapper {
       verticalOffsetMultiplier = 1 - verticalOffsetMultiplier;
       stopOffset =
           Offset(stopOffset.dx, size.height * verticalOffsetMultiplier);
-      canvas.drawLine(startOffset, stopOffset, paint);
+      canvas.drawLine(startOffset, stopOffset, verticalLinePainter);
     }
   }
 

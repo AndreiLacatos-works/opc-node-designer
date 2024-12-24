@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
-import 'package:waveform_designer/state/waveform/waveform.dart';
+import 'package:waveform_designer/state/waveform/waveform.state.dart';
 import 'package:waveform_designer/widgets/fine_tuner/controls/ErrorConsumerState.dart';
 import 'package:waveform_designer/widgets/input/MultiLabeledInput.dart';
 import 'package:waveform_designer/widgets/shared/ErrorDisplay.dart';

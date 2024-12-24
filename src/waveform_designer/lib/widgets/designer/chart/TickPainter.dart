@@ -1,35 +1,48 @@
 import 'package:flutter/widgets.dart';
 import 'package:waveform_designer/calc/ValueRangeMapper.dart';
+import 'package:waveform_designer/widgets/designer/chart/PanningBehavior.dart';
 
-class TickPainter extends CustomPainter with ValueRangeMapper {
-  final int _frequency;
-  final int _duration;
+class TickPainter extends CustomPainter with ValueRangeMapper, PanningBehavior {
+  final int frequency;
+  final int duration;
+  final double slice;
+  final double offset;
 
-  TickPainter({required int frequency, required int duration})
-      : _duration = duration,
-        _frequency = frequency;
+  TickPainter({
+    required this.frequency,
+    required this.duration,
+    required this.slice,
+    required this.offset,
+  });
 
   @override
   void paint(Canvas canvas, Size size) {
-    final tickCount = (_duration / _frequency + 1).toInt();
+    final clipSize = Size(size.width + 40, size.height + 40);
+    zoomAndPan(canvas, size, slice, offset, clipSize);
+    final tickCount = (duration / frequency + 1).toInt();
     for (var i = 0; i < tickCount; i++) {
       final horizontalOffset = mapValueToNewRange(
-          0, _duration.toDouble(), i * _frequency.toDouble(), 0, size.width);
-      _drawTickAtOffset(canvas, size, horizontalOffset, i * _frequency);
+          0, duration.toDouble(), i * frequency.toDouble(), 0, size.width);
+      _drawTickAtOffset(canvas, size, horizontalOffset, i * frequency);
     }
 
     // in case the last tick does not align with the duration, draw an extra tick
-    if (_duration & _frequency != 0) {
-      _drawTickAtOffset(canvas, size, size.width, _duration);
+    if (duration & frequency != 0) {
+      _drawTickAtOffset(canvas, size, size.width, duration);
     }
   }
 
   void _drawTickAtOffset(
-      Canvas canvas, Size size, double horizontalOffset, int tickIndex) {
+    Canvas canvas,
+    Size size,
+    double horizontalOffset,
+    int tickIndex,
+  ) {
     var dashHeight = 4, dashSpace = 6, startY = 0.0;
+    final zoomRatio = 1.0 / slice;
     final paint = Paint()
       ..color = const Color.fromARGB(255, 71, 71, 71)
-      ..strokeWidth = 2.0
+      ..strokeWidth = 2.0 / zoomRatio
       ..style = PaintingStyle.stroke;
     final bottomOffset = Offset(horizontalOffset, size.height);
 
@@ -41,6 +54,22 @@ class TickPainter extends CustomPainter with ValueRangeMapper {
       startY += dashHeight + dashSpace;
     }
 
+    _drawTickText(canvas, size, horizontalOffset, tickIndex);
+  }
+
+  void _drawTickText(
+    Canvas canvas,
+    Size size,
+    double horizontalOffset,
+    int tickIndex,
+  ) {
+    canvas.save();
+
+    final zoomRatio = 1.0 / slice;
+    // apply an inverse canvas transformation to avoid stretching text
+    canvas.transform(Matrix4.identity().scaled(1 / zoomRatio, 1.0).storage);
+
+    final bottomOffset = Offset(horizontalOffset * zoomRatio, size.height);
     // draw tick text
     const textStyle = TextStyle(
       color: Color.fromARGB(255, 0, 0, 0),
@@ -61,6 +90,7 @@ class TickPainter extends CustomPainter with ValueRangeMapper {
 
     textPainter.paint(
         canvas, bottomOffset.translate(textPainter.width / 2 * -1, 5));
+    canvas.restore();
   }
 
   @override

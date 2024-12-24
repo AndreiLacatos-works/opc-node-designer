@@ -4,7 +4,9 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:waveform_designer/calc/NeighboringTickCalculator.dart';
 import 'package:waveform_designer/calc/TickOverlapCalculator.dart';
 import 'package:waveform_designer/calc/ValueRangeMapper.dart';
-import 'package:waveform_designer/state/waveform/waveform.dart';
+import 'package:waveform_designer/state/designer/designer.state.dart';
+import 'package:waveform_designer/state/waveform/waveform.state.dart';
+import 'package:waveform_designer/widgets/designer/chart/PanPainter.dart';
 import 'package:waveform_designer/widgets/designer/chart/SnapPainter.dart';
 import 'package:window_manager/window_manager.dart';
 
@@ -27,8 +29,10 @@ class _InteractionHandler extends ConsumerState<InteractionHandler>
         TickOverlapCalculator {
   final GlobalKey _widgetKey = GlobalKey();
   late int? _hoveredTransitionPointIndex;
-  late bool _isDragConsidered;
+  late bool _isDraggingTransition;
   late int? _tickToSnap;
+  late double? _dragStartXOffset;
+  late double? _currentDragOffset;
 
   @override
   void initState() {
@@ -36,8 +40,10 @@ class _InteractionHandler extends ConsumerState<InteractionHandler>
     WidgetsBinding.instance.addPostFrameCallback((_) => _updateWidgetSize());
     windowManager.addListener(this);
     _hoveredTransitionPointIndex = null;
-    _isDragConsidered = false;
+    _isDraggingTransition = false;
     _tickToSnap = null;
+    _dragStartXOffset = null;
+    _currentDragOffset = null;
   }
 
   void _updateWidgetSize() {
@@ -45,6 +51,9 @@ class _InteractionHandler extends ConsumerState<InteractionHandler>
         _widgetKey.currentContext?.findRenderObject() as RenderBox?;
     if (renderBox != null) {
       diagramWidth = renderBox.size.width;
+      ref
+          .read(designerStateProvider.notifier)
+          .updateDesignerWidth(diagramWidth);
     }
   }
 
@@ -58,27 +67,55 @@ class _InteractionHandler extends ConsumerState<InteractionHandler>
   void _onExit(PointerExitEvent event) {
     setState(() {
       _hoveredTransitionPointIndex = null;
-      _isDragConsidered = false;
+      _isDraggingTransition = false;
       _tickToSnap = null;
-    });
-  }
-
-  void handleDrag(double position) {
-    setState(() {
-      _tickToSnap = getNeighboringTick(position);
+      _dragStartXOffset = null;
+      _currentDragOffset = null;
     });
   }
 
   void _dragStart(DragStartDetails details) {
     setState(() {
-      _isDragConsidered = _hoveredTransitionPointIndex != null;
+      _isDraggingTransition = _hoveredTransitionPointIndex != null;
+      _dragStartXOffset = details.localPosition.dx;
     });
   }
 
   void _onDragUpdate(DragUpdateDetails details) {
-    if (_isDragConsidered) {
-      handleDrag(details.localPosition.dx);
+    if (_isDraggingTransition) {
+      setState(() {
+        _tickToSnap = getNeighboringTick(details.localPosition.dx);
+      });
+    } else {
+      setState(() {
+        _currentDragOffset = details.localPosition.dx;
+      });
     }
+  }
+
+  void _dragEnd(DragEndDetails details) {
+    if (_isDraggingTransition) {
+      if (_tickToSnap != null && _hoveredTransitionPointIndex != null) {
+        ref.read(waveFormStateProvider.notifier).updateTransitionPoint(
+              _hoveredTransitionPointIndex!,
+              _tickToSnap!,
+            );
+      }
+    } else {
+      var delta = ((_dragStartXOffset ?? 0.0) - details.localPosition.dx).abs();
+      // prevent zoom when selected area is really small (could be accidentally
+      // 1 or 2 pixels when clicking)
+      if (_dragStartXOffset != null && delta > 12) {
+        ref
+            .read(designerStateProvider.notifier)
+            .updatePan(_dragStartXOffset!, details.localPosition.dx);
+      }
+    }
+    setState(() {
+      _tickToSnap = null;
+      _dragStartXOffset = null;
+      _currentDragOffset = null;
+    });
   }
 
   @override
@@ -88,20 +125,6 @@ class _InteractionHandler extends ConsumerState<InteractionHandler>
 
   @override
   Widget build(BuildContext context) {
-    void dragEnd(DragEndDetails details) {
-      if (_isDragConsidered) {
-        if (_tickToSnap != null && _hoveredTransitionPointIndex != null) {
-          ref.read(waveFormStateProvider.notifier).updateTransitionPoint(
-                _hoveredTransitionPointIndex!,
-                _tickToSnap!,
-              );
-        }
-      }
-      setState(() {
-        _tickToSnap = null;
-      });
-    }
-
     void onClickUp(TapUpDetails details) {
       final neighbouringTick = getNeighboringTick(details.localPosition.dx);
       ref
@@ -110,18 +133,35 @@ class _InteractionHandler extends ConsumerState<InteractionHandler>
     }
 
     waveForm = ref.watch(waveFormStateProvider);
+    designer = ref.watch(designerStateProvider);
 
     return Stack(
       children: [
-        Container(
-          width: double.infinity,
-          height: double.infinity,
-          child: CustomPaint(
-            painter: SnapPainter(
-              tick: _tickToSnap,
-              duration: ref.read(waveFormStateProvider).duration,
+        Stack(
+          children: [
+            Container(
+              width: double.infinity,
+              height: double.infinity,
+              child: CustomPaint(
+                painter: SnapPainter(
+                  tick: _tickToSnap,
+                  duration: ref.read(waveFormStateProvider).duration,
+                  offset: designer.sliceOffset,
+                  slice: designer.sliceRatio,
+                ),
+              ),
             ),
-          ),
+            Container(
+              width: double.infinity,
+              height: double.infinity,
+              child: CustomPaint(
+                painter: PanPainter(
+                  start: _dragStartXOffset,
+                  end: _currentDragOffset,
+                ),
+              ),
+            ),
+          ],
         ),
         Container(
           child: MouseRegion(
@@ -135,7 +175,7 @@ class _InteractionHandler extends ConsumerState<InteractionHandler>
                 : SystemMouseCursors.basic,
             child: GestureDetector(
               onPanStart: _dragStart,
-              onPanEnd: dragEnd,
+              onPanEnd: _dragEnd,
               onPanUpdate: _onDragUpdate,
               onTapUp: onClickUp,
               child: Container(
