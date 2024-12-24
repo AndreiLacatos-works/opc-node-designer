@@ -102,7 +102,7 @@ class _InteractionHandler extends ConsumerState<InteractionHandler>
             );
       }
     } else {
-      var delta = (_dragStartXOffset ?? 0.0 - details.localPosition.dx).abs();
+      var delta = ((_dragStartXOffset ?? 0.0) - details.localPosition.dx).abs();
       // prevent zoom when selected area is really small (could be accidentally
       // 1 or 2 pixels when clicking)
       if (_dragStartXOffset != null && delta > 12) {
