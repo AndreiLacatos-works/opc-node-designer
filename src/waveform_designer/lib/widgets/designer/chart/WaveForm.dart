@@ -1,5 +1,6 @@
 import 'package:flutter/widgets.dart';
 import 'package:waveform_designer/calc/ValueRangeMapper.dart';
+import 'package:waveform_designer/widgets/designer/chart/PanningBehavior.dart';
 
 class Range {
   final int start;
@@ -8,7 +9,8 @@ class Range {
   Range({required this.start, required this.stop});
 }
 
-class WaveFormPainter extends CustomPainter with ValueRangeMapper {
+class WaveFormPainter extends CustomPainter
+    with ValueRangeMapper, PanningBehavior {
   final List<int> transitionPoints;
   final int duration;
   final double slice;
@@ -33,21 +35,12 @@ class WaveFormPainter extends CustomPainter with ValueRangeMapper {
 
   @override
   void paint(Canvas canvas, Size size) {
-    // prevent rendering outside of the original canvas size
-    canvas.clipRect(Rect.fromLTWH(0.0, 0.0, size.width, size.height));
-
-    // create a zoom effect by horizontally scaling the canvas
-    final zoomRatio = 1.0 / slice;
-    canvas.transform(Matrix4.identity().scaled(zoomRatio, 1.0).storage);
-
-    // move it to the left such that the beginning of the zoomed area aligns
-    // witht the beginning of the "physical" canvas
-    canvas.translate(size.width * offset * -1, 0.0);
-
+    zoomAndPan(canvas, size, slice, offset);
     final strokeWidth = 2.0;
     final horizontalLinePainter = Paint()
       ..color = const Color.fromARGB(255, 0, 0, 0)
       ..strokeWidth = strokeWidth;
+    final zoomRatio = 1.0 / slice;
     final verticalLinePainter = Paint()
       ..color = const Color.fromARGB(255, 0, 0, 0)
       ..strokeWidth = strokeWidth / zoomRatio;

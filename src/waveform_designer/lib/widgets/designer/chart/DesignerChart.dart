@@ -51,6 +51,8 @@ class DesignerChart extends ConsumerWidget {
                           painter: TickPainter(
                             duration: waveformState.duration,
                             frequency: waveformState.tickFrequency,
+                            slice: panningState.sliceRatio,
+                            offset: panningState.sliceOffset,
                           ),
                         ),
                       ),
