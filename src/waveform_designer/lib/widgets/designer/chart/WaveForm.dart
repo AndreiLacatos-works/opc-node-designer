@@ -11,8 +11,15 @@ class Range {
 class WaveFormPainter extends CustomPainter with ValueRangeMapper {
   final List<int> transitionPoints;
   final int duration;
+  final double slice;
+  final double offset;
 
-  WaveFormPainter({required this.transitionPoints, required this.duration});
+  WaveFormPainter({
+    required this.transitionPoints,
+    required this.duration,
+    required this.slice,
+    required this.offset,
+  });
 
   List<Range> mapToRanges(List<int> input) {
     List<Range> ranges = [];
@@ -26,9 +33,24 @@ class WaveFormPainter extends CustomPainter with ValueRangeMapper {
 
   @override
   void paint(Canvas canvas, Size size) {
-    final paint = Paint()
+    // prevent rendering outside of the original canvas size
+    canvas.clipRect(Rect.fromLTWH(0.0, 0.0, size.width, size.height));
+
+    // create a zoom effect by horizontally scaling the canvas
+    final zoomRatio = 1.0 / slice;
+    canvas.transform(Matrix4.identity().scaled(zoomRatio, 1.0).storage);
+
+    // move it to the left such that the beginning of the zoomed area aligns
+    // witht the beginning of the "physical" canvas
+    canvas.translate(size.width * offset * -1, 0.0);
+
+    final strokeWidth = 2.0;
+    final horizontalLinePainter = Paint()
       ..color = const Color.fromARGB(255, 0, 0, 0)
-      ..strokeWidth = 2;
+      ..strokeWidth = strokeWidth;
+    final verticalLinePainter = Paint()
+      ..color = const Color.fromARGB(255, 0, 0, 0)
+      ..strokeWidth = strokeWidth / zoomRatio;
 
     final intervals = mapToRanges([0, ...transitionPoints, duration]);
 
@@ -43,7 +65,7 @@ class WaveFormPainter extends CustomPainter with ValueRangeMapper {
           0, duration.toDouble(), intervals[i].stop.toDouble(), 0, size.width);
       var startOffset = Offset(paintStart, verticalOffset);
       var stopOffset = Offset(paintEnd, verticalOffset);
-      canvas.drawLine(startOffset, stopOffset, paint);
+      canvas.drawLine(startOffset, stopOffset, horizontalLinePainter);
 
       // draw vertical line
       if (i == intervals.length - 1) {
@@ -53,7 +75,7 @@ class WaveFormPainter extends CustomPainter with ValueRangeMapper {
       verticalOffsetMultiplier = 1 - verticalOffsetMultiplier;
       stopOffset =
           Offset(stopOffset.dx, size.height * verticalOffsetMultiplier);
-      canvas.drawLine(startOffset, stopOffset, paint);
+      canvas.drawLine(startOffset, stopOffset, verticalLinePainter);
     }
   }
 

@@ -1,5 +1,6 @@
 import 'package:flutter/widgets.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:waveform_designer/state/designer/designer.state.dart';
 import 'package:waveform_designer/state/waveform/waveform.state.dart';
 import 'package:waveform_designer/widgets/designer/chart/PanControls.dart';
 import 'package:waveform_designer/widgets/designer/chart/TickPainter.dart';
@@ -11,6 +12,7 @@ class DesignerChart extends ConsumerWidget {
   @override
   Widget build(BuildContext context, WidgetRef ref) {
     final waveformState = ref.watch(waveFormStateProvider);
+    final panningState = ref.watch(designerStateProvider);
     return Expanded(
       child: Padding(
         padding: EdgeInsets.fromLTRB(40, 0, 40, 0),
@@ -37,6 +39,8 @@ class DesignerChart extends ConsumerWidget {
                         painter: WaveFormPainter(
                           duration: waveformState.duration,
                           transitionPoints: waveformState.transitionPoints,
+                          slice: panningState.sliceRatio,
+                          offset: panningState.sliceOffset,
                         ),
                       ),
                     ),
