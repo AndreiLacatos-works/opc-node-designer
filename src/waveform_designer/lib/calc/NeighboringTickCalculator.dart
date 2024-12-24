@@ -8,21 +8,11 @@ mixin NeighboringTickCalculator on ValueRangeMapper {
   late DesignerModel designer;
 
   int getNeighboringTick(double position) {
-    // map the input position from zoomed screen space
-    // to simple screen space values to account for zooming
-    final normalizedPosition = mapValueToNewRange(
-      0,
-      designer.designerWidth,
-      position,
-      designer.designerWidth * designer.sliceOffset,
-      designer.designerWidth * designer.sliceOffset +
-          designer.designerWidth * designer.sliceRatio,
-    );
     // map the screen space value to duration space
     final durationSpacePosition = mapValueToNewRange(
       0,
       diagramWidth,
-      normalizedPosition,
+      compensateZoomLevel(position),
       0,
       waveForm.duration.toDouble(),
     ).toInt();
@@ -35,5 +25,18 @@ mixin NeighboringTickCalculator on ValueRangeMapper {
         (a - durationSpacePosition).abs() < (b - durationSpacePosition).abs()
             ? a
             : b);
+  }
+
+  double compensateZoomLevel(double position) {
+    // map the input position from zoomed screen space
+    // to simple screen space values to account for zooming
+    return mapValueToNewRange(
+      0,
+      designer.designerWidth,
+      position,
+      designer.designerWidth * designer.sliceOffset,
+      designer.designerWidth * designer.sliceOffset +
+          designer.designerWidth * designer.sliceRatio,
+    );
   }
 }
