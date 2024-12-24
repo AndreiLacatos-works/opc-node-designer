@@ -146,6 +146,8 @@ class _InteractionHandler extends ConsumerState<InteractionHandler>
                 painter: SnapPainter(
                   tick: _tickToSnap,
                   duration: ref.read(waveFormStateProvider).duration,
+                  offset: designer.sliceOffset,
+                  slice: designer.sliceRatio,
                 ),
               ),
             ),
