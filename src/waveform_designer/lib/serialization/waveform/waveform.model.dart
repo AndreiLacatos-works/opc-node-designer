@@ -18,6 +18,7 @@ class WaveFormModel {
 
   factory WaveFormModel.fromJson(Map<String, dynamic> json) =>
       _$WaveFormModelFromJson(json);
+
   factory WaveFormModel.fromState(WaveFormState.WaveFormModel state) =>
       WaveFormModel(
         duration: state.duration,
@@ -25,4 +26,10 @@ class WaveFormModel {
         transitionPoints: state.transitionPoints,
       );
   Map<String, dynamic> toJson() => _$WaveFormModelToJson(this);
+
+  WaveFormState.WaveFormModel toState() => WaveFormState.WaveFormModel(
+        duration: this.duration,
+        tickFrequency: this.tickFrequency,
+        transitionPoints: this.transitionPoints,
+      );
 }

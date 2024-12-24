@@ -3,6 +3,7 @@ import 'dart:io';
 
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:waveform_designer/state/designer/designer.state.dart';
 import 'package:waveform_designer/state/waveform/waveform.model.dart';
 import 'package:waveform_designer/state/waveform/waveform.state.dart';
 import 'package:waveform_designer/serialization/waveform/waveform.model.dart'
@@ -12,9 +13,13 @@ import 'package:file_picker/file_picker.dart';
 class Saver extends ConsumerWidget {
   Future handleSave(WidgetRef ref) async {
     final waveform = ref.read(waveFormStateProvider);
-    final saveLocation = await promptSaveLocation();
+    var saveLocation = ref.read(designerStateProvider).projectPath;
+    if (saveLocation == null) {
+      saveLocation = await promptSaveLocation();
+    }
     if (saveLocation != null) {
       await writeWaveform(waveform, saveLocation);
+      ref.read(designerStateProvider.notifier).setProjectPath(saveLocation);
     }
   }
 

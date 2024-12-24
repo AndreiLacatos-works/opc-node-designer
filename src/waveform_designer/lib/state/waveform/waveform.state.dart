@@ -14,6 +14,10 @@ class WaveFormState extends _$WaveFormState {
     );
   }
 
+  void initialize(WaveFormModel model) {
+    state = model;
+  }
+
   void updateDuration(int newDuration) {
     if (newDuration < state.tickFrequency) {
       throw 'Durationg must be greater than tick frequency!';
