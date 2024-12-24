@@ -133,6 +133,7 @@ class _InteractionHandler extends ConsumerState<InteractionHandler>
     }
 
     waveForm = ref.watch(waveFormStateProvider);
+    designer = ref.watch(designerStateProvider);
 
     return Stack(
       children: [
