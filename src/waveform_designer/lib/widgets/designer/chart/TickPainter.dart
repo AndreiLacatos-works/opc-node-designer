@@ -19,11 +19,21 @@ class TickPainter extends CustomPainter with ValueRangeMapper, PanningBehavior {
   void paint(Canvas canvas, Size size) {
     final clipSize = Size(size.width + 40, size.height + 40);
     zoomAndPan(canvas, size, slice, offset, clipSize);
-    final tickCount = (duration / frequency + 1).toInt();
-    for (var i = 0; i < tickCount; i++) {
-      final horizontalOffset = mapValueToNewRange(
-          0, duration.toDouble(), i * frequency.toDouble(), 0, size.width);
-      _drawTickAtOffset(canvas, size, horizontalOffset, i * frequency);
+
+    // show roughly 20 ticks in the visible viewport
+    final maxTicksToShow = 20 ~/ slice;
+    final alternativeStep =
+        calculateAlternativeStepSize(duration, maxTicksToShow, frequency);
+    final ticksToShow =
+        List.generate(maxTicksToShow, (i) => i * alternativeStep);
+    final totalTickCount = (duration / frequency + 1).toInt();
+    for (var i = 0; i < totalTickCount; i++) {
+      final tick = i * frequency;
+      if (ticksToShow.contains(tick)) {
+        final horizontalOffset = mapValueToNewRange(
+            0, duration.toDouble(), i * frequency.toDouble(), 0, size.width);
+        _drawTickAtOffset(canvas, size, horizontalOffset, tick);
+      }
     }
 
     // in case the last tick does not align with the duration, draw an extra tick
@@ -91,6 +101,17 @@ class TickPainter extends CustomPainter with ValueRangeMapper, PanningBehavior {
     textPainter.paint(
         canvas, bottomOffset.translate(textPainter.width / 2 * -1, 5));
     canvas.restore();
+  }
+
+  int calculateAlternativeStepSize(
+    int duration,
+    int targetItemCount,
+    int stepOriginal,
+  ) {
+    final stepAlternative = duration / targetItemCount;
+    return stepAlternative <= stepOriginal
+        ? stepOriginal
+        : (stepAlternative / stepOriginal).ceil() * stepOriginal;
   }
 
   @override
