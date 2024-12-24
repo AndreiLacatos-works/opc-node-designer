@@ -3,7 +3,8 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:waveform_designer/widgets/fine_tuner/controls/DurationControl.dart';
 import 'package:waveform_designer/widgets/fine_tuner/controls/TickFrequencyControl.dart';
 import 'package:waveform_designer/widgets/fine_tuner/controls/TransitionPointsControl.dart';
-import 'package:waveform_designer/widgets/fine_tuner/save/Saver.dart';
+import 'package:waveform_designer/widgets/fine_tuner/project_actions/Closer.dart';
+import 'package:waveform_designer/widgets/fine_tuner/project_actions/Saver.dart';
 
 class FineTuner extends ConsumerWidget {
   @override
@@ -16,7 +17,16 @@ class FineTuner extends ConsumerWidget {
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
-          Saver(),
+          Row(
+            mainAxisAlignment: MainAxisAlignment.end,
+            children: [
+              Saver(),
+              SizedBox.fromSize(
+                size: Size(20, 0),
+              ),
+              Closer(),
+            ],
+          ),
           SizedBox(height: 60),
           DurationControl(),
           SizedBox(height: 80),

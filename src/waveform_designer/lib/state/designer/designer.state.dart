@@ -9,14 +9,16 @@ part 'designer.state.g.dart';
 
 @riverpod
 class DesignerState extends _$DesignerState with ValueRangeMapper {
+  static DesignerModel _initialState = DesignerModel(
+    designerWidth: 0.0,
+    sliceOffset: 0.0,
+    sliceRatio: 1.0,
+    projectPath: null,
+  );
+
   @override
   DesignerModel build() {
-    return DesignerModel(
-      designerWidth: 0.0,
-      sliceOffset: 0.0,
-      sliceRatio: 1.0,
-      projectPath: null,
-    );
+    return _initialState;
   }
 
   void setProjectPath(String? path) {
@@ -71,6 +73,10 @@ class DesignerState extends _$DesignerState with ValueRangeMapper {
   void panRight() {
     state = state.copyWith(
         sliceOffset: _clampOffset(state.sliceOffset + _getTickDelta()));
+  }
+
+  void reset() {
+    state = _initialState;
   }
 
   double _getTickDelta() {
