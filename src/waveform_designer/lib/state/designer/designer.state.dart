@@ -19,9 +19,28 @@ class DesignerState extends _$DesignerState with ValueRangeMapper {
   }
 
   void updatePan(double start, double end) {
-    var normalizedStart = min(start, end);
+    // map the input start and end positions from screen space
+    // to duration space values to account for zooming,
+    // especially when already zoomed in
+    final mappedStart = mapValueToNewRange(
+      0,
+      state.designerWidth,
+      start,
+      state.designerWidth * state.sliceOffset,
+      state.designerWidth * state.sliceOffset +
+          state.designerWidth * state.sliceRatio,
+    );
+    final mappedEnd = mapValueToNewRange(
+      0,
+      state.designerWidth,
+      end,
+      state.designerWidth * state.sliceOffset,
+      state.designerWidth * state.sliceOffset +
+          state.designerWidth * state.sliceRatio,
+    );
+    final normalizedStart = min(mappedStart, mappedEnd);
     state = state.copyWith(
-      sliceRatio: (start - end).abs() / state.designerWidth,
+      sliceRatio: (mappedStart - mappedEnd).abs() / state.designerWidth,
       sliceOffset: normalizedStart / state.designerWidth,
     );
   }
