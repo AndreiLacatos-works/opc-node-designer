@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:waveform_designer/state/designer/designer.state.dart';
+import 'package:waveform_designer/state/waveform/waveform.state.dart';
+import 'package:waveform_designer/widgets/designer/chart/WaveForm.dart';
 
 class PanIndicator extends ConsumerStatefulWidget {
   @override
@@ -20,18 +22,31 @@ class _PanIndicator extends ConsumerState {
   Widget build(BuildContext context) {
     return LayoutBuilder(
       builder: (context, constraints) {
-        var state = ref.watch(designerStateProvider);
+        var waveformState = ref.watch(waveFormStateProvider);
+        var designerState = ref.watch(designerStateProvider);
         var widgetWidth = constraints.maxWidth;
-        var width = state.sliceRatio * widgetWidth;
-        var leftOffset = state.sliceOffset * widgetWidth;
+        var width = designerState.sliceRatio * widgetWidth;
+        var leftOffset = designerState.sliceOffset * widgetWidth;
 
         return Stack(
           alignment: Alignment.topLeft,
           children: [
             Container(
-              height: 18,
+              height: 54,
               width: widgetWidth,
               color: Color.fromARGB(255, 235, 235, 235),
+            ),
+            Container(
+              height: 54,
+              width: double.infinity,
+              child: CustomPaint(
+                painter: WaveFormPainter(
+                  duration: waveformState.duration,
+                  transitionPoints: waveformState.transitionPoints,
+                  slice: 1.0,
+                  offset: 0.0,
+                ),
+              ),
             ),
             Transform.translate(
               offset: Offset(leftOffset, 0),
@@ -49,9 +64,9 @@ class _PanIndicator extends ConsumerState {
                         .updatePanOffset(delta);
                   },
                   child: Container(
-                    height: 18,
+                    height: 54,
                     width: width,
-                    color: Color.fromARGB(255, 171, 171, 171),
+                    color: Color.fromARGB(118, 171, 171, 171),
                   ),
                 ),
               ),
