@@ -3,6 +3,7 @@ import 'dart:io';
 
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:waveform_designer/state/designer/designer.state.dart';
 import 'package:waveform_designer/state/waveform/waveform.model.dart';
 import 'package:waveform_designer/state/waveform/waveform.state.dart';
 import 'package:waveform_designer/serialization/waveform/waveform.model.dart'
@@ -10,11 +11,15 @@ import 'package:waveform_designer/serialization/waveform/waveform.model.dart'
 import 'package:file_picker/file_picker.dart';
 
 class Saver extends ConsumerWidget {
-  Future handleSave(WidgetRef ref) async {
+  Future _handleSave(WidgetRef ref) async {
     final waveform = ref.read(waveFormStateProvider);
-    final saveLocation = await promptSaveLocation();
+    var saveLocation = ref.read(designerStateProvider).projectPath;
+    if (saveLocation == null) {
+      saveLocation = await promptSaveLocation();
+    }
     if (saveLocation != null) {
       await writeWaveform(waveform, saveLocation);
+      ref.read(designerStateProvider.notifier).setProjectPath(saveLocation);
     }
   }
 
@@ -39,32 +44,27 @@ class Saver extends ConsumerWidget {
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
-    return Row(
-      mainAxisAlignment: MainAxisAlignment.end,
-      children: [
-        MouseRegion(
-          cursor: SystemMouseCursors.click,
-          child: GestureDetector(
-            onTap: () {
-              handleSave(ref);
-            },
-            child: Container(
-              padding: const EdgeInsets.fromLTRB(24, 12, 24, 12),
-              decoration: BoxDecoration(
-                color: Color.fromARGB(255, 126, 211, 33),
-                borderRadius: BorderRadius.circular(6),
-              ),
-              child: const Text(
-                'Save',
-                style: TextStyle(
-                  color: Color(0xFFFFFFFF),
-                  fontSize: 16.0,
-                ),
-              ),
+    return MouseRegion(
+      cursor: SystemMouseCursors.click,
+      child: GestureDetector(
+        onTap: () {
+          _handleSave(ref);
+        },
+        child: Container(
+          padding: const EdgeInsets.fromLTRB(24, 12, 24, 12),
+          decoration: BoxDecoration(
+            color: Color.fromARGB(255, 126, 211, 33),
+            borderRadius: BorderRadius.circular(6),
+          ),
+          child: const Text(
+            'Save',
+            style: TextStyle(
+              color: Color(0xFFFFFFFF),
+              fontSize: 16.0,
             ),
           ),
         ),
-      ],
+      ),
     );
   }
 }

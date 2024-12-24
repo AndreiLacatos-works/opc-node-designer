@@ -8,5 +8,6 @@ class DesignerModel with _$DesignerModel {
     required double designerWidth,
     required double sliceRatio,
     required double sliceOffset,
+    required String? projectPath,
   }) = _DesignerModel;
 }

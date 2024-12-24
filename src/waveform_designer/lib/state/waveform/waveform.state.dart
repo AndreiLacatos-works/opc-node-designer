@@ -5,13 +5,19 @@ part 'waveform.state.g.dart';
 
 @riverpod
 class WaveFormState extends _$WaveFormState {
+  static WaveFormModel _initialState = WaveFormModel(
+    duration: 1000,
+    tickFrequency: 100,
+    transitionPoints: [500],
+  );
+
   @override
   WaveFormModel build() {
-    return WaveFormModel(
-      duration: 1000,
-      tickFrequency: 100,
-      transitionPoints: [500],
-    );
+    return _initialState;
+  }
+
+  void initialize(WaveFormModel model) {
+    state = model;
   }
 
   void updateDuration(int newDuration) {
@@ -61,6 +67,10 @@ class WaveFormState extends _$WaveFormState {
     _ensureTransitionPointRulesFulfilled(value);
     var newPoints = [...state.transitionPoints, value];
     state = state.copyWith(transitionPoints: _sortAndUnique(newPoints));
+  }
+
+  void reset() {
+    state = _initialState;
   }
 
   List<int> _sortAndUnique(List<int> values) {

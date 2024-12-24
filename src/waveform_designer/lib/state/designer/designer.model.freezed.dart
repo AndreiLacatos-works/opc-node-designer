@@ -19,6 +19,7 @@ mixin _$DesignerModel {
   double get designerWidth => throw _privateConstructorUsedError;
   double get sliceRatio => throw _privateConstructorUsedError;
   double get sliceOffset => throw _privateConstructorUsedError;
+  String? get projectPath => throw _privateConstructorUsedError;
 
   /// Create a copy of DesignerModel
   /// with the given fields replaced by the non-null parameter values.
@@ -33,7 +34,11 @@ abstract class $DesignerModelCopyWith<$Res> {
           DesignerModel value, $Res Function(DesignerModel) then) =
       _$DesignerModelCopyWithImpl<$Res, DesignerModel>;
   @useResult
-  $Res call({double designerWidth, double sliceRatio, double sliceOffset});
+  $Res call(
+      {double designerWidth,
+      double sliceRatio,
+      double sliceOffset,
+      String? projectPath});
 }
 
 /// @nodoc
@@ -54,6 +59,7 @@ class _$DesignerModelCopyWithImpl<$Res, $Val extends DesignerModel>
     Object? designerWidth = null,
     Object? sliceRatio = null,
     Object? sliceOffset = null,
+    Object? projectPath = freezed,
   }) {
     return _then(_value.copyWith(
       designerWidth: null == designerWidth
@@ -68,6 +74,10 @@ class _$DesignerModelCopyWithImpl<$Res, $Val extends DesignerModel>
           ? _value.sliceOffset
           : sliceOffset // ignore: cast_nullable_to_non_nullable
               as double,
+      projectPath: freezed == projectPath
+          ? _value.projectPath
+          : projectPath // ignore: cast_nullable_to_non_nullable
+              as String?,
     ) as $Val);
   }
 }
@@ -80,7 +90,11 @@ abstract class _$$DesignerModelImplCopyWith<$Res>
       __$$DesignerModelImplCopyWithImpl<$Res>;
   @override
   @useResult
-  $Res call({double designerWidth, double sliceRatio, double sliceOffset});
+  $Res call(
+      {double designerWidth,
+      double sliceRatio,
+      double sliceOffset,
+      String? projectPath});
 }
 
 /// @nodoc
@@ -99,6 +113,7 @@ class __$$DesignerModelImplCopyWithImpl<$Res>
     Object? designerWidth = null,
     Object? sliceRatio = null,
     Object? sliceOffset = null,
+    Object? projectPath = freezed,
   }) {
     return _then(_$DesignerModelImpl(
       designerWidth: null == designerWidth
@@ -113,6 +128,10 @@ class __$$DesignerModelImplCopyWithImpl<$Res>
           ? _value.sliceOffset
           : sliceOffset // ignore: cast_nullable_to_non_nullable
               as double,
+      projectPath: freezed == projectPath
+          ? _value.projectPath
+          : projectPath // ignore: cast_nullable_to_non_nullable
+              as String?,
     ));
   }
 }
@@ -123,7 +142,8 @@ class _$DesignerModelImpl implements _DesignerModel {
   _$DesignerModelImpl(
       {required this.designerWidth,
       required this.sliceRatio,
-      required this.sliceOffset});
+      required this.sliceOffset,
+      required this.projectPath});
 
   @override
   final double designerWidth;
@@ -131,10 +151,12 @@ class _$DesignerModelImpl implements _DesignerModel {
   final double sliceRatio;
   @override
   final double sliceOffset;
+  @override
+  final String? projectPath;
 
   @override
   String toString() {
-    return 'DesignerModel(designerWidth: $designerWidth, sliceRatio: $sliceRatio, sliceOffset: $sliceOffset)';
+    return 'DesignerModel(designerWidth: $designerWidth, sliceRatio: $sliceRatio, sliceOffset: $sliceOffset, projectPath: $projectPath)';
   }
 
   @override
@@ -147,12 +169,14 @@ class _$DesignerModelImpl implements _DesignerModel {
             (identical(other.sliceRatio, sliceRatio) ||
                 other.sliceRatio == sliceRatio) &&
             (identical(other.sliceOffset, sliceOffset) ||
-                other.sliceOffset == sliceOffset));
+                other.sliceOffset == sliceOffset) &&
+            (identical(other.projectPath, projectPath) ||
+                other.projectPath == projectPath));
   }
 
   @override
-  int get hashCode =>
-      Object.hash(runtimeType, designerWidth, sliceRatio, sliceOffset);
+  int get hashCode => Object.hash(
+      runtimeType, designerWidth, sliceRatio, sliceOffset, projectPath);
 
   /// Create a copy of DesignerModel
   /// with the given fields replaced by the non-null parameter values.
@@ -167,7 +191,8 @@ abstract class _DesignerModel implements DesignerModel {
   factory _DesignerModel(
       {required final double designerWidth,
       required final double sliceRatio,
-      required final double sliceOffset}) = _$DesignerModelImpl;
+      required final double sliceOffset,
+      required final String? projectPath}) = _$DesignerModelImpl;
 
   @override
   double get designerWidth;
@@ -175,6 +200,8 @@ abstract class _DesignerModel implements DesignerModel {
   double get sliceRatio;
   @override
   double get sliceOffset;
+  @override
+  String? get projectPath;
 
   /// Create a copy of DesignerModel
   /// with the given fields replaced by the non-null parameter values.
