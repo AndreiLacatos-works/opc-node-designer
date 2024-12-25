@@ -1,0 +1,18 @@
+display_name: Waveform designer
+package_name: waveformdesigner
+
+maintainer:
+  name: Andrei Lacatos
+  email: lacatos_andrei@yahoo.com
+
+priority: optional
+
+section: x11
+
+essential: false
+installed_size: 23720
+generic_name: Waveform designer
+
+categories:
+  - Development
+  - Utility
