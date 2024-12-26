@@ -35,7 +35,7 @@ class DesignerChart extends ConsumerWidget {
                 child: Stack(
                   children: [
                     AspectRatio(
-                      aspectRatio: 2.7,
+                      aspectRatio: 3.2,
                       child: CustomPaint(
                         painter: WaveFormPainter(
                           duration: waveformState.duration,
@@ -46,7 +46,7 @@ class DesignerChart extends ConsumerWidget {
                       ),
                     ),
                     AspectRatio(
-                      aspectRatio: 2.7,
+                      aspectRatio: 3.2,
                       child: InteractionHandler(
                         child: CustomPaint(
                           painter: TickPainter(
