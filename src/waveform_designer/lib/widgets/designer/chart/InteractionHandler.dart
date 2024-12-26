@@ -2,6 +2,8 @@ import 'package:flutter/gestures.dart';
 import 'package:flutter/widgets.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:waveform_designer/calc/NeighboringTickCalculator.dart';
+import 'package:waveform_designer/calc/PointTransformer.dart';
+import 'package:waveform_designer/calc/ScreenSpacePoint.dart';
 import 'package:waveform_designer/calc/TickOverlapCalculator.dart';
 import 'package:waveform_designer/calc/ValueRangeMapper.dart';
 import 'package:waveform_designer/state/designer/designer.state.dart';
@@ -25,6 +27,7 @@ class _InteractionHandler extends ConsumerState<InteractionHandler>
     with
         WindowListener,
         ValueRangeMapper,
+        PointTransformer,
         NeighboringTickCalculator,
         TickOverlapCalculator {
   final GlobalKey _widgetKey = GlobalKey();
@@ -50,17 +53,19 @@ class _InteractionHandler extends ConsumerState<InteractionHandler>
     final renderBox =
         _widgetKey.currentContext?.findRenderObject() as RenderBox?;
     if (renderBox != null) {
-      diagramWidth = renderBox.size.width;
       ref
           .read(designerStateProvider.notifier)
-          .updateDesignerWidth(diagramWidth);
+          .updateDesignerWidth(renderBox.size.width);
     }
   }
 
   void _onHover(BuildContext context, PointerHoverEvent event) {
     setState(() {
-      _hoveredTransitionPointIndex =
-          getOverlappingTransitionPointIndex(event.localPosition.dx);
+      _hoveredTransitionPointIndex = getOverlappingTransitionPointIndex(
+        ScreenSpacePoint(
+          dx: event.localPosition.dx,
+        ),
+      );
     });
   }
 
@@ -84,7 +89,11 @@ class _InteractionHandler extends ConsumerState<InteractionHandler>
   void _onDragUpdate(DragUpdateDetails details) {
     if (_isDraggingTransition) {
       setState(() {
-        _tickToSnap = getNeighboringTick(details.localPosition.dx);
+        _tickToSnap = getNeighboringTick(
+          ScreenSpacePoint(
+            dx: details.localPosition.dx,
+          ),
+        );
       });
     } else {
       setState(() {
@@ -126,7 +135,11 @@ class _InteractionHandler extends ConsumerState<InteractionHandler>
   @override
   Widget build(BuildContext context) {
     void onClickUp(TapUpDetails details) {
-      final neighbouringTick = getNeighboringTick(details.localPosition.dx);
+      final neighbouringTick = getNeighboringTick(
+        ScreenSpacePoint(
+          dx: details.localPosition.dx,
+        ),
+      );
       ref
           .read(waveFormStateProvider.notifier)
           .addTransitionPoint(neighbouringTick);
