@@ -18,8 +18,8 @@ class LabeledInput extends StatelessWidget {
     this.width,
     this.onSubmitted,
     this.value = 0,
-    Key? key,
-  }) : super(key: key);
+    super.key,
+  });
 
   @override
   Widget build(BuildContext context) {

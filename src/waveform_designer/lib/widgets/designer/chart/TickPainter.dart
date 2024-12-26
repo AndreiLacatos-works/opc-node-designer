@@ -3,42 +3,45 @@ import 'package:waveform_designer/calc/ValueRangeMapper.dart';
 import 'package:waveform_designer/widgets/designer/chart/PanningBehavior.dart';
 
 class TickPainter extends CustomPainter with ValueRangeMapper, PanningBehavior {
-  final int frequency;
-  final int duration;
-  final double slice;
-  final double offset;
+  final int _frequency;
+  final int _duration;
+  final double _slice;
+  final double _offset;
 
   TickPainter({
-    required this.frequency,
-    required this.duration,
-    required this.slice,
-    required this.offset,
-  });
+    required int frequency,
+    required int duration,
+    required double slice,
+    required double offset,
+  })  : _offset = offset,
+        _slice = slice,
+        _duration = duration,
+        _frequency = frequency;
 
   @override
   void paint(Canvas canvas, Size size) {
     final clipSize = Size(size.width + 40, size.height + 40);
-    zoomAndPan(canvas, size, slice, offset, clipSize);
+    zoomAndPan(canvas, size, _slice, _offset, clipSize);
 
     // show roughly 20 ticks in the visible viewport
-    final maxTicksToShow = 20 ~/ slice;
+    final maxTicksToShow = 20 ~/ _slice;
     final alternativeStep =
-        calculateAlternativeStepSize(duration, maxTicksToShow, frequency);
+        _calculateAlternativeStepSize(_duration, maxTicksToShow, _frequency);
     final ticksToShow =
         List.generate(maxTicksToShow, (i) => i * alternativeStep);
-    final totalTickCount = (duration / frequency + 1).toInt();
+    final totalTickCount = (_duration / _frequency + 1).toInt();
     for (var i = 0; i < totalTickCount; i++) {
-      final tick = i * frequency;
+      final tick = i * _frequency;
       if (ticksToShow.contains(tick)) {
         final horizontalOffset = mapValueToNewRange(
-            0, duration.toDouble(), i * frequency.toDouble(), 0, size.width);
+            0, _duration.toDouble(), i * _frequency.toDouble(), 0, size.width);
         _drawTickAtOffset(canvas, size, horizontalOffset, tick);
       }
     }
 
     // in case the last tick does not align with the duration, draw an extra tick
-    if (duration & frequency != 0) {
-      _drawTickAtOffset(canvas, size, size.width, duration);
+    if (_duration & _frequency != 0) {
+      _drawTickAtOffset(canvas, size, size.width, _duration);
     }
   }
 
@@ -49,7 +52,7 @@ class TickPainter extends CustomPainter with ValueRangeMapper, PanningBehavior {
     int tickIndex,
   ) {
     var dashHeight = 4, dashSpace = 6, startY = 0.0;
-    final zoomRatio = 1.0 / slice;
+    final zoomRatio = 1.0 / _slice;
     final paint = Paint()
       ..color = const Color.fromARGB(255, 71, 71, 71)
       ..strokeWidth = 2.0 / zoomRatio
@@ -75,7 +78,7 @@ class TickPainter extends CustomPainter with ValueRangeMapper, PanningBehavior {
   ) {
     canvas.save();
 
-    final zoomRatio = 1.0 / slice;
+    final zoomRatio = 1.0 / _slice;
     // apply an inverse canvas transformation to avoid stretching text
     canvas.transform(Matrix4.identity().scaled(1 / zoomRatio, 1.0).storage);
 
@@ -103,7 +106,7 @@ class TickPainter extends CustomPainter with ValueRangeMapper, PanningBehavior {
     canvas.restore();
   }
 
-  int calculateAlternativeStepSize(
+  int _calculateAlternativeStepSize(
     int duration,
     int targetItemCount,
     int stepOriginal,

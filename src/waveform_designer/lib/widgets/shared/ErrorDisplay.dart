@@ -1,9 +1,12 @@
 import 'package:flutter/material.dart';
 
 class ErrorDisplay extends StatelessWidget {
-  String? error;
+  final String? error;
 
-  ErrorDisplay({required this.error, super.key});
+  const ErrorDisplay({
+    required this.error,
+    super.key,
+  });
 
   @override
   Widget build(BuildContext context) {

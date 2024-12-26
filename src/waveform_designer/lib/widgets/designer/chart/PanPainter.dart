@@ -4,8 +4,10 @@ class PanPainter extends CustomPainter {
   final double? _start;
   final double? _end;
 
-  PanPainter({required double? start, required double? end})
-      : _end = end,
+  PanPainter({
+    required double? start,
+    required double? end,
+  })  : _end = end,
         _start = start;
 
   @override

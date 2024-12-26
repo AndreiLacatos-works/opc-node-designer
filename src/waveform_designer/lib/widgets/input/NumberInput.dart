@@ -16,8 +16,8 @@ class NumberInput extends StatefulWidget {
     this.onSubmitted,
     this.onFocusLost,
     this.onFocus,
-    Key? key,
-  }) : super(key: key);
+    super.key,
+  });
 
   @override
   _NumberInputState createState() => _NumberInputState();
@@ -25,7 +25,7 @@ class NumberInput extends StatefulWidget {
 
 class _NumberInputState extends State<NumberInput> {
   final TextEditingController _controller = TextEditingController();
-  FocusNode _focusNode = FocusNode();
+  final FocusNode _focusNode = FocusNode();
 
   @override
   void initState() {

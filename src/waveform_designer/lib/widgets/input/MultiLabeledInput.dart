@@ -12,7 +12,6 @@ class MultiLabeledInput extends StatelessWidget {
   final Function()? onFocus;
 
   const MultiLabeledInput({
-    super.key,
     required this.mainLabel,
     required this.secondaryLabel,
     this.onChanged,
@@ -21,6 +20,7 @@ class MultiLabeledInput extends StatelessWidget {
     this.onFocus,
     this.value = 0,
     this.width = 160,
+    super.key,
   });
 
   @override

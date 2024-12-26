@@ -8,7 +8,11 @@ import 'package:waveform_designer/widgets/shared/ErrorDisplay.dart';
 class TransitionPointAdder extends ConsumerStatefulWidget {
   final Function(int) onConfirm;
   final Function() onCancel;
-  TransitionPointAdder({required this.onConfirm, required this.onCancel});
+  TransitionPointAdder({
+    required this.onConfirm,
+    required this.onCancel,
+    super.key,
+  });
 
   @override
   ConsumerState<ConsumerStatefulWidget> createState() =>

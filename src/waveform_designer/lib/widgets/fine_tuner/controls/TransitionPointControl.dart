@@ -9,7 +9,10 @@ import 'package:waveform_designer/widgets/shared/ErrorDisplay.dart';
 class TransitionPointControl extends ConsumerStatefulWidget {
   final int pointIndex;
 
-  TransitionPointControl({required this.pointIndex, super.key});
+  TransitionPointControl({
+    required this.pointIndex,
+    super.key,
+  });
 
   @override
   ConsumerState<ConsumerStatefulWidget> createState() =>
