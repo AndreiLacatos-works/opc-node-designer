@@ -1,23 +1,18 @@
 import 'package:waveform_designer/calc/NeighboringTickCalculator.dart';
+import 'package:waveform_designer/calc/ScreenSpacePoint.dart';
 
 mixin TickOverlapCalculator on NeighboringTickCalculator {
-  int? getOverlappingTransitionPointIndex(double position) {
+  int? getOverlappingTransitionPointIndex(ScreenSpacePoint position) {
     double tolerancePixels = 4.0 * designer.sliceRatio;
 
-    if (diagramWidth == 0) {
+    if (designer.designerWidth == 0) {
       return null;
     }
 
-    final mapped = mapValueToNewRange(
-      0,
-      diagramWidth,
-      compensateZoomLevel(position),
-      0,
-      waveForm.duration.toDouble(),
-    );
+    final mapped = toDriagramSpace(position);
     final mappedTolerance = mapValueToNewRange(
       0,
-      diagramWidth,
+      designer.designerWidth,
       tolerancePixels,
       0,
       waveForm.duration.toDouble(),
@@ -25,7 +20,7 @@ mixin TickOverlapCalculator on NeighboringTickCalculator {
 
     for (var i = 0; i < waveForm.transitionPoints.length; i++) {
       final point = waveForm.transitionPoints[i];
-      if ((point - mapped).abs() <= mappedTolerance) {
+      if ((point - mapped.dx).abs() <= mappedTolerance) {
         return i;
       }
     }

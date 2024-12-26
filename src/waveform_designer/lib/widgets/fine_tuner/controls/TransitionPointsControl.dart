@@ -2,8 +2,10 @@ import 'package:flutter/widgets.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:waveform_designer/state/waveform/waveform.state.dart';
+import 'package:waveform_designer/theme/AppTheme.dart';
 import 'package:waveform_designer/widgets/fine_tuner/controls/TransitionPointAdder.dart';
 import 'package:waveform_designer/widgets/fine_tuner/controls/TransitionPointControl.dart';
+import 'package:waveform_designer/widgets/shared/SimpleButton.dart';
 
 class TransitionPointsControl extends ConsumerStatefulWidget {
   @override
@@ -60,22 +62,14 @@ class _TransitionPointsControlState
                     ),
                   ),
                 ),
-                MouseRegion(
-                  cursor: SystemMouseCursors.click,
-                  child: GestureDetector(
-                    onTap: _triggerAddMode,
-                    child: Container(
-                      padding: EdgeInsets.fromLTRB(6, 4, 6, 4),
-                      decoration: BoxDecoration(
-                        borderRadius: BorderRadius.circular(6),
-                        color: Color.fromARGB(255, 87, 237, 67),
-                      ),
-                      child: FaIcon(
-                        FontAwesomeIcons.plus,
-                        size: 20,
-                        color: Color.fromARGB(255, 255, 255, 255),
-                      ),
-                    ),
+                SimpleButton(
+                  onClick: _triggerAddMode,
+                  color: AppTheme.brightGreen,
+                  padding: EdgeInsets.fromLTRB(6, 4, 6, 4),
+                  content: FaIcon(
+                    FontAwesomeIcons.plus,
+                    size: 20,
+                    color: AppTheme.foreground,
                   ),
                 ),
               ],

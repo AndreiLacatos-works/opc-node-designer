@@ -1,9 +1,13 @@
-import 'package:flutter/material.dart';
+import 'package:flutter/widgets.dart';
+import 'package:waveform_designer/theme/AppTheme.dart';
 
 class ErrorDisplay extends StatelessWidget {
-  String? error;
+  final String? error;
 
-  ErrorDisplay({required this.error, super.key});
+  const ErrorDisplay({
+    required this.error,
+    super.key,
+  });
 
   @override
   Widget build(BuildContext context) {
@@ -17,7 +21,7 @@ class ErrorDisplay extends StatelessWidget {
       style: TextStyle(
         fontSize: 14,
         fontWeight: FontWeight.w600,
-        color: Color.fromARGB(255, 239, 73, 31),
+        color: AppTheme.danger,
       ),
     );
   }

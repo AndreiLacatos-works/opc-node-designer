@@ -2,10 +2,11 @@ import 'package:flutter/widgets.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:waveform_designer/state/designer/designer.state.dart';
 import 'package:waveform_designer/state/waveform/waveform.state.dart';
+import 'package:waveform_designer/theme/AppTheme.dart';
 import 'package:waveform_designer/widgets/designer/chart/PanControls.dart';
 import 'package:waveform_designer/widgets/designer/chart/TickPainter.dart';
-import 'package:waveform_designer/widgets/designer/chart/InteractionHandler.dart';
-import 'package:waveform_designer/widgets/designer/chart/WaveForm.dart';
+import 'package:waveform_designer/widgets/designer/chart/interaction/InteractionHandler.dart';
+import 'package:waveform_designer/widgets/designer/chart/WaveFormPainter.dart';
 import 'package:waveform_designer/widgets/designer/panning/PanIndicator.dart';
 
 class DesignerChart extends ConsumerWidget {
@@ -23,14 +24,14 @@ class DesignerChart extends ConsumerWidget {
             Container(
               width: double.infinity,
               padding: EdgeInsets.fromLTRB(35, 12, 35, 12),
-              color: Color.fromARGB(255, 255, 255, 255),
+              color: AppTheme.foreground,
               child: PanControls(),
             ),
             Transform.translate(
               offset: Offset(0, -1),
               child: Container(
                 padding: EdgeInsets.all(35),
-                color: Color.fromARGB(255, 255, 255, 255),
+                color: AppTheme.foreground,
                 child: Stack(
                   children: [
                     AspectRatio(
@@ -65,7 +66,7 @@ class DesignerChart extends ConsumerWidget {
               offset: Offset(0, -2),
               child: Container(
                 padding: EdgeInsets.fromLTRB(35, 12, 35, 12),
-                color: Color.fromARGB(255, 255, 255, 255),
+                color: AppTheme.foreground,
                 child: PanIndicator(),
               ),
             ),

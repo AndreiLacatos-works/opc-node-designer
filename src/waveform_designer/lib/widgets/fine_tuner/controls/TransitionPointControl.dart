@@ -2,14 +2,19 @@ import 'package:flutter/widgets.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:waveform_designer/state/waveform/waveform.state.dart';
+import 'package:waveform_designer/theme/AppTheme.dart';
 import 'package:waveform_designer/widgets/fine_tuner/controls/ErrorConsumerState.dart';
 import 'package:waveform_designer/widgets/input/LabeledInput.dart';
 import 'package:waveform_designer/widgets/shared/ErrorDisplay.dart';
+import 'package:waveform_designer/widgets/shared/IconButton.dart';
 
 class TransitionPointControl extends ConsumerStatefulWidget {
   final int pointIndex;
 
-  TransitionPointControl({required this.pointIndex, super.key});
+  TransitionPointControl({
+    required this.pointIndex,
+    super.key,
+  });
 
   @override
   ConsumerState<ConsumerStatefulWidget> createState() =>
@@ -78,41 +83,32 @@ class _TransitionPointControlState
               onFocus: clearError,
             ),
             Padding(
-              padding: EdgeInsets.fromLTRB(24, 0, 8, 0),
-              child: MouseRegion(
-                cursor: SystemMouseCursors.click,
-                child: GestureDetector(
-                  onTap: moveLeft,
-                  child: FaIcon(
-                    FontAwesomeIcons.arrowLeft,
-                    color: Color.fromARGB(255, 87, 237, 67),
-                  ),
+              padding: EdgeInsets.fromLTRB(8, 0, 8, 0),
+              child: IconButton(
+                onClick: moveLeft,
+                icon: FaIcon(
+                  FontAwesomeIcons.arrowLeft,
+                  color: AppTheme.brightGreen,
                 ),
               ),
             ),
             Padding(
               padding: EdgeInsets.fromLTRB(8, 0, 8, 0),
-              child: MouseRegion(
-                cursor: SystemMouseCursors.click,
-                child: GestureDetector(
-                  onTap: moveRight,
-                  child: FaIcon(
-                    FontAwesomeIcons.arrowRight,
-                    color: Color.fromARGB(255, 87, 237, 67),
-                  ),
+              child: IconButton(
+                onClick: moveRight,
+                icon: FaIcon(
+                  FontAwesomeIcons.arrowRight,
+                  color: AppTheme.brightGreen,
                 ),
               ),
             ),
             Padding(
               padding: EdgeInsets.fromLTRB(8, 0, 8, 0),
-              child: MouseRegion(
-                cursor: SystemMouseCursors.click,
-                child: GestureDetector(
-                  onTap: handleRemove,
-                  child: FaIcon(
-                    FontAwesomeIcons.solidTrashCan,
-                    color: Color.fromARGB(255, 239, 73, 31),
-                  ),
+              child: IconButton(
+                onClick: handleRemove,
+                icon: FaIcon(
+                  FontAwesomeIcons.solidTrashCan,
+                  color: AppTheme.danger,
                 ),
               ),
             ),

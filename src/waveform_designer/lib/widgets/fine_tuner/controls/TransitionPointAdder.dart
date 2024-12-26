@@ -1,14 +1,20 @@
 import 'package:flutter/widgets.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
+import 'package:waveform_designer/theme/AppTheme.dart';
 import 'package:waveform_designer/widgets/fine_tuner/controls/ErrorConsumerState.dart';
 import 'package:waveform_designer/widgets/input/LabeledInput.dart';
 import 'package:waveform_designer/widgets/shared/ErrorDisplay.dart';
+import 'package:waveform_designer/widgets/shared/IconButton.dart';
 
 class TransitionPointAdder extends ConsumerStatefulWidget {
   final Function(int) onConfirm;
   final Function() onCancel;
-  TransitionPointAdder({required this.onConfirm, required this.onCancel});
+  TransitionPointAdder({
+    required this.onConfirm,
+    required this.onCancel,
+    super.key,
+  });
 
   @override
   ConsumerState<ConsumerStatefulWidget> createState() =>
@@ -72,28 +78,22 @@ class _TransitionPointAdderState
                 onFocus: clearError,
               ),
               Padding(
-                padding: EdgeInsets.fromLTRB(24, 0, 8, 0),
-                child: MouseRegion(
-                  cursor: SystemMouseCursors.click,
-                  child: GestureDetector(
-                    onTap: _handleConfirm,
-                    child: FaIcon(
-                      FontAwesomeIcons.check,
-                      color: Color.fromARGB(255, 87, 237, 67),
-                    ),
+                padding: EdgeInsets.fromLTRB(8, 0, 8, 0),
+                child: IconButton(
+                  onClick: _handleConfirm,
+                  icon: FaIcon(
+                    FontAwesomeIcons.check,
+                    color: AppTheme.brightGreen,
                   ),
                 ),
               ),
               Padding(
                 padding: EdgeInsets.fromLTRB(8, 0, 8, 0),
-                child: MouseRegion(
-                  cursor: SystemMouseCursors.click,
-                  child: GestureDetector(
-                    onTap: _handleCancel,
-                    child: FaIcon(
-                      FontAwesomeIcons.xmark,
-                      color: Color.fromARGB(255, 239, 73, 31),
-                    ),
+                child: IconButton(
+                  onClick: _handleCancel,
+                  icon: FaIcon(
+                    FontAwesomeIcons.xmark,
+                    color: AppTheme.danger,
                   ),
                 ),
               ),

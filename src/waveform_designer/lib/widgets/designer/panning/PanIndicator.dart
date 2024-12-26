@@ -1,8 +1,9 @@
-import 'package:flutter/material.dart';
+import 'package:flutter/widgets.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:waveform_designer/state/designer/designer.state.dart';
 import 'package:waveform_designer/state/waveform/waveform.state.dart';
-import 'package:waveform_designer/widgets/designer/chart/WaveForm.dart';
+import 'package:waveform_designer/theme/AppTheme.dart';
+import 'package:waveform_designer/widgets/designer/chart/WaveFormPainter.dart';
 
 class PanIndicator extends ConsumerStatefulWidget {
   @override
@@ -34,7 +35,7 @@ class _PanIndicator extends ConsumerState {
             Container(
               height: 54,
               width: widgetWidth,
-              color: Color.fromARGB(255, 235, 235, 235),
+              color: AppTheme.lightShade,
             ),
             Container(
               height: 54,
@@ -66,7 +67,7 @@ class _PanIndicator extends ConsumerState {
                   child: Container(
                     height: 54,
                     width: width,
-                    color: Color.fromARGB(118, 171, 171, 171),
+                    color: AppTheme.darkShade.withAlpha(118),
                   ),
                 ),
               ),

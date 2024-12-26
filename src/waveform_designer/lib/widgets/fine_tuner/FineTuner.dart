@@ -1,5 +1,6 @@
 import 'package:flutter/widgets.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:waveform_designer/theme/AppTheme.dart';
 import 'package:waveform_designer/widgets/fine_tuner/controls/DurationControl.dart';
 import 'package:waveform_designer/widgets/fine_tuner/controls/TickFrequencyControl.dart';
 import 'package:waveform_designer/widgets/fine_tuner/controls/TransitionPointsControl.dart';
@@ -10,7 +11,9 @@ class FineTuner extends ConsumerWidget {
   @override
   Widget build(BuildContext context, WidgetRef ref) {
     return Container(
-      decoration: const BoxDecoration(color: Color.fromARGB(255, 74, 144, 226)),
+      decoration: const BoxDecoration(
+        color: AppTheme.accentColor,
+      ),
       padding: const EdgeInsets.all(25),
       width: 320,
       height: double.infinity,

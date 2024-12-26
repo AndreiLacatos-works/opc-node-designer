@@ -1,5 +1,6 @@
 import 'package:flutter/services.dart';
 import 'package:flutter/widgets.dart';
+import 'package:waveform_designer/theme/AppTheme.dart';
 
 class NumberInput extends StatefulWidget {
   final Function(int?)? onChanged;
@@ -16,8 +17,8 @@ class NumberInput extends StatefulWidget {
     this.onSubmitted,
     this.onFocusLost,
     this.onFocus,
-    Key? key,
-  }) : super(key: key);
+    super.key,
+  });
 
   @override
   _NumberInputState createState() => _NumberInputState();
@@ -25,7 +26,7 @@ class NumberInput extends StatefulWidget {
 
 class _NumberInputState extends State<NumberInput> {
   final TextEditingController _controller = TextEditingController();
-  FocusNode _focusNode = FocusNode();
+  final FocusNode _focusNode = FocusNode();
 
   @override
   void initState() {
@@ -52,7 +53,7 @@ class _NumberInputState extends State<NumberInput> {
       width: widget.width ?? 100,
       child: Container(
         decoration: BoxDecoration(
-          color: Color.fromARGB(255, 230, 230, 230),
+          color: AppTheme.foreground,
           borderRadius: BorderRadius.circular(8),
         ),
         padding: const EdgeInsets.all(12),
