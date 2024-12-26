@@ -1,7 +1,7 @@
 import 'dart:convert';
 import 'dart:io';
 
-import 'package:flutter/material.dart';
+import 'package:flutter/widgets.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:waveform_designer/state/designer/designer.state.dart';
 import 'package:waveform_designer/state/waveform/waveform.model.dart';
@@ -9,6 +9,8 @@ import 'package:waveform_designer/state/waveform/waveform.state.dart';
 import 'package:waveform_designer/serialization/waveform/waveform.model.dart'
     as WaveFormSerialization;
 import 'package:file_picker/file_picker.dart';
+import 'package:waveform_designer/theme/AppTheme.dart';
+import 'package:waveform_designer/widgets/shared/TextButton.dart';
 
 class Saver extends ConsumerWidget {
   Future _handleSave(WidgetRef ref) async {
@@ -44,27 +46,11 @@ class Saver extends ConsumerWidget {
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
-    return MouseRegion(
-      cursor: SystemMouseCursors.click,
-      child: GestureDetector(
-        onTap: () {
-          _handleSave(ref);
-        },
-        child: Container(
-          padding: const EdgeInsets.fromLTRB(24, 12, 24, 12),
-          decoration: BoxDecoration(
-            color: Color.fromARGB(255, 126, 211, 33),
-            borderRadius: BorderRadius.circular(6),
-          ),
-          child: const Text(
-            'Save',
-            style: TextStyle(
-              color: Color(0xFFFFFFFF),
-              fontSize: 16.0,
-            ),
-          ),
-        ),
-      ),
+    return TextButton(
+      onClick: () => _handleSave(ref),
+      text: "Save",
+      color: AppTheme.brightGreen,
+      padding: const EdgeInsets.fromLTRB(24, 12, 24, 12),
     );
   }
 }

@@ -1,5 +1,6 @@
 import 'package:flutter/widgets.dart';
 import 'package:waveform_designer/calc/ValueRangeMapper.dart';
+import 'package:waveform_designer/theme/AppTheme.dart';
 import 'package:waveform_designer/widgets/designer/chart/PanningBehavior.dart';
 
 class SnapPainter extends CustomPainter with ValueRangeMapper, PanningBehavior {
@@ -26,7 +27,7 @@ class SnapPainter extends CustomPainter with ValueRangeMapper, PanningBehavior {
     zoomAndPan(canvas, size, _slice, _offset);
     final zoomRatio = 1.0 / _slice;
     final paint = Paint()
-      ..color = const Color.fromARGB(255, 8, 176, 243)
+      ..color = AppTheme.secondarAccent
       ..strokeWidth = 3.0 / zoomRatio
       ..style = PaintingStyle.stroke;
 

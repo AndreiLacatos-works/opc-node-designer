@@ -1,4 +1,4 @@
-import 'package:flutter/material.dart';
+import 'package:flutter/widgets.dart';
 import 'package:waveform_designer/widgets/designer/chart/DesignerChart.dart';
 import 'package:waveform_designer/widgets/fine_tuner/FineTuner.dart';
 

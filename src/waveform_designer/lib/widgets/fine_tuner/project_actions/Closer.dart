@@ -2,6 +2,8 @@ import 'package:flutter/widgets.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:waveform_designer/state/designer/designer.state.dart';
 import 'package:waveform_designer/state/waveform/waveform.state.dart';
+import 'package:waveform_designer/theme/AppTheme.dart';
+import 'package:waveform_designer/widgets/shared/TextButton.dart';
 
 class Closer extends ConsumerWidget {
   void _handleClose(BuildContext context, WidgetRef ref) {
@@ -12,27 +14,11 @@ class Closer extends ConsumerWidget {
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
-    return MouseRegion(
-      cursor: SystemMouseCursors.click,
-      child: GestureDetector(
-        onTap: () {
-          _handleClose(context, ref);
-        },
-        child: Container(
-          padding: const EdgeInsets.fromLTRB(24, 12, 24, 12),
-          decoration: BoxDecoration(
-            color: Color.fromARGB(255, 239, 73, 31),
-            borderRadius: BorderRadius.circular(6),
-          ),
-          child: const Text(
-            'Close',
-            style: TextStyle(
-              color: Color(0xFFFFFFFF),
-              fontSize: 16.0,
-            ),
-          ),
-        ),
-      ),
+    return TextButton(
+      onClick: () => _handleClose(context, ref),
+      text: "Save",
+      color: AppTheme.danger,
+      padding: const EdgeInsets.fromLTRB(24, 12, 24, 12),
     );
   }
 }

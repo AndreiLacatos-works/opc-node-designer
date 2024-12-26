@@ -1,5 +1,6 @@
 import 'package:flutter/widgets.dart';
 import 'package:waveform_designer/calc/ValueRangeMapper.dart';
+import 'package:waveform_designer/theme/AppTheme.dart';
 import 'package:waveform_designer/widgets/designer/chart/PanningBehavior.dart';
 
 class Range {
@@ -44,11 +45,11 @@ class WaveFormPainter extends CustomPainter
     zoomAndPan(canvas, size, _slice, _offset);
     final strokeWidth = 2.0;
     final horizontalLinePainter = Paint()
-      ..color = const Color.fromARGB(255, 0, 0, 0)
+      ..color = AppTheme.textColor
       ..strokeWidth = strokeWidth;
     final zoomRatio = 1.0 / _slice;
     final verticalLinePainter = Paint()
-      ..color = const Color.fromARGB(255, 0, 0, 0)
+      ..color = AppTheme.textColor
       ..strokeWidth = strokeWidth / zoomRatio;
 
     final intervals = _mapToRanges([0, ..._transitionPoints, _duration]);

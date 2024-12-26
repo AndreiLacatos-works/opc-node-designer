@@ -1,4 +1,5 @@
 import 'package:flutter/widgets.dart';
+import 'package:waveform_designer/theme/AppTheme.dart';
 
 class PanPainter extends CustomPainter {
   final double? _start;
@@ -17,11 +18,11 @@ class PanPainter extends CustomPainter {
     }
 
     final borderPainter = Paint()
-      ..color = const Color.fromARGB(255, 8, 176, 243)
+      ..color = AppTheme.secondarAccent
       ..strokeWidth = 3.0
       ..style = PaintingStyle.stroke;
     final fillPainter = Paint()
-      ..color = const Color.fromARGB(62, 8, 176, 243)
+      ..color = AppTheme.secondarAccent.withAlpha(62)
       ..style = PaintingStyle.fill;
 
     final startOffset = Offset(_start, 5);

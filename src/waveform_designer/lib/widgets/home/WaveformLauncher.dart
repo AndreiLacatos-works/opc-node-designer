@@ -8,6 +8,8 @@ import 'package:waveform_designer/serialization/waveform/waveform.model.dart'
     as WaveformSerialization;
 import 'package:waveform_designer/state/designer/designer.state.dart';
 import 'package:waveform_designer/state/waveform/waveform.state.dart';
+import 'package:waveform_designer/theme/AppTheme.dart';
+import 'package:waveform_designer/widgets/shared/TextButton.dart';
 
 class WaveformLauncher extends ConsumerWidget {
   Future _handleOpenExisting(BuildContext context, WidgetRef ref) async {
@@ -42,7 +44,7 @@ class WaveformLauncher extends ConsumerWidget {
     ref.watch(waveFormStateProvider);
     ref.watch(designerStateProvider);
     return Container(
-      color: Color.fromARGB(255, 45, 45, 45),
+      color: AppTheme.background,
       child: Column(
         children: [
           Expanded(
@@ -50,54 +52,20 @@ class WaveformLauncher extends ConsumerWidget {
               mainAxisAlignment: MainAxisAlignment.center,
               crossAxisAlignment: CrossAxisAlignment.center,
               children: [
-                MouseRegion(
-                  cursor: SystemMouseCursors.click,
-                  child: GestureDetector(
-                    onTap: () => _handleOpenExisting(context, ref),
-                    child: Container(
-                      width: 140,
-                      height: 140,
-                      decoration: BoxDecoration(
-                        color: Color.fromARGB(255, 74, 144, 226),
-                        borderRadius: BorderRadius.circular(6),
-                      ),
-                      child: Center(
-                        child: const Text(
-                          'Open existing',
-                          style: TextStyle(
-                            color: Color(0xFFFFFFFF),
-                            fontSize: 16.0,
-                          ),
-                        ),
-                      ),
-                    ),
-                  ),
+                TextButton(
+                  onClick: () => _handleOpenExisting(context, ref),
+                  text: "Open existing",
+                  size: Size(140, 140),
+                  color: AppTheme.accentColor,
                 ),
                 SizedBox.fromSize(
                   size: Size(20, 0),
                 ),
-                MouseRegion(
-                  cursor: SystemMouseCursors.click,
-                  child: GestureDetector(
-                    onTap: () => _handleCreateNew(context),
-                    child: Container(
-                      width: 140,
-                      height: 140,
-                      decoration: BoxDecoration(
-                        color: Color.fromARGB(255, 126, 211, 33),
-                        borderRadius: BorderRadius.circular(6),
-                      ),
-                      child: Center(
-                        child: const Text(
-                          'Create new',
-                          style: TextStyle(
-                            color: Color(0xFFFFFFFF),
-                            fontSize: 16.0,
-                          ),
-                        ),
-                      ),
-                    ),
-                  ),
+                TextButton(
+                  onClick: () => _handleCreateNew(context),
+                  text: "Create new",
+                  size: Size(140, 140),
+                  color: AppTheme.brightGreen,
                 ),
               ],
             ),

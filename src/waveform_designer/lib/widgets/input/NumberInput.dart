@@ -1,5 +1,6 @@
 import 'package:flutter/services.dart';
 import 'package:flutter/widgets.dart';
+import 'package:waveform_designer/theme/AppTheme.dart';
 
 class NumberInput extends StatefulWidget {
   final Function(int?)? onChanged;
@@ -52,7 +53,7 @@ class _NumberInputState extends State<NumberInput> {
       width: widget.width ?? 100,
       child: Container(
         decoration: BoxDecoration(
-          color: Color.fromARGB(255, 230, 230, 230),
+          color: AppTheme.foreground,
           borderRadius: BorderRadius.circular(8),
         ),
         padding: const EdgeInsets.all(12),

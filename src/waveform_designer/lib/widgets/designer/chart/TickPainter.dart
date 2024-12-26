@@ -1,5 +1,6 @@
 import 'package:flutter/widgets.dart';
 import 'package:waveform_designer/calc/ValueRangeMapper.dart';
+import 'package:waveform_designer/theme/AppTheme.dart';
 import 'package:waveform_designer/widgets/designer/chart/PanningBehavior.dart';
 
 class TickPainter extends CustomPainter with ValueRangeMapper, PanningBehavior {
@@ -54,7 +55,7 @@ class TickPainter extends CustomPainter with ValueRangeMapper, PanningBehavior {
     var dashHeight = 4, dashSpace = 6, startY = 0.0;
     final zoomRatio = 1.0 / _slice;
     final paint = Paint()
-      ..color = const Color.fromARGB(255, 71, 71, 71)
+      ..color = AppTheme.textColor.withAlpha(107)
       ..strokeWidth = 2.0 / zoomRatio
       ..style = PaintingStyle.stroke;
     final bottomOffset = Offset(horizontalOffset, size.height);
@@ -85,7 +86,7 @@ class TickPainter extends CustomPainter with ValueRangeMapper, PanningBehavior {
     final bottomOffset = Offset(horizontalOffset * zoomRatio, size.height);
     // draw tick text
     const textStyle = TextStyle(
-      color: Color.fromARGB(255, 0, 0, 0),
+      color: AppTheme.textColor,
       fontSize: 14,
     );
     var textSpan = TextSpan(
