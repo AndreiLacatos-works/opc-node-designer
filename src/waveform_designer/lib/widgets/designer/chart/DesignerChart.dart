@@ -5,7 +5,7 @@ import 'package:waveform_designer/state/waveform/waveform.state.dart';
 import 'package:waveform_designer/theme/AppTheme.dart';
 import 'package:waveform_designer/widgets/designer/chart/PanControls.dart';
 import 'package:waveform_designer/widgets/designer/chart/TickPainter.dart';
-import 'package:waveform_designer/widgets/designer/chart/InteractionHandler.dart';
+import 'package:waveform_designer/widgets/designer/chart/interaction/InteractionHandler.dart';
 import 'package:waveform_designer/widgets/designer/chart/WaveFormPainter.dart';
 import 'package:waveform_designer/widgets/designer/panning/PanIndicator.dart';
 
