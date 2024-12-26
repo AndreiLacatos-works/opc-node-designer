@@ -42,7 +42,8 @@ class _TransitionPointsControlState
       _cancelAddMode();
     }
 
-    final transitionPoints = ref.watch(waveFormStateProvider).transitionPoints;
+    final transitionPoints =
+        ref.watch(waveFormStateProvider).values.map((v) => v.tick).toList();
     return Expanded(
       child: Column(
         children: [

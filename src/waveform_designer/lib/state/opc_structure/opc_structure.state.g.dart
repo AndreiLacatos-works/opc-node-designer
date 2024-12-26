@@ -1,26 +1,26 @@
 // GENERATED CODE - DO NOT MODIFY BY HAND
 
-part of 'designer.state.dart';
+part of 'opc_structure.state.dart';
 
 // **************************************************************************
 // RiverpodGenerator
 // **************************************************************************
 
-String _$designerStateHash() => r'8bbf3a501dbba4f5ec9102d680311d0779274784';
+String _$opcStructureStateHash() => r'47749919f036e5e628f9919efa61b4c6490a4af2';
 
-/// See also [DesignerState].
-@ProviderFor(DesignerState)
-final designerStateProvider =
-    AutoDisposeNotifierProvider<DesignerState, DesignerModel>.internal(
-  DesignerState.new,
-  name: r'designerStateProvider',
+/// See also [OpcStructureState].
+@ProviderFor(OpcStructureState)
+final opcStructureStateProvider =
+    AutoDisposeNotifierProvider<OpcStructureState, OpcStructureModel>.internal(
+  OpcStructureState.new,
+  name: r'opcStructureStateProvider',
   debugGetCreateSourceHash: const bool.fromEnvironment('dart.vm.product')
       ? null
-      : _$designerStateHash,
+      : _$opcStructureStateHash,
   dependencies: null,
   allTransitiveDependencies: null,
 );
 
-typedef _$DesignerState = AutoDisposeNotifier<DesignerModel>;
+typedef _$OpcStructureState = AutoDisposeNotifier<OpcStructureModel>;
 // ignore_for_file: type=lint
 // ignore_for_file: subtype_of_sealed_class, invalid_use_of_internal_member, invalid_use_of_visible_for_testing_member, deprecated_member_use_from_same_package

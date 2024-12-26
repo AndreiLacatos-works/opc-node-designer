@@ -42,14 +42,14 @@ class _TransitionPointControlState
 
     void moveLeft() {
       final waveform = ref.read(waveFormStateProvider);
-      handleMove(waveform.transitionPoints[widget.pointIndex] -
-          waveform.tickFrequency);
+      handleMove(
+          waveform.values[widget.pointIndex].tick - waveform.tickFrequency);
     }
 
     void moveRight() {
       final waveform = ref.read(waveFormStateProvider);
-      handleMove(waveform.transitionPoints[widget.pointIndex] +
-          waveform.tickFrequency);
+      handleMove(
+          waveform.values[widget.pointIndex].tick + waveform.tickFrequency);
     }
 
     void handleRemove() {
@@ -63,7 +63,8 @@ class _TransitionPointControlState
       }
     }
 
-    final transitionPoints = ref.watch(waveFormStateProvider).transitionPoints;
+    final transitionPoints =
+        ref.watch(waveFormStateProvider).values.map((v) => v.tick).toList();
     if (widget.pointIndex >= transitionPoints.length) {
       return SizedBox.shrink();
     }

@@ -8,7 +8,7 @@ class WaveFormState extends _$WaveFormState {
   static WaveFormModel _initialState = WaveFormModel(
     duration: 1000,
     tickFrequency: 100,
-    transitionPoints: [500],
+    values: [WaveFormValue(tick: 500, value: 100.0)],
   );
 
   @override
@@ -24,7 +24,7 @@ class WaveFormState extends _$WaveFormState {
     if (newDuration < state.tickFrequency) {
       throw 'Durationg must be greater than tick frequency!';
     }
-    var lastTransition = state.transitionPoints.lastOrNull ?? 0;
+    var lastTransition = state.values.lastOrNull?.tick ?? 0;
     if (newDuration < lastTransition) {
       throw 'Duration is too short to display all transition points!';
     }
@@ -35,7 +35,8 @@ class WaveFormState extends _$WaveFormState {
     if (newTickFrequency > state.duration) {
       throw 'Tick frequency must be less than duration!';
     }
-    var allTransitionPointsAligned = state.transitionPoints
+    var allTransitionPointsAligned = state.values
+        .map((v) => v.tick)
         .every((point) => _intersectsTicks(point, newTickFrequency));
     if (!allTransitionPointsAligned) {
       throw 'Some transition points do not intersect with the new tick frequency!';
@@ -44,37 +45,37 @@ class WaveFormState extends _$WaveFormState {
   }
 
   void updateTransitionPoint(int pointIndex, int newValue) {
-    if (pointIndex < 0 || pointIndex >= state.transitionPoints.length) {
+    if (pointIndex < 0 || pointIndex >= state.values.length) {
       return;
     }
     _ensureTransitionPointRulesFulfilled(newValue);
-    var newPoints = [...state.transitionPoints];
-    newPoints[pointIndex] = newValue;
-    state = state.copyWith(transitionPoints: _sortAndUnique(newPoints));
+    var newPoints = [...state.values];
+    newPoints[pointIndex] = newPoints[pointIndex].copyWith(tick: newValue);
+    state = state.copyWith(values: _sortAndUnique(newPoints));
   }
 
   void removeTransitionPoint(int pointIndex) {
-    if (pointIndex < 0 || pointIndex >= state.transitionPoints.length) {
+    if (pointIndex < 0 || pointIndex >= state.values.length) {
       return;
     }
 
-    var newPoints = [...state.transitionPoints];
+    var newPoints = [...state.values];
     newPoints.removeAt(pointIndex);
-    state = state.copyWith(transitionPoints: _sortAndUnique(newPoints));
+    state = state.copyWith(values: _sortAndUnique(newPoints));
   }
 
   void addTransitionPoint(int value) {
     _ensureTransitionPointRulesFulfilled(value);
-    var newPoints = [...state.transitionPoints, value];
-    state = state.copyWith(transitionPoints: _sortAndUnique(newPoints));
+    var newPoints = [...state.values, WaveFormValue(tick: value, value: 100.0)];
+    state = state.copyWith(values: _sortAndUnique(newPoints));
   }
 
   void reset() {
     state = _initialState;
   }
 
-  List<int> _sortAndUnique(List<int> values) {
-    values.sort();
+  List<WaveFormValue> _sortAndUnique(List<WaveFormValue> values) {
+    values.sort((a, b) => a.tick < b.tick ? -1 : 1);
     return values.toSet().toList();
   }
 

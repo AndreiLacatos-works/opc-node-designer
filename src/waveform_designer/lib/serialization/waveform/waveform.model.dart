@@ -1,6 +1,7 @@
 import 'package:json_annotation/json_annotation.dart';
 import 'package:waveform_designer/state/waveform/waveform.model.dart'
     as WaveFormState;
+import 'package:waveform_designer/state/waveform/waveform.model.dart';
 
 part 'waveform.model.g.dart';
 
@@ -23,13 +24,18 @@ class WaveFormModel {
       WaveFormModel(
         duration: state.duration,
         tickFrequency: state.tickFrequency,
-        transitionPoints: state.transitionPoints,
+        transitionPoints: state.values.map((v) => v.tick).toList(),
       );
   Map<String, dynamic> toJson() => _$WaveFormModelToJson(this);
 
   WaveFormState.WaveFormModel toState() => WaveFormState.WaveFormModel(
         duration: this.duration,
         tickFrequency: this.tickFrequency,
-        transitionPoints: this.transitionPoints,
+        values: this
+            .transitionPoints
+            .map(
+              (v) => WaveFormValue(tick: v, value: 100.0),
+            )
+            .toList(),
       );
 }

@@ -43,7 +43,8 @@ class _PanIndicator extends ConsumerState {
               child: CustomPaint(
                 painter: WaveFormPainter(
                   duration: waveformState.duration,
-                  transitionPoints: waveformState.transitionPoints,
+                  transitionPoints:
+                      waveformState.values.map((v) => v.tick).toList(),
                   slice: 1.0,
                   offset: 0.0,
                 ),

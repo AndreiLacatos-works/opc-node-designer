@@ -39,7 +39,8 @@ class DesignerChart extends ConsumerWidget {
                       child: CustomPaint(
                         painter: WaveFormPainter(
                           duration: waveformState.duration,
-                          transitionPoints: waveformState.transitionPoints,
+                          transitionPoints:
+                              waveformState.values.map((v) => v.tick).toList(),
                           slice: panningState.sliceRatio,
                           offset: panningState.sliceOffset,
                         ),
