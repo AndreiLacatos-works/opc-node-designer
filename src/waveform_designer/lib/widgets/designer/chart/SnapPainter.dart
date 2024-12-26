@@ -32,7 +32,7 @@ class SnapPainter extends CustomPainter with ValueRangeMapper, PanningBehavior {
       ..style = PaintingStyle.stroke;
 
     final dx = mapValueToNewRange(
-        0, _duration.toDouble(), _tick!.toDouble(), 0, size.width);
+        0, _duration.toDouble(), _tick.toDouble(), 0, size.width);
     final topOffset = Offset(dx, 0);
     final bottomOffset = Offset(dx, size.height);
     canvas.drawLine(topOffset, bottomOffset, paint);

@@ -16,7 +16,7 @@ class Closer extends ConsumerWidget {
   Widget build(BuildContext context, WidgetRef ref) {
     return TextButton(
       onClick: () => _handleClose(context, ref),
-      text: "Save",
+      text: "Close",
       color: AppTheme.danger,
       padding: const EdgeInsets.fromLTRB(24, 12, 24, 12),
     );

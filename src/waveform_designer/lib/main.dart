@@ -2,7 +2,7 @@ import 'package:flutter/widgets.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:waveform_designer/screens/WaveformDesigner.dart';
 import 'package:waveform_designer/theme/AppTheme.dart';
-import 'package:waveform_designer/widgets/home/WaveformLauncher.dart';
+import 'package:waveform_designer/screens/WaveformLauncher.dart';
 import 'package:window_manager/window_manager.dart';
 
 void main() async {
@@ -13,12 +13,7 @@ void main() async {
 
   runApp(
     ProviderScope(
-      child: Container(
-        decoration: BoxDecoration(
-          color: AppTheme.background,
-        ),
-        child: MyApp(),
-      ),
+      child: MyApp(),
     ),
   );
 }

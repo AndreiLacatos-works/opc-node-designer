@@ -4,6 +4,7 @@ import 'dart:io';
 import 'package:file_picker/file_picker.dart';
 import 'package:flutter/widgets.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:waveform_designer/screens/AppScreen.dart';
 import 'package:waveform_designer/serialization/waveform/waveform.model.dart'
     as WaveformSerialization;
 import 'package:waveform_designer/state/designer/designer.state.dart';
@@ -43,8 +44,7 @@ class WaveformLauncher extends ConsumerWidget {
   Widget build(BuildContext context, WidgetRef ref) {
     ref.watch(waveFormStateProvider);
     ref.watch(designerStateProvider);
-    return Container(
-      color: AppTheme.background,
+    return AppScreen(
       child: Column(
         children: [
           Expanded(
