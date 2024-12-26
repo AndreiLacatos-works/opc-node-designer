@@ -35,7 +35,7 @@ class _PanIndicator extends ConsumerState {
             Container(
               height: 54,
               width: widgetWidth,
-              color: Color.fromARGB(255, 235, 235, 235),
+              color: AppTheme.lightShade,
             ),
             Container(
               height: 54,
@@ -67,7 +67,7 @@ class _PanIndicator extends ConsumerState {
                   child: Container(
                     height: 54,
                     width: width,
-                    color: Color.fromARGB(118, 171, 171, 171),
+                    color: AppTheme.darkShade.withAlpha(118),
                   ),
                 ),
               ),
