@@ -25,7 +25,7 @@ class SimpleButton extends StatelessWidget {
       cursor:
           disabled ? SystemMouseCursors.forbidden : SystemMouseCursors.click,
       child: GestureDetector(
-        onTap: onClick,
+        onTap: disabled ? null : onClick,
         child: Container(
           width: size?.width,
           height: size?.height,
