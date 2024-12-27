@@ -27,6 +27,27 @@ class OpcDesignerState extends _$OpcDesignerState {
     );
   }
 
+  void expandContainer(OpcContainerNodeModel container) {
+    final children = _listChildContainersRecursively(container);
+    state = state.copyWith(
+      expandedContainers:
+          [...state.expandedContainers, ...children].toSet().toList(),
+    );
+  }
+
+  List<OpcContainerNodeModel> _listChildContainersRecursively(
+      OpcContainerNodeModel root) {
+    final nonEmptyChildren = root.children
+        .whereType<OpcContainerNodeModel>()
+        .where((container) => container.children.length > 0)
+        .toList();
+    final descendants = <OpcContainerNodeModel>[];
+    for (final child in nonEmptyChildren) {
+      descendants.addAll(_listChildContainersRecursively(child));
+    }
+    return [root, ...descendants];
+  }
+
   List<OpcContainerNodeModel> _toggleExpansion(
       List<OpcContainerNodeModel> expandedContainers,
       OpcContainerNodeModel container) {
