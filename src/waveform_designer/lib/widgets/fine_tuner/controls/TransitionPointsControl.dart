@@ -6,6 +6,8 @@ import 'package:waveform_designer/theme/AppTheme.dart';
 import 'package:waveform_designer/widgets/fine_tuner/controls/TransitionPointAdder.dart';
 import 'package:waveform_designer/widgets/fine_tuner/controls/TransitionPointControl.dart';
 import 'package:waveform_designer/widgets/shared/SimpleButton.dart';
+import 'package:waveform_designer/state/opc_designer/opc_designer.state.dart';
+import 'package:waveform_designer/state/opc_structure/opc_structure.model.dart';
 
 class TransitionPointsControl extends ConsumerStatefulWidget {
   @override
@@ -44,6 +46,8 @@ class _TransitionPointsControlState
 
     final transitionPoints =
         ref.watch(waveFormStateProvider).values.map((v) => v.tick).toList();
+    final valueNodeSelected =
+        ref.watch(opcDesignerStateProvider).selectedNode is OpcValueNodeModel;
     return Expanded(
       child: Column(
         children: [
@@ -72,6 +76,7 @@ class _TransitionPointsControlState
                     size: 20,
                     color: AppTheme.foreground,
                   ),
+                  disabled: !valueNodeSelected,
                 ),
               ],
             ),

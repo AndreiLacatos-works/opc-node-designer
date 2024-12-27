@@ -9,6 +9,7 @@ class TextButton extends StatelessWidget {
   final Color textColor;
   final EdgeInsetsGeometry? padding;
   final Size? size;
+  final bool disabled;
 
   TextButton({
     required this.onClick,
@@ -17,6 +18,7 @@ class TextButton extends StatelessWidget {
     this.textColor = AppTheme.foreground,
     this.padding,
     this.size,
+    this.disabled = false,
     super.key,
   });
 
@@ -38,6 +40,7 @@ class TextButton extends StatelessWidget {
       size: size,
       padding: padding,
       content: content,
+      disabled: disabled,
     );
   }
 }
