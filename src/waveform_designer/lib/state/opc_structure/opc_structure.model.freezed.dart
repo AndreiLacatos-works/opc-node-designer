@@ -154,6 +154,11 @@ class _$OpcContainerNodeModelImpl implements _OpcContainerNodeModel {
   }
 
   @override
+  String getLabel() {
+    return label;
+  }
+
+  @override
   bool operator ==(Object other) {
     return identical(this, other) ||
         (other.runtimeType == runtimeType &&
@@ -337,6 +342,11 @@ class _$OpcValueNodeModelImpl implements _OpcValueNodeModel {
   @override
   String getId() {
     return id;
+  }
+
+  @override
+  String getLabel() {
+    return label;
   }
 
   @override

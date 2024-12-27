@@ -76,7 +76,7 @@ class OpcContainerNode extends ConsumerWidget
               ),
             ),
           if (expanded)
-            ...node.children.map((node) {
+            ...getOrderedChildren(node).map((node) {
               switch (node) {
                 case OpcValueNodeModel():
                   return IntrinsicWidth(

@@ -5,6 +5,7 @@ part 'opc_structure.model.freezed.dart';
 
 abstract class OpcStructureNodeModel {
   String getId();
+  String getLabel();
 }
 
 @freezed
@@ -21,6 +22,11 @@ class OpcContainerNodeModel
   String getId() {
     return id;
   }
+
+  @override
+  String getLabel() {
+    return label;
+  }
 }
 
 @freezed
@@ -36,6 +42,11 @@ class OpcValueNodeModel
   @override
   String getId() {
     return id;
+  }
+
+  @override
+  String getLabel() {
+    return label;
   }
 }
 

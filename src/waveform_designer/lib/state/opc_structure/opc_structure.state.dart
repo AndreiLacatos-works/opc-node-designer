@@ -19,14 +19,9 @@ class OpcStructureState extends _$OpcStructureState {
               OpcContainerNodeModel(
                 id: uuid.v4(),
                 children: [
-                  OpcContainerNodeModel(
-                    id: uuid.v4(),
-                    children: [],
-                    label: "Container 4",
-                  ),
                   OpcValueNodeModel(
                     id: uuid.v4(),
-                    label: "Value 2",
+                    label: "Value 7",
                     waveform: WaveFormModel(
                       duration: 1700,
                       tickFrequency: 50,
@@ -57,6 +52,11 @@ class OpcStructureState extends _$OpcStructureState {
                         ),
                       ],
                     ),
+                  ),
+                  OpcContainerNodeModel(
+                    id: uuid.v4(),
+                    children: [],
+                    label: "Container 4",
                   ),
                   OpcValueNodeModel(
                     id: uuid.v4(),

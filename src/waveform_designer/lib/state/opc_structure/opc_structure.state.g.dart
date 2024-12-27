@@ -6,7 +6,7 @@ part of 'opc_structure.state.dart';
 // RiverpodGenerator
 // **************************************************************************
 
-String _$opcStructureStateHash() => r'6f1ebd03b81ebbeb8e258c0188599eef85e2f1d0';
+String _$opcStructureStateHash() => r'4bd95a37fdafd70b50f9a1d281e488c775b186c7';
 
 /// See also [OpcStructureState].
 @ProviderFor(OpcStructureState)
