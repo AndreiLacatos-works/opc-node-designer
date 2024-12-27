@@ -29,7 +29,13 @@ class OpcStructureMutations extends ConsumerWidget
             dimension: 12,
           ),
           TextButton(
-            onClick: () {},
+            onClick: () {
+              handleAddValueNode(
+                context,
+                ref,
+                selectedNode,
+              );
+            },
             text: "Add node",
             color: AppTheme.brightGreen,
             padding: EdgeInsets.fromLTRB(16, 12, 16, 12),

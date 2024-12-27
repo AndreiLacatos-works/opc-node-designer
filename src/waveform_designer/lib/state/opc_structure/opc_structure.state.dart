@@ -145,6 +145,26 @@ class OpcStructureState extends _$OpcStructureState {
     state = state.copyWith(root: _replaceNode(state.root, updatedParent));
   }
 
+  void insertNode(
+    OpcStructureNodeModel newNode,
+    OpcStructureNodeModel? insertionPoint,
+  ) {
+    OpcContainerNodeModel? parent = null;
+    switch (insertionPoint) {
+      case OpcContainerNodeModel():
+        parent = insertionPoint;
+        break;
+      case OpcValueNodeModel():
+        parent = _getParent(state.root, insertionPoint);
+        break;
+    }
+    var updatedParent = (parent ?? state.root);
+    updatedParent = updatedParent.copyWith(
+      children: [...updatedParent.children, newNode],
+    );
+    state = state.copyWith(root: _replaceNode(state.root, updatedParent));
+  }
+
   OpcContainerNodeModel? _getParent(
     OpcContainerNodeModel root,
     OpcStructureNodeModel target,

@@ -16,6 +16,7 @@ class OpcDesignerState extends _$OpcDesignerState {
   OpcDesignerModel build() {
     ref.listen(opcStructureStateProvider, (_, newState) {
       _preserveExpansion(newState.root);
+      _preserveSelection(newState.root);
     });
     return _initialState;
   }
@@ -51,17 +52,32 @@ class OpcDesignerState extends _$OpcDesignerState {
     state = state.copyWith(expandedContainers: newExpansion);
   }
 
+  void _preserveSelection(OpcContainerNodeModel newRoot) {
+    final currentSelection = state.selectedNode?.getId();
+    final treeItems = _flattenTree(newRoot);
+    final newSelection =
+        treeItems.where((n) => n.getId() == currentSelection).firstOrNull;
+    state = state.copyWith(selectedNode: newSelection);
+  }
+
   List<OpcContainerNodeModel> _listChildContainersRecursively(
       OpcContainerNodeModel root) {
+    return _flattenTree(root).whereType<OpcContainerNodeModel>().toList();
+  }
+
+  List<OpcStructureNodeModel> _flattenTree(OpcContainerNodeModel root) {
     final nonEmptyChildren = root.children
         .whereType<OpcContainerNodeModel>()
         .where((container) => container.children.length > 0)
         .toList();
-    final descendants = <OpcContainerNodeModel>[];
+    final items = root.children
+        .whereType<OpcValueNodeModel>()
+        .cast<OpcStructureNodeModel>()
+        .toList();
     for (final child in nonEmptyChildren) {
-      descendants.addAll(_listChildContainersRecursively(child));
+      items.addAll(_flattenTree(child));
     }
-    return [root, ...descendants];
+    return [root, ...items];
   }
 
   List<OpcContainerNodeModel> _toggleExpansion(
