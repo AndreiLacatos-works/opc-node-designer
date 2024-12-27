@@ -1,11 +1,15 @@
 import 'package:flutter/widgets.dart';
+import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:waveform_designer/state/opc_structure/opc_structure.model.dart';
 import 'package:waveform_designer/theme/AppTheme.dart';
-import 'package:waveform_designer/widgets/designer/opc/opc_structure/OpcValueNode.dart';
+import 'package:waveform_designer/widgets/designer/opc/opc_structure/opc_node/OpcNode.Actions.dart';
+import 'package:waveform_designer/widgets/designer/opc/opc_structure/opc_node/OpcNode.State.dart';
+import 'package:waveform_designer/widgets/designer/opc/opc_structure/opc_node/OpcValueNode.dart';
 import 'package:waveform_designer/widgets/shared/SimpleButton.dart';
 
-class OpcContainerNode extends StatelessWidget {
+class OpcContainerNode extends ConsumerWidget
+    with OpcNodeState, OpcNodeActions {
   final OpcContainerNodeModel node;
   final int level;
   static const double offset = 26.0;
@@ -17,7 +21,7 @@ class OpcContainerNode extends StatelessWidget {
   });
 
   @override
-  Widget build(BuildContext context) {
+  Widget build(BuildContext context, WidgetRef ref) {
     return Padding(
       padding: const EdgeInsets.only(left: offset),
       child: Column(
@@ -25,8 +29,15 @@ class OpcContainerNode extends StatelessWidget {
         children: [
           IntrinsicWidth(
             child: SimpleButton(
-              onClick: () {},
-              color: AppTheme.transparent,
+              onClick: () {
+                selectNode(
+                  ref,
+                  node,
+                );
+              },
+              color: selectedNode(ref) == node
+                  ? AppTheme.amber.withAlpha(71)
+                  : AppTheme.transparent,
               padding: const EdgeInsets.only(top: 2, bottom: 2),
               content: Row(
                 children: [

@@ -1,10 +1,13 @@
 import 'package:flutter/widgets.dart';
+import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:waveform_designer/state/opc_structure/opc_structure.model.dart';
 import 'package:waveform_designer/theme/AppTheme.dart';
+import 'package:waveform_designer/widgets/designer/opc/opc_structure/opc_node/OpcNode.Actions.dart';
+import 'package:waveform_designer/widgets/designer/opc/opc_structure/opc_node/OpcNode.State.dart';
 import 'package:waveform_designer/widgets/shared/SimpleButton.dart';
 
-class OpcValueNode extends StatelessWidget {
+class OpcValueNode extends ConsumerWidget with OpcNodeState, OpcNodeActions {
   final OpcValueNodeModel node;
   final int level;
   static const double offset = 26.0;
@@ -16,13 +19,20 @@ class OpcValueNode extends StatelessWidget {
   });
 
   @override
-  Widget build(BuildContext context) {
+  Widget build(BuildContext context, WidgetRef ref) {
     return Padding(
       padding: EdgeInsets.only(left: offset),
       child: SimpleButton(
-        onClick: () {},
-        color: AppTheme.transparent,
-        padding: const EdgeInsets.only(top: 2, bottom: 2),
+        onClick: () {
+          selectNode(
+            ref,
+            node,
+          );
+        },
+        color: selectedNode(ref) == node
+            ? AppTheme.purple.withAlpha(71)
+            : AppTheme.transparent,
+        padding: const EdgeInsets.all(2),
         content: Row(
           children: [
             Padding(

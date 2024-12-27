@@ -7,5 +7,6 @@ part 'opc_designer.model.freezed.dart';
 class OpcDesignerModel with _$OpcDesignerModel {
   factory OpcDesignerModel({
     required OpcStructureNodeModel? selectedNode,
+    required List<OpcContainerNodeModel> expandedContainers,
   }) = _OpcDesignerModel;
 }

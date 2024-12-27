@@ -1,7 +1,7 @@
 import 'package:flutter/widgets.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:waveform_designer/state/opc_structure/opc_structure.state.dart';
-import 'package:waveform_designer/widgets/designer/opc/opc_structure/OpcContainerNode.dart';
+import 'package:waveform_designer/widgets/designer/opc/opc_structure/opc_node/OpcContainerNode.dart';
 
 class OpcStructureBrowser extends ConsumerWidget {
   @override
