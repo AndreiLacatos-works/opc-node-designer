@@ -11,4 +11,6 @@ class AppTheme {
   static const lightShade = Color.fromARGB(255, 235, 235, 235);
   static const darkShade = Color.fromARGB(255, 171, 171, 171);
   static const transparent = Color.fromARGB(0, 255, 255, 255);
+  static const amber = Color.fromARGB(255, 255, 225, 0);
+  static const purple = Color.fromARGB(255, 167, 37, 200);
 }

@@ -1,7 +1,7 @@
 import 'package:flutter/widgets.dart';
 import 'package:waveform_designer/theme/AppTheme.dart';
 import 'package:waveform_designer/widgets/designer/opc/actions/OpcStructureActions.dart';
-import 'package:waveform_designer/widgets/designer/opc/opc_structure/OpcStructure.dart';
+import 'package:waveform_designer/widgets/designer/opc/opc_structure/OpcStructureBrowser.dart';
 
 class OpcStructureDesigner extends StatelessWidget {
   @override
@@ -20,7 +20,7 @@ class OpcStructureDesigner extends StatelessWidget {
       ),
       child: Row(
         children: [
-          OpcStructure(),
+          OpcStructureBrowser(),
           OpcStructureActions(),
         ],
       ),

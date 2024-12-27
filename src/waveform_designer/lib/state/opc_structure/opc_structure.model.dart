@@ -4,7 +4,7 @@ import 'package:waveform_designer/state/waveform/waveform.model.dart';
 part 'opc_structure.model.freezed.dart';
 
 abstract class OpcStructureNodeModel {
-  String getLabel();
+  String getId();
 }
 
 @freezed
@@ -13,12 +13,13 @@ class OpcContainerNodeModel
     implements OpcStructureNodeModel {
   factory OpcContainerNodeModel({
     required List<OpcStructureNodeModel> children,
+    required String id,
     required String label,
   }) = _OpcContainerNodeModel;
 
   @override
-  String getLabel() {
-    return this.label;
+  String getId() {
+    return id;
   }
 }
 
@@ -27,13 +28,14 @@ class OpcValueNodeModel
     with _$OpcValueNodeModel
     implements OpcStructureNodeModel {
   factory OpcValueNodeModel({
+    required String id,
     required String label,
     required WaveFormModel waveform,
   }) = _OpcValueNodeModel;
 
   @override
-  String getLabel() {
-    return this.label;
+  String getId() {
+    return id;
   }
 }
 

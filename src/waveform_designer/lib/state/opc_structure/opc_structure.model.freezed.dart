@@ -18,6 +18,7 @@ final _privateConstructorUsedError = UnsupportedError(
 mixin _$OpcContainerNodeModel {
   List<OpcStructureNodeModel> get children =>
       throw _privateConstructorUsedError;
+  String get id => throw _privateConstructorUsedError;
   String get label => throw _privateConstructorUsedError;
 
   /// Create a copy of OpcContainerNodeModel
@@ -33,7 +34,7 @@ abstract class $OpcContainerNodeModelCopyWith<$Res> {
           $Res Function(OpcContainerNodeModel) then) =
       _$OpcContainerNodeModelCopyWithImpl<$Res, OpcContainerNodeModel>;
   @useResult
-  $Res call({List<OpcStructureNodeModel> children, String label});
+  $Res call({List<OpcStructureNodeModel> children, String id, String label});
 }
 
 /// @nodoc
@@ -53,6 +54,7 @@ class _$OpcContainerNodeModelCopyWithImpl<$Res,
   @override
   $Res call({
     Object? children = null,
+    Object? id = null,
     Object? label = null,
   }) {
     return _then(_value.copyWith(
@@ -60,6 +62,10 @@ class _$OpcContainerNodeModelCopyWithImpl<$Res,
           ? _value.children
           : children // ignore: cast_nullable_to_non_nullable
               as List<OpcStructureNodeModel>,
+      id: null == id
+          ? _value.id
+          : id // ignore: cast_nullable_to_non_nullable
+              as String,
       label: null == label
           ? _value.label
           : label // ignore: cast_nullable_to_non_nullable
@@ -77,7 +83,7 @@ abstract class _$$OpcContainerNodeModelImplCopyWith<$Res>
       __$$OpcContainerNodeModelImplCopyWithImpl<$Res>;
   @override
   @useResult
-  $Res call({List<OpcStructureNodeModel> children, String label});
+  $Res call({List<OpcStructureNodeModel> children, String id, String label});
 }
 
 /// @nodoc
@@ -95,6 +101,7 @@ class __$$OpcContainerNodeModelImplCopyWithImpl<$Res>
   @override
   $Res call({
     Object? children = null,
+    Object? id = null,
     Object? label = null,
   }) {
     return _then(_$OpcContainerNodeModelImpl(
@@ -102,6 +109,10 @@ class __$$OpcContainerNodeModelImplCopyWithImpl<$Res>
           ? _value._children
           : children // ignore: cast_nullable_to_non_nullable
               as List<OpcStructureNodeModel>,
+      id: null == id
+          ? _value.id
+          : id // ignore: cast_nullable_to_non_nullable
+              as String,
       label: null == label
           ? _value.label
           : label // ignore: cast_nullable_to_non_nullable
@@ -115,6 +126,7 @@ class __$$OpcContainerNodeModelImplCopyWithImpl<$Res>
 class _$OpcContainerNodeModelImpl implements _OpcContainerNodeModel {
   _$OpcContainerNodeModelImpl(
       {required final List<OpcStructureNodeModel> children,
+      required this.id,
       required this.label})
       : _children = children;
 
@@ -127,16 +139,18 @@ class _$OpcContainerNodeModelImpl implements _OpcContainerNodeModel {
   }
 
   @override
+  final String id;
+  @override
   final String label;
 
   @override
   String toString() {
-    return 'OpcContainerNodeModel(children: $children, label: $label)';
+    return 'OpcContainerNodeModel(children: $children, id: $id, label: $label)';
   }
 
   @override
-  String getLabel() {
-    return this.label;
+  String getId() {
+    return id;
   }
 
   @override
@@ -145,12 +159,13 @@ class _$OpcContainerNodeModelImpl implements _OpcContainerNodeModel {
         (other.runtimeType == runtimeType &&
             other is _$OpcContainerNodeModelImpl &&
             const DeepCollectionEquality().equals(other._children, _children) &&
+            (identical(other.id, id) || other.id == id) &&
             (identical(other.label, label) || other.label == label));
   }
 
   @override
   int get hashCode => Object.hash(
-      runtimeType, const DeepCollectionEquality().hash(_children), label);
+      runtimeType, const DeepCollectionEquality().hash(_children), id, label);
 
   /// Create a copy of OpcContainerNodeModel
   /// with the given fields replaced by the non-null parameter values.
@@ -165,10 +180,13 @@ class _$OpcContainerNodeModelImpl implements _OpcContainerNodeModel {
 abstract class _OpcContainerNodeModel implements OpcContainerNodeModel {
   factory _OpcContainerNodeModel(
       {required final List<OpcStructureNodeModel> children,
+      required final String id,
       required final String label}) = _$OpcContainerNodeModelImpl;
 
   @override
   List<OpcStructureNodeModel> get children;
+  @override
+  String get id;
   @override
   String get label;
 
@@ -182,6 +200,7 @@ abstract class _OpcContainerNodeModel implements OpcContainerNodeModel {
 
 /// @nodoc
 mixin _$OpcValueNodeModel {
+  String get id => throw _privateConstructorUsedError;
   String get label => throw _privateConstructorUsedError;
   WaveFormModel get waveform => throw _privateConstructorUsedError;
 
@@ -198,7 +217,7 @@ abstract class $OpcValueNodeModelCopyWith<$Res> {
           OpcValueNodeModel value, $Res Function(OpcValueNodeModel) then) =
       _$OpcValueNodeModelCopyWithImpl<$Res, OpcValueNodeModel>;
   @useResult
-  $Res call({String label, WaveFormModel waveform});
+  $Res call({String id, String label, WaveFormModel waveform});
 
   $WaveFormModelCopyWith<$Res> get waveform;
 }
@@ -218,10 +237,15 @@ class _$OpcValueNodeModelCopyWithImpl<$Res, $Val extends OpcValueNodeModel>
   @pragma('vm:prefer-inline')
   @override
   $Res call({
+    Object? id = null,
     Object? label = null,
     Object? waveform = null,
   }) {
     return _then(_value.copyWith(
+      id: null == id
+          ? _value.id
+          : id // ignore: cast_nullable_to_non_nullable
+              as String,
       label: null == label
           ? _value.label
           : label // ignore: cast_nullable_to_non_nullable
@@ -252,7 +276,7 @@ abstract class _$$OpcValueNodeModelImplCopyWith<$Res>
       __$$OpcValueNodeModelImplCopyWithImpl<$Res>;
   @override
   @useResult
-  $Res call({String label, WaveFormModel waveform});
+  $Res call({String id, String label, WaveFormModel waveform});
 
   @override
   $WaveFormModelCopyWith<$Res> get waveform;
@@ -271,10 +295,15 @@ class __$$OpcValueNodeModelImplCopyWithImpl<$Res>
   @pragma('vm:prefer-inline')
   @override
   $Res call({
+    Object? id = null,
     Object? label = null,
     Object? waveform = null,
   }) {
     return _then(_$OpcValueNodeModelImpl(
+      id: null == id
+          ? _value.id
+          : id // ignore: cast_nullable_to_non_nullable
+              as String,
       label: null == label
           ? _value.label
           : label // ignore: cast_nullable_to_non_nullable
@@ -290,8 +319,11 @@ class __$$OpcValueNodeModelImplCopyWithImpl<$Res>
 /// @nodoc
 
 class _$OpcValueNodeModelImpl implements _OpcValueNodeModel {
-  _$OpcValueNodeModelImpl({required this.label, required this.waveform});
+  _$OpcValueNodeModelImpl(
+      {required this.id, required this.label, required this.waveform});
 
+  @override
+  final String id;
   @override
   final String label;
   @override
@@ -299,12 +331,12 @@ class _$OpcValueNodeModelImpl implements _OpcValueNodeModel {
 
   @override
   String toString() {
-    return 'OpcValueNodeModel(label: $label, waveform: $waveform)';
+    return 'OpcValueNodeModel(id: $id, label: $label, waveform: $waveform)';
   }
 
   @override
-  String getLabel() {
-    return this.label;
+  String getId() {
+    return id;
   }
 
   @override
@@ -312,13 +344,14 @@ class _$OpcValueNodeModelImpl implements _OpcValueNodeModel {
     return identical(this, other) ||
         (other.runtimeType == runtimeType &&
             other is _$OpcValueNodeModelImpl &&
+            (identical(other.id, id) || other.id == id) &&
             (identical(other.label, label) || other.label == label) &&
             (identical(other.waveform, waveform) ||
                 other.waveform == waveform));
   }
 
   @override
-  int get hashCode => Object.hash(runtimeType, label, waveform);
+  int get hashCode => Object.hash(runtimeType, id, label, waveform);
 
   /// Create a copy of OpcValueNodeModel
   /// with the given fields replaced by the non-null parameter values.
@@ -332,9 +365,12 @@ class _$OpcValueNodeModelImpl implements _OpcValueNodeModel {
 
 abstract class _OpcValueNodeModel implements OpcValueNodeModel {
   factory _OpcValueNodeModel(
-      {required final String label,
+      {required final String id,
+      required final String label,
       required final WaveFormModel waveform}) = _$OpcValueNodeModelImpl;
 
+  @override
+  String get id;
   @override
   String get label;
   @override
