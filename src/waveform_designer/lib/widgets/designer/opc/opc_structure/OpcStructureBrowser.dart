@@ -14,9 +14,8 @@ class _OpcStructureBrowserState extends ConsumerState {
   @override
   void initState() {
     final rootContainer = ref.read(opcStructureStateProvider).root;
-    Future(() => ref
-        .read(opcDesignerStateProvider.notifier)
-        .expandContainer(rootContainer));
+    Future(() =>
+        ref.read(opcDesignerStateProvider.notifier).expandRoot(rootContainer));
     super.initState();
   }
 

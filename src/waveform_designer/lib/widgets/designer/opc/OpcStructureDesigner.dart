@@ -1,6 +1,6 @@
 import 'package:flutter/widgets.dart';
 import 'package:waveform_designer/theme/AppTheme.dart';
-import 'package:waveform_designer/widgets/designer/opc/actions/OpcStructureActions.dart';
+import 'package:waveform_designer/widgets/designer/opc/actions/OpcStructureMutations.dart';
 import 'package:waveform_designer/widgets/designer/opc/opc_structure/OpcStructureBrowser.dart';
 
 class OpcStructureDesigner extends StatelessWidget {
@@ -22,7 +22,7 @@ class OpcStructureDesigner extends StatelessWidget {
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
           OpcStructureBrowser(),
-          OpcStructureActions(),
+          OpcStructureMutations(),
         ],
       ),
     );

@@ -1,6 +1,7 @@
 import 'package:riverpod_annotation/riverpod_annotation.dart';
 import 'package:waveform_designer/state/opc_designer/opc_designer.model.dart';
 import 'package:waveform_designer/state/opc_structure/opc_structure.model.dart';
+import 'package:waveform_designer/state/opc_structure/opc_structure.state.dart';
 
 part 'opc_designer.state.g.dart';
 
@@ -13,6 +14,9 @@ class OpcDesignerState extends _$OpcDesignerState {
 
   @override
   OpcDesignerModel build() {
+    ref.listen(opcStructureStateProvider, (_, newState) {
+      _preserveExpansion(newState.root);
+    });
     return _initialState;
   }
 
@@ -27,12 +31,24 @@ class OpcDesignerState extends _$OpcDesignerState {
     );
   }
 
-  void expandContainer(OpcContainerNodeModel container) {
+  void expandRoot(OpcContainerNodeModel container) {
     final children = _listChildContainersRecursively(container);
     state = state.copyWith(
       expandedContainers:
           [...state.expandedContainers, ...children].toSet().toList(),
     );
+  }
+
+  void _preserveExpansion(OpcContainerNodeModel newRoot) {
+    final newContainers = _listChildContainersRecursively(newRoot);
+    final previousExpansion = state.expandedContainers;
+    final newExpansion = <OpcContainerNodeModel>[];
+    for (final container in newContainers) {
+      if (previousExpansion.any((node) => node.id == container.id)) {
+        newExpansion.add(container);
+      }
+    }
+    state = state.copyWith(expandedContainers: newExpansion);
   }
 
   List<OpcContainerNodeModel> _listChildContainersRecursively(

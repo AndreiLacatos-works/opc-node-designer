@@ -131,4 +131,69 @@ class OpcStructureState extends _$OpcStructureState {
   OpcStructureModel build() {
     return _makeInitialState();
   }
+
+  void removeNode(OpcStructureNodeModel node) {
+    final parent = _getParent(state.root, node);
+    if (parent == null) {
+      return;
+    }
+
+    final updatedChildren = [...parent.children];
+    updatedChildren.remove(node);
+    final updatedParent = parent.copyWith(children: updatedChildren);
+
+    state = state.copyWith(root: _replaceNode(state.root, updatedParent));
+  }
+
+  OpcContainerNodeModel? _getParent(
+    OpcContainerNodeModel root,
+    OpcStructureNodeModel target,
+  ) {
+    if (root.children.isEmpty) {
+      return null;
+    }
+
+    for (final child in root.children) {
+      if (child == target) {
+        return root;
+      }
+    }
+
+    for (final child in root.children.whereType<OpcContainerNodeModel>()) {
+      final parent = _getParent(child, target);
+      if (parent != null) {
+        return parent;
+      }
+    }
+
+    return null;
+  }
+
+  OpcContainerNodeModel _replaceNode(
+    OpcContainerNodeModel root,
+    OpcStructureNodeModel nodeToReplace,
+  ) {
+    if (root.getId() == nodeToReplace.getId() &&
+        nodeToReplace is OpcContainerNodeModel) {
+      return nodeToReplace;
+    }
+
+    final newChildren = <OpcStructureNodeModel>[];
+    for (final child in root.children) {
+      if (child.getId() == nodeToReplace.getId()) {
+        newChildren.add(nodeToReplace);
+      } else {
+        switch (child) {
+          case OpcContainerNodeModel():
+            newChildren.add(_replaceNode(child, nodeToReplace));
+            break;
+          case OpcValueNodeModel():
+            newChildren.add(child.copyWith());
+            break;
+        }
+      }
+    }
+    final newRoot = root.copyWith(children: newChildren);
+    return newRoot;
+  }
 }
