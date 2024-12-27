@@ -20,7 +20,13 @@ class OpcStructureMutations extends ConsumerWidget
         crossAxisAlignment: CrossAxisAlignment.end,
         children: [
           TextButton(
-            onClick: () {},
+            onClick: () {
+              handleAddContainerNode(
+                context,
+                ref,
+                selectedNode,
+              );
+            },
             text: "Add container",
             color: AppTheme.brightGreen,
             padding: EdgeInsets.fromLTRB(16, 12, 16, 12),
