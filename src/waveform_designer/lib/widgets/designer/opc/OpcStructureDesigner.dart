@@ -19,6 +19,7 @@ class OpcStructureDesigner extends StatelessWidget {
         color: AppTheme.foreground,
       ),
       child: Row(
+        crossAxisAlignment: CrossAxisAlignment.start,
         children: [
           OpcStructureBrowser(),
           OpcStructureActions(),

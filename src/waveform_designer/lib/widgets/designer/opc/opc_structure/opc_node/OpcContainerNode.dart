@@ -3,13 +3,14 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:waveform_designer/state/opc_structure/opc_structure.model.dart';
 import 'package:waveform_designer/theme/AppTheme.dart';
+import 'package:waveform_designer/widgets/designer/opc/opc_structure/opc_node/OpcContainerNode.State.dart';
 import 'package:waveform_designer/widgets/designer/opc/opc_structure/opc_node/OpcNode.Actions.dart';
 import 'package:waveform_designer/widgets/designer/opc/opc_structure/opc_node/OpcNode.State.dart';
 import 'package:waveform_designer/widgets/designer/opc/opc_structure/opc_node/OpcValueNode.dart';
 import 'package:waveform_designer/widgets/shared/SimpleButton.dart';
 
 class OpcContainerNode extends ConsumerWidget
-    with OpcNodeState, OpcNodeActions {
+    with OpcNodeState, OpcContainerNodeState, OpcNodeActions {
   final OpcContainerNodeModel node;
   final int level;
   static const double offset = 26.0;
@@ -22,6 +23,7 @@ class OpcContainerNode extends ConsumerWidget
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
+    final expanded = isExpanded(ref, node);
     return Padding(
       padding: const EdgeInsets.only(left: offset),
       child: Column(
@@ -38,11 +40,13 @@ class OpcContainerNode extends ConsumerWidget
               color: selectedNode(ref) == node
                   ? AppTheme.amber.withAlpha(71)
                   : AppTheme.transparent,
-              padding: const EdgeInsets.only(top: 2, bottom: 2),
+              padding: const EdgeInsets.all(2),
               content: Row(
                 children: [
                   FaIcon(
-                    FontAwesomeIcons.folderOpen,
+                    expanded
+                        ? FontAwesomeIcons.folderOpen
+                        : FontAwesomeIcons.solidFolder,
                     color: AppTheme.amber,
                     size: 20,
                   ),
@@ -59,7 +63,7 @@ class OpcContainerNode extends ConsumerWidget
               ),
             ),
           ),
-          if (node.children.length == 0)
+          if (expanded && node.children.length == 0)
             Container(
               width: double.infinity,
               padding: const EdgeInsets.fromLTRB(offset, 8, 0, 8),
@@ -71,24 +75,25 @@ class OpcContainerNode extends ConsumerWidget
                 textAlign: TextAlign.left,
               ),
             ),
-          ...node.children.map((node) {
-            switch (node) {
-              case OpcValueNodeModel():
-                return IntrinsicWidth(
-                  child: OpcValueNode(
+          if (expanded)
+            ...node.children.map((node) {
+              switch (node) {
+                case OpcValueNodeModel():
+                  return IntrinsicWidth(
+                    child: OpcValueNode(
+                      node: node,
+                      level: level,
+                    ),
+                  );
+                case OpcContainerNodeModel():
+                  return OpcContainerNode(
                     node: node,
-                    level: level,
-                  ),
-                );
-              case OpcContainerNodeModel():
-                return OpcContainerNode(
-                  node: node,
-                  level: level + 1,
-                );
-              default:
-                return SizedBox.shrink();
-            }
-          }),
+                    level: level + 1,
+                  );
+                default:
+                  return SizedBox.shrink();
+              }
+            }),
         ],
       ),
     );

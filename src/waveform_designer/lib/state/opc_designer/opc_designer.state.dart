@@ -17,14 +17,29 @@ class OpcDesignerState extends _$OpcDesignerState {
   }
 
   void selectNode(OpcStructureNodeModel? node) {
+    var expandedContainers = state.expandedContainers;
     switch (node) {
       case OpcContainerNodeModel():
-        print("Container");
+        expandedContainers = _toggleExpansion(expandedContainers, node);
         break;
       case OpcValueNodeModel():
         print("Value");
         break;
     }
-    state = state.copyWith(selectedNode: node);
+    state = state.copyWith(
+      selectedNode: node,
+      expandedContainers: expandedContainers,
+    );
+  }
+
+  List<OpcContainerNodeModel> _toggleExpansion(
+      List<OpcContainerNodeModel> expandedContainers,
+      OpcContainerNodeModel container) {
+    final newState = [...expandedContainers];
+    final removed = newState.remove(container);
+    if (!removed) {
+      newState.add(container);
+    }
+    return newState;
   }
 }
