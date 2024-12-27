@@ -4,7 +4,9 @@ import 'package:waveform_designer/calc/ScreenSpacePoint.dart';
 mixin NeighboringTickCalculator on PointTransformer {
   int getNeighboringTick(ScreenSpacePoint position) {
     final diagramPoint = toDriagramSpace(position);
-
+    if (waveForm.tickFrequency == 0) {
+      return 0;
+    }
     // determine the closest tick
     final tickCount = waveForm.duration ~/ waveForm.tickFrequency + 1;
     final ticks =

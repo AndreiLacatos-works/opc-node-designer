@@ -18,13 +18,8 @@ class OpcDesignerState extends _$OpcDesignerState {
 
   void selectNode(OpcStructureNodeModel? node) {
     var expandedContainers = state.expandedContainers;
-    switch (node) {
-      case OpcContainerNodeModel():
-        expandedContainers = _toggleExpansion(expandedContainers, node);
-        break;
-      case OpcValueNodeModel():
-        print("Value");
-        break;
+    if (node is OpcContainerNodeModel) {
+      expandedContainers = _toggleExpansion(expandedContainers, node);
     }
     state = state.copyWith(
       selectedNode: node,

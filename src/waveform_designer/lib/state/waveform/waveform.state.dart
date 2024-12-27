@@ -6,9 +6,9 @@ part 'waveform.state.g.dart';
 @riverpod
 class WaveFormState extends _$WaveFormState {
   static WaveFormModel _initialState = WaveFormModel(
-    duration: 1000,
-    tickFrequency: 100,
-    values: [WaveFormValue(tick: 500, value: 100.0)],
+    duration: 0,
+    tickFrequency: 0,
+    values: [],
   );
 
   @override
@@ -80,7 +80,7 @@ class WaveFormState extends _$WaveFormState {
   }
 
   bool _intersectsTicks(int point, int tickFrequency) {
-    return point % tickFrequency == 0;
+    return tickFrequency == 0 ? false : point % tickFrequency == 0;
   }
 
   void _ensureTransitionPointRulesFulfilled(int value) {

@@ -66,7 +66,7 @@ class OpcStructureState extends _$OpcStructureState {
                       tickFrequency: 50,
                       values: [
                         WaveFormValue(
-                          tick: 0,
+                          tick: 50,
                           value: 9.0,
                         ),
                         WaveFormValue(
