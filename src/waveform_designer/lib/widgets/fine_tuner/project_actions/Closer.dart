@@ -4,12 +4,20 @@ import 'package:waveform_designer/state/designer/designer.state.dart';
 import 'package:waveform_designer/state/waveform/waveform.state.dart';
 import 'package:waveform_designer/theme/AppTheme.dart';
 import 'package:waveform_designer/widgets/shared/TextButton.dart';
+import 'package:waveform_designer/widgets/shared/confirmation_dialog.dart';
 
 class Closer extends ConsumerWidget {
-  void _handleClose(BuildContext context, WidgetRef ref) {
-    ref.read(waveFormStateProvider.notifier).reset();
-    ref.read(designerStateProvider.notifier).reset();
-    Navigator.of(context).pushNamed("/");
+  Future _handleClose(BuildContext context, WidgetRef ref) async {
+    final confirmed = await showConfirmationDialog(
+      context: context,
+      prompt:
+          "Are you sure you want to close the waveform? Unsaved changes will be lost",
+    );
+    if (confirmed) {
+      ref.read(waveFormStateProvider.notifier).reset();
+      ref.read(designerStateProvider.notifier).reset();
+      Navigator.of(context).pushNamed("/");
+    }
   }
 
   @override
