@@ -19,6 +19,15 @@ class OpcDesignerState extends _$OpcDesignerState {
       _preserveExpansion(newState.root);
       _preserveSelection(newState.root);
     });
+    ref.listen(waveFormStateProvider, (_, newWaveform) {
+      final selectedValueNode = state.selectedNode;
+      if (selectedValueNode is OpcValueNodeModel) {
+        // update the waveform of the selected value node on waveform store state change
+        ref
+            .read(opcStructureStateProvider.notifier)
+            .updateWaveform(selectedValueNode, newWaveform);
+      }
+    });
     return _initialState;
   }
 
@@ -45,13 +54,6 @@ class OpcDesignerState extends _$OpcDesignerState {
       expandedContainers: expandedContainers,
     );
 
-    // update the waveform of the previously selected value node on selection change
-    if (selectionChanged && previousSelection is OpcValueNodeModel) {
-      final updatedWaveform = ref.read(waveFormStateProvider).copyWith();
-      ref
-          .read(opcStructureStateProvider.notifier)
-          .updateWaveform(previousSelection, updatedWaveform);
-    }
     // update the waveform diagram state to show the waveform of the selected node
     var waveformNotifier = ref.read(waveFormStateProvider.notifier);
     if (node is OpcValueNodeModel) {
