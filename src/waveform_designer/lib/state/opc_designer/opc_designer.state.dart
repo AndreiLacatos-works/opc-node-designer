@@ -24,19 +24,31 @@ class OpcDesignerState extends _$OpcDesignerState {
 
   void selectNode(OpcStructureNodeModel? node) {
     var expandedContainers = state.expandedContainers;
+    final previousSelection = state.selectedNode;
+    final selectionChanged = node != previousSelection;
     if (node is OpcContainerNodeModel) {
       expandedContainers = _toggleExpansion(expandedContainers, node);
     }
-    if (node != null && node != state.selectedNode) {
+    // expand containers to the selected node
+    if (node != null && selectionChanged) {
       final root = ref.read(opcStructureStateProvider).root;
       expandedContainers =
           [...expandedContainers, ..._getPath(root, node)].toSet().toList();
     }
+
     state = state.copyWith(
       selectedNode: node,
       expandedContainers: expandedContainers,
     );
 
+    // update the waveform of the previously selected value node on selection change
+    if (selectionChanged && previousSelection is OpcValueNodeModel) {
+      final updatedWaveform = ref.read(waveFormStateProvider).copyWith();
+      ref
+          .read(opcStructureStateProvider.notifier)
+          .updateWaveform(previousSelection, updatedWaveform);
+    }
+    // update the waveform diagram state to show the waveform of the selected node
     var waveformNotifier = ref.read(waveFormStateProvider.notifier);
     if (node is OpcValueNodeModel) {
       waveformNotifier.initialize(node.waveform);
@@ -46,7 +58,8 @@ class OpcDesignerState extends _$OpcDesignerState {
   }
 
   void expandRoot(OpcContainerNodeModel container) {
-    final children = _listChildContainersRecursively(container);
+    final children = _listChildContainersRecursively(container)
+        .where((container) => container.children.length > 0);
     state = state.copyWith(
       expandedContainers:
           [...state.expandedContainers, ...children].toSet().toList(),
@@ -67,9 +80,11 @@ class OpcDesignerState extends _$OpcDesignerState {
 
   void _preserveSelection(OpcContainerNodeModel newRoot) {
     final currentSelection = state.selectedNode?.getId();
+    print(currentSelection);
     final treeItems = _flattenTree(newRoot);
     final newSelection =
         treeItems.where((n) => n.getId() == currentSelection).firstOrNull;
+    print(newSelection);
     state = state.copyWith(selectedNode: newSelection);
   }
 
@@ -79,10 +94,8 @@ class OpcDesignerState extends _$OpcDesignerState {
   }
 
   List<OpcStructureNodeModel> _flattenTree(OpcContainerNodeModel root) {
-    final nonEmptyChildren = root.children
-        .whereType<OpcContainerNodeModel>()
-        .where((container) => container.children.length > 0)
-        .toList();
+    final nonEmptyChildren =
+        root.children.whereType<OpcContainerNodeModel>().toList();
     final items = root.children
         .whereType<OpcValueNodeModel>()
         .cast<OpcStructureNodeModel>()
@@ -90,6 +103,7 @@ class OpcDesignerState extends _$OpcDesignerState {
     for (final child in nonEmptyChildren) {
       items.addAll(_flattenTree(child));
     }
+    print(root.label);
     return [root, ...items];
   }
 

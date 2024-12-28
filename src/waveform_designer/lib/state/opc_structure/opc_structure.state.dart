@@ -165,6 +165,13 @@ class OpcStructureState extends _$OpcStructureState {
     state = state.copyWith(root: _replaceNode(state.root, updatedParent));
   }
 
+  void updateWaveform(OpcValueNodeModel node, WaveFormModel newWaveform) {
+    final updatedNode = node.copyWith(
+      waveform: newWaveform,
+    );
+    state = state.copyWith(root: _replaceNode(state.root, updatedNode));
+  }
+
   OpcContainerNodeModel? _getParent(
     OpcContainerNodeModel root,
     OpcStructureNodeModel target,
