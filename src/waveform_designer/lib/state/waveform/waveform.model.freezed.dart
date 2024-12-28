@@ -15,37 +15,37 @@ final _privateConstructorUsedError = UnsupportedError(
     'It seems like you constructed your class using `MyClass._()`. This constructor is only meant to be used by freezed and you are not supposed to need it nor use it.\nPlease check the documentation here for more information: https://github.com/rrousselGit/freezed#adding-getters-and-methods-to-our-models');
 
 /// @nodoc
-mixin _$WaveFormValue {
+mixin _$WaveFormValueModel {
   int get tick => throw _privateConstructorUsedError;
   double get value => throw _privateConstructorUsedError;
 
-  /// Create a copy of WaveFormValue
+  /// Create a copy of WaveFormValueModel
   /// with the given fields replaced by the non-null parameter values.
   @JsonKey(includeFromJson: false, includeToJson: false)
-  $WaveFormValueCopyWith<WaveFormValue> get copyWith =>
+  $WaveFormValueModelCopyWith<WaveFormValueModel> get copyWith =>
       throw _privateConstructorUsedError;
 }
 
 /// @nodoc
-abstract class $WaveFormValueCopyWith<$Res> {
-  factory $WaveFormValueCopyWith(
-          WaveFormValue value, $Res Function(WaveFormValue) then) =
-      _$WaveFormValueCopyWithImpl<$Res, WaveFormValue>;
+abstract class $WaveFormValueModelCopyWith<$Res> {
+  factory $WaveFormValueModelCopyWith(
+          WaveFormValueModel value, $Res Function(WaveFormValueModel) then) =
+      _$WaveFormValueModelCopyWithImpl<$Res, WaveFormValueModel>;
   @useResult
   $Res call({int tick, double value});
 }
 
 /// @nodoc
-class _$WaveFormValueCopyWithImpl<$Res, $Val extends WaveFormValue>
-    implements $WaveFormValueCopyWith<$Res> {
-  _$WaveFormValueCopyWithImpl(this._value, this._then);
+class _$WaveFormValueModelCopyWithImpl<$Res, $Val extends WaveFormValueModel>
+    implements $WaveFormValueModelCopyWith<$Res> {
+  _$WaveFormValueModelCopyWithImpl(this._value, this._then);
 
   // ignore: unused_field
   final $Val _value;
   // ignore: unused_field
   final $Res Function($Val) _then;
 
-  /// Create a copy of WaveFormValue
+  /// Create a copy of WaveFormValueModel
   /// with the given fields replaced by the non-null parameter values.
   @pragma('vm:prefer-inline')
   @override
@@ -68,7 +68,7 @@ class _$WaveFormValueCopyWithImpl<$Res, $Val extends WaveFormValue>
 
 /// @nodoc
 abstract class _$$WaveFormValueImplCopyWith<$Res>
-    implements $WaveFormValueCopyWith<$Res> {
+    implements $WaveFormValueModelCopyWith<$Res> {
   factory _$$WaveFormValueImplCopyWith(
           _$WaveFormValueImpl value, $Res Function(_$WaveFormValueImpl) then) =
       __$$WaveFormValueImplCopyWithImpl<$Res>;
@@ -79,13 +79,13 @@ abstract class _$$WaveFormValueImplCopyWith<$Res>
 
 /// @nodoc
 class __$$WaveFormValueImplCopyWithImpl<$Res>
-    extends _$WaveFormValueCopyWithImpl<$Res, _$WaveFormValueImpl>
+    extends _$WaveFormValueModelCopyWithImpl<$Res, _$WaveFormValueImpl>
     implements _$$WaveFormValueImplCopyWith<$Res> {
   __$$WaveFormValueImplCopyWithImpl(
       _$WaveFormValueImpl _value, $Res Function(_$WaveFormValueImpl) _then)
       : super(_value, _then);
 
-  /// Create a copy of WaveFormValue
+  /// Create a copy of WaveFormValueModel
   /// with the given fields replaced by the non-null parameter values.
   @pragma('vm:prefer-inline')
   @override
@@ -118,7 +118,7 @@ class _$WaveFormValueImpl implements _WaveFormValue {
 
   @override
   String toString() {
-    return 'WaveFormValue(tick: $tick, value: $value)';
+    return 'WaveFormValueModel(tick: $tick, value: $value)';
   }
 
   @override
@@ -133,7 +133,7 @@ class _$WaveFormValueImpl implements _WaveFormValue {
   @override
   int get hashCode => Object.hash(runtimeType, tick, value);
 
-  /// Create a copy of WaveFormValue
+  /// Create a copy of WaveFormValueModel
   /// with the given fields replaced by the non-null parameter values.
   @JsonKey(includeFromJson: false, includeToJson: false)
   @override
@@ -142,7 +142,7 @@ class _$WaveFormValueImpl implements _WaveFormValue {
       __$$WaveFormValueImplCopyWithImpl<_$WaveFormValueImpl>(this, _$identity);
 }
 
-abstract class _WaveFormValue implements WaveFormValue {
+abstract class _WaveFormValue implements WaveFormValueModel {
   factory _WaveFormValue(
       {required final int tick,
       required final double value}) = _$WaveFormValueImpl;
@@ -152,7 +152,7 @@ abstract class _WaveFormValue implements WaveFormValue {
   @override
   double get value;
 
-  /// Create a copy of WaveFormValue
+  /// Create a copy of WaveFormValueModel
   /// with the given fields replaced by the non-null parameter values.
   @override
   @JsonKey(includeFromJson: false, includeToJson: false)
@@ -164,7 +164,7 @@ abstract class _WaveFormValue implements WaveFormValue {
 mixin _$WaveFormModel {
   int get duration => throw _privateConstructorUsedError;
   int get tickFrequency => throw _privateConstructorUsedError;
-  List<WaveFormValue> get values => throw _privateConstructorUsedError;
+  List<WaveFormValueModel> get values => throw _privateConstructorUsedError;
 
   /// Create a copy of WaveFormModel
   /// with the given fields replaced by the non-null parameter values.
@@ -179,7 +179,7 @@ abstract class $WaveFormModelCopyWith<$Res> {
           WaveFormModel value, $Res Function(WaveFormModel) then) =
       _$WaveFormModelCopyWithImpl<$Res, WaveFormModel>;
   @useResult
-  $Res call({int duration, int tickFrequency, List<WaveFormValue> values});
+  $Res call({int duration, int tickFrequency, List<WaveFormValueModel> values});
 }
 
 /// @nodoc
@@ -213,7 +213,7 @@ class _$WaveFormModelCopyWithImpl<$Res, $Val extends WaveFormModel>
       values: null == values
           ? _value.values
           : values // ignore: cast_nullable_to_non_nullable
-              as List<WaveFormValue>,
+              as List<WaveFormValueModel>,
     ) as $Val);
   }
 }
@@ -226,7 +226,7 @@ abstract class _$$WaveFormModelImplCopyWith<$Res>
       __$$WaveFormModelImplCopyWithImpl<$Res>;
   @override
   @useResult
-  $Res call({int duration, int tickFrequency, List<WaveFormValue> values});
+  $Res call({int duration, int tickFrequency, List<WaveFormValueModel> values});
 }
 
 /// @nodoc
@@ -258,7 +258,7 @@ class __$$WaveFormModelImplCopyWithImpl<$Res>
       values: null == values
           ? _value._values
           : values // ignore: cast_nullable_to_non_nullable
-              as List<WaveFormValue>,
+              as List<WaveFormValueModel>,
     ));
   }
 }
@@ -269,16 +269,16 @@ class _$WaveFormModelImpl implements _WaveFormModel {
   _$WaveFormModelImpl(
       {required this.duration,
       required this.tickFrequency,
-      required final List<WaveFormValue> values})
+      required final List<WaveFormValueModel> values})
       : _values = values;
 
   @override
   final int duration;
   @override
   final int tickFrequency;
-  final List<WaveFormValue> _values;
+  final List<WaveFormValueModel> _values;
   @override
-  List<WaveFormValue> get values {
+  List<WaveFormValueModel> get values {
     if (_values is EqualUnmodifiableListView) return _values;
     // ignore: implicit_dynamic_type
     return EqualUnmodifiableListView(_values);
@@ -318,14 +318,14 @@ abstract class _WaveFormModel implements WaveFormModel {
   factory _WaveFormModel(
       {required final int duration,
       required final int tickFrequency,
-      required final List<WaveFormValue> values}) = _$WaveFormModelImpl;
+      required final List<WaveFormValueModel> values}) = _$WaveFormModelImpl;
 
   @override
   int get duration;
   @override
   int get tickFrequency;
   @override
-  List<WaveFormValue> get values;
+  List<WaveFormValueModel> get values;
 
   /// Create a copy of WaveFormModel
   /// with the given fields replaced by the non-null parameter values.

@@ -28,7 +28,7 @@ class MyApp extends StatelessWidget {
     return WidgetsApp(
       title: 'Waveform designer',
       color: AppTheme.background,
-      home: WaveformDesigner(),
+      home: WaveformLauncher(),
       pageRouteBuilder: <T>(RouteSettings settings, WidgetBuilder builder) {
         return PageRouteBuilder<T>(
           settings: settings,

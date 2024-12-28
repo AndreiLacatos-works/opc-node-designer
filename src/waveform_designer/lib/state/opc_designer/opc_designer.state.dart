@@ -22,6 +22,10 @@ class OpcDesignerState extends _$OpcDesignerState {
     return _initialState;
   }
 
+  void reset() {
+    state = _initialState;
+  }
+
   void selectNode(OpcStructureNodeModel? node) {
     var expandedContainers = state.expandedContainers;
     final previousSelection = state.selectedNode;

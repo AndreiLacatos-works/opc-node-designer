@@ -66,7 +66,10 @@ class WaveFormState extends _$WaveFormState {
 
   void addTransitionPoint(int value) {
     _ensureTransitionPointRulesFulfilled(value);
-    var newPoints = [...state.values, WaveFormValue(tick: value, value: 100.0)];
+    var newPoints = [
+      ...state.values,
+      WaveFormValueModel(tick: value, value: 100.0)
+    ];
     state = state.copyWith(values: _sortAndUnique(newPoints));
   }
 
@@ -74,7 +77,7 @@ class WaveFormState extends _$WaveFormState {
     state = _initialState;
   }
 
-  List<WaveFormValue> _sortAndUnique(List<WaveFormValue> values) {
+  List<WaveFormValueModel> _sortAndUnique(List<WaveFormValueModel> values) {
     values.sort((a, b) => a.tick < b.tick ? -1 : 1);
     return values.toSet().toList();
   }

@@ -3,8 +3,8 @@ import 'package:freezed_annotation/freezed_annotation.dart';
 part 'waveform.model.freezed.dart';
 
 @freezed
-class WaveFormValue with _$WaveFormValue {
-  factory WaveFormValue({
+class WaveFormValueModel with _$WaveFormValueModel {
+  factory WaveFormValueModel({
     required int tick,
     required double value,
   }) = _WaveFormValue;
@@ -15,6 +15,6 @@ class WaveFormModel with _$WaveFormModel {
   factory WaveFormModel({
     required int duration,
     required int tickFrequency,
-    required List<WaveFormValue> values,
+    required List<WaveFormValueModel> values,
   }) = _WaveFormModel;
 }
