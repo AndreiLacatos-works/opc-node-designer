@@ -80,11 +80,9 @@ class OpcDesignerState extends _$OpcDesignerState {
 
   void _preserveSelection(OpcContainerNodeModel newRoot) {
     final currentSelection = state.selectedNode?.getId();
-    print(currentSelection);
     final treeItems = _flattenTree(newRoot);
     final newSelection =
         treeItems.where((n) => n.getId() == currentSelection).firstOrNull;
-    print(newSelection);
     state = state.copyWith(selectedNode: newSelection);
   }
 
@@ -103,7 +101,6 @@ class OpcDesignerState extends _$OpcDesignerState {
     for (final child in nonEmptyChildren) {
       items.addAll(_flattenTree(child));
     }
-    print(root.label);
     return [root, ...items];
   }
 

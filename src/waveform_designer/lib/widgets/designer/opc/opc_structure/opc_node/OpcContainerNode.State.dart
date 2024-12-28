@@ -7,17 +7,18 @@ mixin OpcContainerNodeState {
       ref.watch(opcDesignerStateProvider).expandedContainers.contains(node);
 
   List<OpcStructureNodeModel> getOrderedChildren(OpcContainerNodeModel node) {
-    final children = [...node.children];
-    children.sort(_opcNodeSorter);
-    return children;
+    final containerNodes =
+        node.children.whereType<OpcContainerNodeModel>().toList();
+    final valueNodes = node.children.whereType<OpcValueNodeModel>().toList();
+    containerNodes.sort(_labelSorter);
+    valueNodes.sort(_labelSorter);
+    return [...containerNodes, ...valueNodes];
   }
 
-  int _opcNodeSorter(OpcStructureNodeModel one, OpcStructureNodeModel other) {
-    // containers before values
-    if (one is OpcValueNodeModel && other is OpcContainerNodeModel) {
-      return 1;
-    }
-
-    return one.getLabel().compareTo(other.getLabel());
+  int _labelSorter(OpcStructureNodeModel one, OpcStructureNodeModel other) {
+    return one
+        .getLabel()
+        .toLowerCase()
+        .compareTo(other.getLabel().toLowerCase());
   }
 }
