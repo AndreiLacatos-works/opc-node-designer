@@ -30,7 +30,9 @@ class TickPainter extends CustomPainter with ValueRangeMapper, PanningBehavior {
         _calculateAlternativeStepSize(_duration, maxTicksToShow, _frequency);
     final ticksToShow =
         List.generate(maxTicksToShow, (i) => i * alternativeStep);
-    final totalTickCount = (_duration / _frequency + 1).toInt();
+    final totalTickCount = _duration == 0 || _frequency == 0
+        ? 0
+        : (_duration / _frequency + 1).toInt();
     for (var i = 0; i < totalTickCount; i++) {
       final tick = i * _frequency;
       if (ticksToShow.contains(tick)) {

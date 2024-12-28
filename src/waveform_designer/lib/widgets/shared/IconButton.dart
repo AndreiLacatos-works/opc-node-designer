@@ -5,10 +5,12 @@ import 'package:waveform_designer/widgets/shared/SimpleButton.dart';
 class IconButton extends StatelessWidget {
   final void Function() onClick;
   final Widget icon;
+  final bool disabled;
 
   IconButton({
     required this.onClick,
     required this.icon,
+    this.disabled = false,
     super.key,
   });
 
@@ -17,6 +19,7 @@ class IconButton extends StatelessWidget {
     return SimpleButton(
       onClick: onClick,
       content: icon,
+      disabled: disabled,
       color: AppTheme.transparent,
     );
   }

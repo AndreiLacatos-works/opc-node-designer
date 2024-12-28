@@ -1,6 +1,8 @@
 import 'package:flutter/widgets.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:waveform_designer/state/designer/designer.state.dart';
+import 'package:waveform_designer/state/opc_designer/opc_designer.state.dart';
+import 'package:waveform_designer/state/opc_structure/opc_structure.state.dart';
 import 'package:waveform_designer/state/waveform/waveform.state.dart';
 import 'package:waveform_designer/theme/AppTheme.dart';
 import 'package:waveform_designer/widgets/shared/TextButton.dart';
@@ -16,6 +18,8 @@ class Closer extends ConsumerWidget {
     if (confirmed) {
       ref.read(waveFormStateProvider.notifier).reset();
       ref.read(designerStateProvider.notifier).reset();
+      ref.read(opcStructureStateProvider.notifier).reset();
+      ref.read(opcDesignerStateProvider.notifier).reset();
       Navigator.of(context).pushNamed("/");
     }
   }

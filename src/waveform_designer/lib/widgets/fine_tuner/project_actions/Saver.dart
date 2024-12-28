@@ -4,23 +4,23 @@ import 'dart:io';
 import 'package:flutter/widgets.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:waveform_designer/state/designer/designer.state.dart';
-import 'package:waveform_designer/state/waveform/waveform.model.dart';
-import 'package:waveform_designer/state/waveform/waveform.state.dart';
-import 'package:waveform_designer/serialization/waveform/waveform.model.dart'
-    as WaveFormSerialization;
+import 'package:waveform_designer/state/opc_structure/opc_structure.model.dart';
+import 'package:waveform_designer/state/opc_structure/opc_structure.state.dart';
+import 'package:waveform_designer/serialization/ops_structure/opc_structure.model.dart'
+    as OpcStructureSerialization;
 import 'package:file_picker/file_picker.dart';
 import 'package:waveform_designer/theme/AppTheme.dart';
 import 'package:waveform_designer/widgets/shared/TextButton.dart';
 
 class Saver extends ConsumerWidget {
   Future _handleSave(WidgetRef ref) async {
-    final waveform = ref.read(waveFormStateProvider);
+    final opcStructure = ref.read(opcStructureStateProvider);
     var saveLocation = ref.read(designerStateProvider).projectPath;
     if (saveLocation == null) {
       saveLocation = await promptSaveLocation();
     }
     if (saveLocation != null) {
-      await writeWaveform(waveform, saveLocation);
+      await writeWaveform(opcStructure, saveLocation);
       ref.read(designerStateProvider.notifier).setProjectPath(saveLocation);
     }
   }
@@ -28,17 +28,22 @@ class Saver extends ConsumerWidget {
   Future<String?> promptSaveLocation() {
     return FilePicker.platform.saveFile(
       dialogTitle: 'Choose save file',
-      fileName: 'waveform.json',
-      allowedExtensions: ['json'],
+      fileName: 'my_project.opcproj',
+      allowedExtensions: ['opcproj'],
     );
   }
 
-  Future writeWaveform(WaveFormModel waveform, String saveLocation) async {
+  Future writeWaveform(
+    OpcStructureModel opcStructureRoot,
+    String saveLocation,
+  ) async {
     final file = File(saveLocation);
     final serializationObject =
-        WaveFormSerialization.WaveFormModel.fromState(waveform);
+        OpcStructureSerialization.OpcStructureModel.fromState(opcStructureRoot);
     try {
-      await file.writeAsString(jsonEncode(serializationObject));
+      final jsonString =
+          const JsonEncoder.withIndent('  ').convert(serializationObject);
+      await file.writeAsString(jsonString);
     } on Exception catch (e) {
       print("Failed to save waveform: ${e.toString()}");
     }

@@ -18,8 +18,9 @@ mixin TickOverlapCalculator on NeighboringTickCalculator {
       waveForm.duration.toDouble(),
     );
 
-    for (var i = 0; i < waveForm.transitionPoints.length; i++) {
-      final point = waveForm.transitionPoints[i];
+    final transitionPoints = waveForm.values.map((v) => v.tick).toList();
+    for (var i = 0; i < transitionPoints.length; i++) {
+      final point = transitionPoints[i];
       if ((point - mapped.dx).abs() <= mappedTolerance) {
         return i;
       }

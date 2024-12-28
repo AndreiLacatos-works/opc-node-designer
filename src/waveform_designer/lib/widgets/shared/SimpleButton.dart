@@ -7,6 +7,7 @@ class SimpleButton extends StatelessWidget {
   final Color color;
   final EdgeInsetsGeometry? padding;
   final Size? size;
+  final bool disabled;
 
   SimpleButton({
     required this.onClick,
@@ -14,20 +15,22 @@ class SimpleButton extends StatelessWidget {
     this.color = AppTheme.accentColor,
     this.padding,
     this.size,
+    this.disabled = false,
     super.key,
   });
 
   @override
   Widget build(BuildContext context) {
     return MouseRegion(
-      cursor: SystemMouseCursors.click,
+      cursor:
+          disabled ? SystemMouseCursors.forbidden : SystemMouseCursors.click,
       child: GestureDetector(
-        onTap: onClick,
+        onTap: disabled ? null : onClick,
         child: Container(
           width: size?.width,
           height: size?.height,
           decoration: BoxDecoration(
-            color: color,
+            color: disabled ? AppTheme.darkShade : color,
             borderRadius: BorderRadius.circular(6),
           ),
           child: padding != null
