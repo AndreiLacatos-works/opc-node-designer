@@ -158,20 +158,6 @@ class _$OpcContainerNodeModelImpl implements _OpcContainerNodeModel {
     return label;
   }
 
-  @override
-  bool operator ==(Object other) {
-    return identical(this, other) ||
-        (other.runtimeType == runtimeType &&
-            other is _$OpcContainerNodeModelImpl &&
-            const DeepCollectionEquality().equals(other._children, _children) &&
-            (identical(other.id, id) || other.id == id) &&
-            (identical(other.label, label) || other.label == label));
-  }
-
-  @override
-  int get hashCode => Object.hash(
-      runtimeType, const DeepCollectionEquality().hash(_children), id, label);
-
   /// Create a copy of OpcContainerNodeModel
   /// with the given fields replaced by the non-null parameter values.
   @JsonKey(includeFromJson: false, includeToJson: false)
@@ -348,20 +334,6 @@ class _$OpcValueNodeModelImpl implements _OpcValueNodeModel {
   String getLabel() {
     return label;
   }
-
-  @override
-  bool operator ==(Object other) {
-    return identical(this, other) ||
-        (other.runtimeType == runtimeType &&
-            other is _$OpcValueNodeModelImpl &&
-            (identical(other.id, id) || other.id == id) &&
-            (identical(other.label, label) || other.label == label) &&
-            (identical(other.waveform, waveform) ||
-                other.waveform == waveform));
-  }
-
-  @override
-  int get hashCode => Object.hash(runtimeType, id, label, waveform);
 
   /// Create a copy of OpcValueNodeModel
   /// with the given fields replaced by the non-null parameter values.

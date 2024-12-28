@@ -29,7 +29,7 @@ class OpcValueNode extends ConsumerWidget with OpcNodeState, OpcNodeActions {
             node,
           );
         },
-        color: selectedNode(ref) == node
+        color: isSelected(ref, node)
             ? AppTheme.purple.withAlpha(71)
             : AppTheme.transparent,
         padding: const EdgeInsets.all(2),

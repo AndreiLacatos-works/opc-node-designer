@@ -37,7 +37,7 @@ class OpcContainerNode extends ConsumerWidget
                   node,
                 );
               },
-              color: selectedNode(ref) == node
+              color: isSelected(ref, node)
                   ? AppTheme.amber.withAlpha(71)
                   : AppTheme.transparent,
               padding: const EdgeInsets.all(2),

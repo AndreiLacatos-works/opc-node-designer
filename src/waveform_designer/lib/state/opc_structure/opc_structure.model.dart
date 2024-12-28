@@ -6,6 +6,14 @@ part 'opc_structure.model.freezed.dart';
 abstract class OpcStructureNodeModel {
   String getId();
   String getLabel();
+
+  @override
+  int get hashCode => getId().hashCode;
+
+  @override
+  bool operator ==(Object other) {
+    return other is OpcStructureNodeModel && getId() == other.getId();
+  }
 }
 
 @freezed

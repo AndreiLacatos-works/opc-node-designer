@@ -2,6 +2,7 @@ import 'package:riverpod_annotation/riverpod_annotation.dart';
 import 'package:waveform_designer/state/opc_designer/opc_designer.model.dart';
 import 'package:waveform_designer/state/opc_structure/opc_structure.model.dart';
 import 'package:waveform_designer/state/opc_structure/opc_structure.state.dart';
+import 'package:waveform_designer/state/waveform/waveform.state.dart';
 
 part 'opc_designer.state.g.dart';
 
@@ -26,10 +27,22 @@ class OpcDesignerState extends _$OpcDesignerState {
     if (node is OpcContainerNodeModel) {
       expandedContainers = _toggleExpansion(expandedContainers, node);
     }
+    if (node != null && node != state.selectedNode) {
+      final root = ref.read(opcStructureStateProvider).root;
+      expandedContainers =
+          [...expandedContainers, ..._getPath(root, node)].toSet().toList();
+    }
     state = state.copyWith(
       selectedNode: node,
       expandedContainers: expandedContainers,
     );
+
+    var waveformNotifier = ref.read(waveFormStateProvider.notifier);
+    if (node is OpcValueNodeModel) {
+      waveformNotifier.initialize(node.waveform);
+    } else {
+      waveformNotifier.reset();
+    }
   }
 
   void expandRoot(OpcContainerNodeModel container) {
@@ -84,10 +97,42 @@ class OpcDesignerState extends _$OpcDesignerState {
       List<OpcContainerNodeModel> expandedContainers,
       OpcContainerNodeModel container) {
     final newState = [...expandedContainers];
-    final removed = newState.remove(container);
-    if (!removed) {
+    final isExpanded = newState.any((n) => n.getId() == container.getId());
+    if (isExpanded) {
+      newState.removeWhere((n) => n.getId() == container.getId());
+    } else {
       newState.add(container);
     }
     return newState;
+  }
+
+  List<OpcContainerNodeModel> _getPath(
+    OpcContainerNodeModel root,
+    OpcStructureNodeModel target,
+  ) {
+    List<OpcContainerNodeModel> path = [root];
+
+    switch (target) {
+      case OpcContainerNodeModel():
+        if (root.getId() == target.getId()) {
+          return path;
+        }
+        break;
+      case OpcValueNodeModel():
+        if (root.children.any((n) => n.getId() == target.getId())) {
+          return path;
+        }
+        break;
+    }
+
+    for (final child in root.children.whereType<OpcContainerNodeModel>()) {
+      final childPath = _getPath(child, target);
+
+      if (childPath.isNotEmpty) {
+        return path + childPath;
+      }
+    }
+
+    return [];
   }
 }
