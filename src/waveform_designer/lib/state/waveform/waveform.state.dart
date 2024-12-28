@@ -1,10 +1,19 @@
 import 'package:riverpod_annotation/riverpod_annotation.dart';
+import 'package:waveform_designer/state/waveform/value_managers_rules/abstract_manager_rules.dart';
+import 'package:waveform_designer/state/waveform/value_managers_rules/null_rules.dart';
+import 'package:waveform_designer/state/waveform/value_managers_rules/transition_value_rules.dart';
 import 'package:waveform_designer/state/waveform/waveform.model.dart';
 
 part 'waveform.state.g.dart';
 
+enum WaveformType {
+  transitions,
+  doubleValues,
+}
+
 @riverpod
 class WaveFormState extends _$WaveFormState {
+  AbstractManagerRules _ruleValidator = NullRules();
   static WaveFormModel _initialState = WaveFormModel(
     duration: 0,
     tickFrequency: 0,
@@ -16,8 +25,15 @@ class WaveFormState extends _$WaveFormState {
     return _initialState;
   }
 
-  void initialize(WaveFormModel model) {
+  void initialize(
+    WaveFormModel model,
+    WaveformType type,
+  ) {
     state = model;
+    _ruleValidator = switch (type) {
+      WaveformType.transitions => TransitionValueRules(),
+      _ => NullRules(),
+    };
   }
 
   void updateDuration(int newDuration) {
@@ -35,69 +51,70 @@ class WaveFormState extends _$WaveFormState {
     if (newTickFrequency > state.duration) {
       throw 'Tick frequency must be less than duration!';
     }
-    var allTransitionPointsAligned = state.values
-        .map((v) => v.tick)
-        .every((point) => _intersectsTicks(point, newTickFrequency));
+    var allTransitionPointsAligned =
+        state.values.every((point) => _intersectsTicks(point));
     if (!allTransitionPointsAligned) {
       throw 'Some transition points do not intersect with the new tick frequency!';
     }
     state = state.copyWith(tickFrequency: newTickFrequency);
   }
 
-  void updateTransitionPoint(int pointIndex, int newValue) {
-    if (pointIndex < 0 || pointIndex >= state.values.length) {
-      return;
-    }
-    _ensureTransitionPointRulesFulfilled(newValue);
-    var newPoints = [...state.values];
-    newPoints[pointIndex] = newPoints[pointIndex].copyWith(tick: newValue);
-    state = state.copyWith(values: _sortAndUnique(newPoints));
+  void moveToTick(WaveFormValueModel value, int newTick) {
+    final updatedValue = value.copyWith(tick: newTick);
+    updateWaveformValue(updatedValue);
+    removeWaveformValue(value);
   }
 
-  void removeTransitionPoint(int pointIndex) {
-    if (pointIndex < 0 || pointIndex >= state.values.length) {
-      return;
-    }
-
+  void updateWaveformValue(WaveFormValueModel updatedValue) {
+    _ensureBaseRulesFulfilled(updatedValue);
+    _ruleValidator.ensureRulesFulfilled(state, updatedValue);
     var newPoints = [...state.values];
-    newPoints.removeAt(pointIndex);
-    state = state.copyWith(values: _sortAndUnique(newPoints));
+    newPoints
+      ..remove(updatedValue)
+      ..add(updatedValue);
+    state = state.copyWith(values: _sortAndUniqueByTick(newPoints));
   }
 
-  void addTransitionPoint(int value) {
-    _ensureTransitionPointRulesFulfilled(value);
+  void removeWaveformValue(WaveFormValueModel value) {
+    var newPoints = [...state.values];
+    newPoints.removeWhere((p) => p.tick == value.tick);
+    state = state.copyWith(values: _sortAndUniqueByTick(newPoints));
+  }
+
+  void addWaveformValue(WaveFormValueModel value) {
+    _ensureBaseRulesFulfilled(value);
+    _ruleValidator.ensureRulesFulfilled(state, value);
     var newPoints = [
       ...state.values,
-      WaveFormValueModel(tick: value, value: 100.0)
+      value,
     ];
-    state = state.copyWith(values: _sortAndUnique(newPoints));
+    state = state.copyWith(values: _sortAndUniqueByTick(newPoints));
   }
 
   void reset() {
     state = _initialState;
+    _ruleValidator = NullRules();
   }
 
-  List<WaveFormValueModel> _sortAndUnique(List<WaveFormValueModel> values) {
+  List<WaveFormValueModel> _sortAndUniqueByTick(
+    List<WaveFormValueModel> values,
+  ) {
     values.sort((a, b) => a.tick < b.tick ? -1 : 1);
     return values.toSet().toList();
   }
 
-  bool _intersectsTicks(int point, int tickFrequency) {
-    return tickFrequency == 0 ? false : point % tickFrequency == 0;
+  bool _intersectsTicks(WaveFormValueModel value) {
+    return state.tickFrequency == 0
+        ? false
+        : value.tick % state.tickFrequency == 0;
   }
 
-  void _ensureTransitionPointRulesFulfilled(int value) {
-    if (!_intersectsTicks(value, state.tickFrequency)) {
+  void _ensureBaseRulesFulfilled(WaveFormValueModel value) {
+    if (!_intersectsTicks(value)) {
       throw 'Transition point must intersect with a tick!';
     }
-    if (value < 0 || value > state.duration) {
+    if (value.tick < 0 || value.tick > state.duration) {
       throw 'Can not add transition point outside the duration window!';
-    }
-    if (value == 0) {
-      throw 'Can not add transition point on the first tick!';
-    }
-    if (value == state.duration) {
-      throw 'Can not add transition point on the last tick!';
     }
   }
 }

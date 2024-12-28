@@ -1,8 +1,10 @@
 import 'package:waveform_designer/calc/NeighboringTickCalculator.dart';
 import 'package:waveform_designer/calc/ScreenSpacePoint.dart';
+import 'package:waveform_designer/state/waveform/waveform.model.dart';
 
 mixin TickOverlapCalculator on NeighboringTickCalculator {
-  int? getOverlappingTransitionPointIndex(ScreenSpacePoint position) {
+  WaveFormValueModel? getOverlappingTransitionPointIndex(
+      ScreenSpacePoint position) {
     double tolerancePixels = 4.0 * designer.sliceRatio;
 
     if (designer.designerWidth == 0) {
@@ -18,11 +20,10 @@ mixin TickOverlapCalculator on NeighboringTickCalculator {
       waveForm.duration.toDouble(),
     );
 
-    final transitionPoints = waveForm.values.map((v) => v.tick).toList();
-    for (var i = 0; i < transitionPoints.length; i++) {
-      final point = transitionPoints[i];
-      if ((point - mapped.dx).abs() <= mappedTolerance) {
-        return i;
+    final points = waveForm.values;
+    for (final point in points) {
+      if ((point.tick - mapped.dx).abs() <= mappedTolerance) {
+        return point;
       }
     }
 

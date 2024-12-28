@@ -6,6 +6,7 @@ import 'package:waveform_designer/calc/ScreenSpacePoint.dart';
 import 'package:waveform_designer/calc/TickOverlapCalculator.dart';
 import 'package:waveform_designer/calc/ValueRangeMapper.dart';
 import 'package:waveform_designer/state/designer/designer.state.dart';
+import 'package:waveform_designer/state/waveform/waveform.model.dart';
 import 'package:waveform_designer/state/waveform/waveform.state.dart';
 import 'package:waveform_designer/widgets/designer/chart/PanPainter.dart';
 import 'package:waveform_designer/widgets/designer/chart/SnapPainter.dart';
@@ -68,7 +69,10 @@ class _InteractionHandler extends ConsumerState<InteractionHandler>
       );
       ref
           .read(waveFormStateProvider.notifier)
-          .addTransitionPoint(neighbouringTick);
+          .addWaveformValue(WaveFormValueModel(
+            tick: neighbouringTick,
+            value: Unit(),
+          ));
     }
 
     waveForm = ref.watch(waveFormStateProvider);

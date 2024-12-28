@@ -3,7 +3,7 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:waveform_designer/theme/AppTheme.dart';
 import 'package:waveform_designer/widgets/fine_tuner/controls/DurationControl.dart';
 import 'package:waveform_designer/widgets/fine_tuner/controls/TickFrequencyControl.dart';
-import 'package:waveform_designer/widgets/fine_tuner/controls/TransitionPointsControl.dart';
+import 'package:waveform_designer/widgets/fine_tuner/controls/transition_value_controls/TransitionPointsControl.dart';
 import 'package:waveform_designer/widgets/fine_tuner/project_actions/Closer.dart';
 import 'package:waveform_designer/widgets/fine_tuner/project_actions/Saver.dart';
 

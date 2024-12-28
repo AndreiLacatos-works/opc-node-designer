@@ -21,7 +21,7 @@ class WaveFormValueModel {
           WaveFormState.WaveFormValueModel state) =>
       WaveFormValueModel(
         tick: state.tick,
-        value: state.value,
+        value: state.value.toDouble(),
       );
 
   Map<String, dynamic> toJson() => _$WaveFormValueModelToJson(this);
@@ -29,7 +29,7 @@ class WaveFormValueModel {
   WaveFormState.WaveFormValueModel toState() =>
       WaveFormState.WaveFormValueModel(
         tick: this.tick,
-        value: this.value,
+        value: WaveFormState.DoubleValue(this.value),
       );
 }
 

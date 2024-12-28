@@ -1,6 +1,7 @@
 import 'package:flutter/widgets.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
+import 'package:waveform_designer/state/waveform/waveform.model.dart';
 import 'package:waveform_designer/theme/AppTheme.dart';
 import 'package:waveform_designer/widgets/fine_tuner/controls/ErrorConsumerState.dart';
 import 'package:waveform_designer/widgets/input/LabeledInput.dart';
@@ -8,7 +9,7 @@ import 'package:waveform_designer/widgets/shared/ErrorDisplay.dart';
 import 'package:waveform_designer/widgets/shared/IconButton.dart';
 
 class TransitionPointAdder extends ConsumerStatefulWidget {
-  final Function(int) onConfirm;
+  final Function(WaveFormValueModel) onConfirm;
   final Function() onCancel;
   TransitionPointAdder({
     required this.onConfirm,
@@ -40,7 +41,12 @@ class _TransitionPointAdderState
   void _handleConfirm() {
     if (_value != null) {
       try {
-        widget.onConfirm(_value!);
+        widget.onConfirm(
+          WaveFormValueModel(
+            tick: _value!,
+            value: Unit(),
+          ),
+        );
       } on String catch (e) {
         setError(e);
       }
@@ -50,7 +56,12 @@ class _TransitionPointAdderState
   void _handleSubmit(int? val) {
     if (val != null) {
       try {
-        widget.onConfirm(val);
+        widget.onConfirm(
+          WaveFormValueModel(
+            tick: val,
+            value: Unit(),
+          ),
+        );
       } on String catch (e) {
         setError(e);
       }
