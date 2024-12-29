@@ -11,7 +11,7 @@ mixin PainterProvider {
     DesignerModel panning,
   ) {
     return switch (waveform.type) {
-      Unit => [
+      Transition => [
           WaveFormPainter(waveform, panning),
         ],
       _ => [

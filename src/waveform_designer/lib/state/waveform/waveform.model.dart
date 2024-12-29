@@ -6,7 +6,12 @@ abstract class WaveformPointValue {
   double getValue();
 }
 
-class Unit extends WaveformPointValue {
+class Void extends WaveformPointValue {
+  @override
+  double getValue() => 0.0;
+}
+
+class Transition extends WaveformPointValue {
   @override
   double getValue() => 0.0;
 }

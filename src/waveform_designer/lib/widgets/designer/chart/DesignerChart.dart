@@ -5,6 +5,7 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:waveform_designer/state/designer/designer.state.dart';
 import 'package:waveform_designer/state/opc_designer/opc_designer.state.dart';
 import 'package:waveform_designer/state/opc_structure/opc_structure.model.dart';
+import 'package:waveform_designer/state/waveform/waveform.model.dart';
 import 'package:waveform_designer/state/waveform/waveform.state.dart';
 import 'package:waveform_designer/theme/AppTheme.dart';
 import 'package:waveform_designer/widgets/designer/chart/PanControls.dart';
@@ -20,7 +21,7 @@ class DesignerChart extends ConsumerWidget {
     final panningState = ref.watch(designerStateProvider);
     final valueNodeSelected =
         ref.watch(opcDesignerStateProvider).selectedNode is OpcValueNodeModel;
-
+    final isVoidState = waveformState.type == Void;
     return Expanded(
       child: Padding(
         padding: EdgeInsets.fromLTRB(40, 0, 40, 0),
@@ -43,28 +44,36 @@ class DesignerChart extends ConsumerWidget {
                       padding: EdgeInsets.all(35),
                       color: AppTheme.foreground,
                       child: Stack(
-                        children: [
-                          AspectRatio(
-                            aspectRatio: 3.2,
-                            child: ChartPainter(
-                              waveform: waveformState,
-                              panning: panningState,
-                            ),
-                          ),
-                          AspectRatio(
-                            aspectRatio: 3.2,
-                            child: InteractionHandler(
-                              child: CustomPaint(
-                                painter: TickPainter(
-                                  duration: waveformState.duration,
-                                  frequency: waveformState.tickFrequency,
-                                  slice: panningState.sliceRatio,
-                                  offset: panningState.sliceOffset,
+                        children: isVoidState
+                            ? [
+                                Container(
+                                  width: 50,
+                                  height: 50,
+                                  color: AppTheme.brightGreen,
+                                )
+                              ]
+                            : [
+                                AspectRatio(
+                                  aspectRatio: 3.2,
+                                  child: ChartPainter(
+                                    waveform: waveformState,
+                                    panning: panningState,
+                                  ),
                                 ),
-                              ),
-                            ),
-                          ),
-                        ],
+                                AspectRatio(
+                                  aspectRatio: 3.2,
+                                  child: InteractionHandler(
+                                    child: CustomPaint(
+                                      painter: TickPainter(
+                                        duration: waveformState.duration,
+                                        frequency: waveformState.tickFrequency,
+                                        slice: panningState.sliceRatio,
+                                        offset: panningState.sliceOffset,
+                                      ),
+                                    ),
+                                  ),
+                                ),
+                              ],
                       ),
                     ),
                   ),

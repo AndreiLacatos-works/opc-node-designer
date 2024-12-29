@@ -6,6 +6,7 @@ part 'designer.model.freezed.dart';
 class DesignerModel with _$DesignerModel {
   factory DesignerModel({
     required double designerWidth,
+    required double designerHeight,
     required double sliceRatio,
     required double sliceOffset,
     required String? projectPath,

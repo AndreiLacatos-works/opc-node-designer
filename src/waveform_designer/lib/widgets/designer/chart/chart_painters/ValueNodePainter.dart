@@ -5,6 +5,7 @@ import 'package:waveform_designer/state/waveform/waveform.model.dart';
 import 'package:waveform_designer/theme/AppTheme.dart';
 import 'package:waveform_designer/widgets/designer/chart/PanningBehavior.dart';
 import 'package:waveform_designer/widgets/designer/chart/ZoomCompensator.dart';
+import 'package:waveform_designer/widgets/designer/chart/calc/WaveformMinMaxer.dart';
 import 'package:waveform_designer/widgets/designer/chart/chart_painters/RangeRestrictorMapper.dart';
 
 class ValueNodePainter extends CustomPainter
@@ -12,7 +13,8 @@ class ValueNodePainter extends CustomPainter
         ValueRangeMapper,
         PanningBehavior,
         ZoomCompensator,
-        RangeRestrictorMapper {
+        RangeRestrictorMapper,
+        WaveformMinMaxer {
   final List<WaveFormValueModel> _values;
   final int _duration;
   final double _slice;
@@ -33,7 +35,7 @@ class ValueNodePainter extends CustomPainter
       ..color = AppTheme.accentColor
       ..style = PaintingStyle.fill;
     final circleRadius = 8.0;
-    final [minValue, maxValue] = _getMinMax();
+    final [minValue, maxValue] = getWaveformMinMaxValues(_values);
 
     for (final value in _values) {
       final horizontalOffset = mapValueToNewRange(
@@ -66,26 +68,5 @@ class ValueNodePainter extends CustomPainter
   @override
   bool shouldRepaint(covariant CustomPainter oldDelegate) {
     return false;
-  }
-
-  List<double> _getMinMax() {
-    if (_values.isEmpty) {
-      return [0, 0];
-    }
-
-    var minValue = _values[0].value.getValue();
-    var maxValue = _values[0].value.getValue();
-
-    for (final value in _values.sublist(1)) {
-      final num = value.value.getValue();
-      if (num < minValue) {
-        minValue = num;
-      }
-      if (num > maxValue) {
-        maxValue = num;
-      }
-    }
-
-    return [minValue, maxValue];
   }
 }
