@@ -31,7 +31,7 @@ class _TransitionPointControlState
       children: [
         Row(
           children: [
-            LabeledInput(
+            LabeledInput<int>(
               label: "ms",
               width: 80,
               value: widget.waveformValue.tick,

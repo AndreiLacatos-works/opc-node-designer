@@ -10,12 +10,12 @@ mixin NumericValueAdderActions {
     double? value,
     WidgetRef ref,
   ) {
-    if (tick != null && value != null) {
+    if (tick != null) {
       try {
         ref.read(waveFormStateProvider.notifier).addWaveformValue(
               WaveFormValueModel(
                 tick: tick,
-                value: DoubleValue(value),
+                value: DoubleValue(value ?? 0),
               ),
             );
 

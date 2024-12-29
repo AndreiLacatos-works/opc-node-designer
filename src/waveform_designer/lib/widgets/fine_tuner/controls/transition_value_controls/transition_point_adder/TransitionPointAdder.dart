@@ -47,7 +47,7 @@ class _TransitionPointAdderState
         children: [
           Row(
             children: [
-              LabeledInput(
+              LabeledInput<int>(
                 label: "ms",
                 width: 80,
                 value: _value ?? 0,

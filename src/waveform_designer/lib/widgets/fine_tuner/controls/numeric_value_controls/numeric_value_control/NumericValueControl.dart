@@ -33,28 +33,28 @@ class _NumericValueControlState extends ErrorConsumerState<NumericValueControl>
           children: [
             Padding(
               padding: const EdgeInsets.only(right: 10),
-              child: LabeledInput(
+              child: LabeledInput<double>(
                 label: "at",
                 width: 60,
-                value: widget.waveformValue.value.getValue().toInt(),
+                value: widget.waveformValue.value.getValue(),
                 onFocusLost: (val) {
                   handleValueChange(
                     widget.waveformValue,
-                    val?.toDouble(),
+                    val,
                     ref,
                   );
                 },
                 onSubmitted: (val) {
                   handleValueChange(
                     widget.waveformValue,
-                    val?.toDouble(),
+                    val,
                     ref,
                   );
                 },
                 onFocus: clearError,
               ),
             ),
-            LabeledInput(
+            LabeledInput<int>(
               label: "ms",
               width: 80,
               value: widget.waveformValue.tick,

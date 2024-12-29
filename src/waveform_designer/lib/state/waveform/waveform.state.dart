@@ -53,6 +53,9 @@ class WaveFormState extends _$WaveFormState {
   }
 
   void moveToTick(WaveFormValueModel value, int newTick) {
+    if (value.tick == newTick) {
+      return;
+    }
     final updatedValue = value.copyWith(tick: newTick);
     updateWaveformValue(updatedValue);
     removeWaveformValue(value);

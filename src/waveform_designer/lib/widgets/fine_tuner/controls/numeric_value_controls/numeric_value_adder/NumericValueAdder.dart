@@ -68,7 +68,7 @@ class _NumericValueAdder extends ErrorConsumerState<NumericValueAdder>
                   onFocus: clearError,
                 ),
               ),
-              LabeledInput(
+              LabeledInput<int>(
                 label: "ms",
                 width: 80,
                 value: _tick ?? 0,
