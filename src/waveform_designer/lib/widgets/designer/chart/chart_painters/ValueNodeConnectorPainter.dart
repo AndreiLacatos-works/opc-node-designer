@@ -5,9 +5,14 @@ import 'package:waveform_designer/state/waveform/waveform.model.dart';
 import 'package:waveform_designer/theme/AppTheme.dart';
 import 'package:waveform_designer/widgets/designer/chart/PanningBehavior.dart';
 import 'package:waveform_designer/widgets/designer/chart/ZoomCompensator.dart';
+import 'package:waveform_designer/widgets/designer/chart/chart_painters/RangeRestrictorMapper.dart';
 
 class ValueNodeConnectorPainter extends CustomPainter
-    with ValueRangeMapper, PanningBehavior, ZoomCompensator {
+    with
+        ValueRangeMapper,
+        PanningBehavior,
+        ZoomCompensator,
+        RangeRestrictorMapper {
   final List<WaveFormValueModel> _values;
   final int _duration;
   final double _slice;
@@ -34,7 +39,6 @@ class ValueNodeConnectorPainter extends CustomPainter
       ..color = AppTheme.textColor
       ..style = PaintingStyle.stroke
       ..isAntiAlias = true;
-    final verticalRestriction = .94;
 
     for (final current in _values.sublist(1)) {
       final from = Offset(
@@ -45,12 +49,12 @@ class ValueNodeConnectorPainter extends CustomPainter
           0,
           size.width,
         ),
-        mapValueToNewRange(
+        mapValueToRestrictedRange(
           maxValue,
           minValue,
           previous.value.getValue(),
-          size.height * (1 - verticalRestriction),
-          size.height * verticalRestriction,
+          size.height,
+          size.height,
         ),
       );
       final to = Offset(
@@ -61,12 +65,12 @@ class ValueNodeConnectorPainter extends CustomPainter
           0,
           size.width,
         ),
-        mapValueToNewRange(
+        mapValueToRestrictedRange(
           maxValue,
           minValue,
           current.value.getValue(),
-          size.height * (1 - verticalRestriction),
-          size.height * verticalRestriction,
+          size.height,
+          size.height,
         ),
       );
       canvas.drawLine(from, to, paint);

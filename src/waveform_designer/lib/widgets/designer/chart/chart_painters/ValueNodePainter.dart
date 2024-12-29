@@ -5,9 +5,14 @@ import 'package:waveform_designer/state/waveform/waveform.model.dart';
 import 'package:waveform_designer/theme/AppTheme.dart';
 import 'package:waveform_designer/widgets/designer/chart/PanningBehavior.dart';
 import 'package:waveform_designer/widgets/designer/chart/ZoomCompensator.dart';
+import 'package:waveform_designer/widgets/designer/chart/chart_painters/RangeRestrictorMapper.dart';
 
 class ValueNodePainter extends CustomPainter
-    with ValueRangeMapper, PanningBehavior, ZoomCompensator {
+    with
+        ValueRangeMapper,
+        PanningBehavior,
+        ZoomCompensator,
+        RangeRestrictorMapper {
   final List<WaveFormValueModel> _values;
   final int _duration;
   final double _slice;
@@ -29,9 +34,6 @@ class ValueNodePainter extends CustomPainter
       ..style = PaintingStyle.fill;
     final circleRadius = 8.0;
     final [minValue, maxValue] = _getMinMax();
-    // avoid rendering point at the very top or bottom of,
-    // the chart drawable area vertically is restricted
-    final verticalRestriction = .94;
 
     for (final value in _values) {
       final horizontalOffset = mapValueToNewRange(
@@ -41,12 +43,12 @@ class ValueNodePainter extends CustomPainter
         0,
         size.width,
       );
-      final verticalOffset = mapValueToNewRange(
+      final verticalOffset = mapValueToRestrictedRange(
         maxValue,
         minValue,
         value.value.getValue(),
-        size.height * (1 - verticalRestriction),
-        size.height * verticalRestriction,
+        size.height,
+        size.height,
       );
       final boundingBox = Rect.fromCenter(
         center: Offset(horizontalOffset, verticalOffset),
