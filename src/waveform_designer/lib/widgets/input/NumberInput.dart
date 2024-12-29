@@ -2,13 +2,13 @@ import 'package:flutter/services.dart';
 import 'package:flutter/widgets.dart';
 import 'package:waveform_designer/theme/AppTheme.dart';
 
-class NumberInput extends StatefulWidget {
-  final Function(int?)? onChanged;
-  final Function(int?)? onSubmitted;
-  final Function(int?)? onFocusLost;
+class NumberInput<T extends num> extends StatefulWidget {
+  final Function(T?)? onChanged;
+  final Function(T?)? onSubmitted;
+  final Function(T?)? onFocusLost;
   final Function()? onFocus;
   final double? width;
-  final int value;
+  final T value;
 
   const NumberInput({
     required this.onChanged,
@@ -21,10 +21,10 @@ class NumberInput extends StatefulWidget {
   });
 
   @override
-  _NumberInputState createState() => _NumberInputState();
+  _NumberInputState createState() => _NumberInputState<T>();
 }
 
-class _NumberInputState extends State<NumberInput> {
+class _NumberInputState<T extends num> extends State<NumberInput<T>> {
   final TextEditingController _controller = TextEditingController();
   final FocusNode _focusNode = FocusNode();
 
@@ -45,6 +45,26 @@ class _NumberInputState extends State<NumberInput> {
     super.dispose();
   }
 
+  List<TextInputFormatter> get formatters {
+    return switch (T) {
+      int => [FilteringTextInputFormatter.digitsOnly],
+      double => [FilteringTextInputFormatter.allow(RegExp(r"^-?\d+\.?\d*$"))],
+      _ => throw "${T} is not a supported NumberInput type",
+    };
+  }
+
+  T? parseValue(String? value) {
+    if (value == null || value.isEmpty) {
+      return null;
+    }
+    final res = switch (T) {
+      int => int.parse(value),
+      double => double.parse(double.parse(value).toStringAsFixed(2)),
+      _ => 0 as T,
+    };
+    return res as T;
+  }
+
   @override
   Widget build(BuildContext context) {
     _controller.text = widget.value.toString();
@@ -60,32 +80,20 @@ class _NumberInputState extends State<NumberInput> {
         child: EditableText(
           controller: _controller,
           focusNode: _focusNode,
-          inputFormatters: [FilteringTextInputFormatter.digitsOnly],
+          inputFormatters: formatters,
           cursorColor: Color(0xFF000000),
           backgroundCursorColor: Color(0xFFFFFFFF),
           onChanged: (String val) {
-            if (widget.onChanged != null) {
-              widget.onChanged!(
-                val.isEmpty ? null : int.parse(val),
-              );
-            }
+            widget.onChanged?.call(parseValue(val));
           },
           onSubmitted: (String val) {
             _focusNode.unfocus();
-            if (widget.onSubmitted != null) {
-              widget.onSubmitted!(
-                val.isEmpty ? null : int.parse(val),
-              );
-            }
+            widget.onSubmitted?.call(parseValue(val));
           },
           onTapOutside: (_) {
             _focusNode.unfocus();
-            if (widget.onFocusLost != null) {
-              final val = _controller.text;
-              widget.onFocusLost!(
-                val.isEmpty ? null : int.parse(val),
-              );
-            }
+            final val = _controller.text;
+            widget.onFocusLost?.call(parseValue(val));
           },
           textAlign: TextAlign.right,
           style: TextStyle(

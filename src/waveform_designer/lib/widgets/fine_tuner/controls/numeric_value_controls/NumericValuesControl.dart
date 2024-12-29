@@ -3,20 +3,19 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:waveform_designer/state/waveform/waveform.state.dart';
 import 'package:waveform_designer/theme/AppTheme.dart';
-import 'package:waveform_designer/widgets/fine_tuner/controls/TransitionPointAdder.dart';
-import 'package:waveform_designer/widgets/fine_tuner/controls/TransitionPointControl.dart';
+import 'package:waveform_designer/widgets/fine_tuner/controls/numeric_value_controls/numeric_value_adder/NumericValueAdder.dart';
+import 'package:waveform_designer/widgets/fine_tuner/controls/numeric_value_controls/numeric_value_control/NumericValueControl.dart';
 import 'package:waveform_designer/widgets/shared/SimpleButton.dart';
 import 'package:waveform_designer/state/opc_designer/opc_designer.state.dart';
 import 'package:waveform_designer/state/opc_structure/opc_structure.model.dart';
 
-class TransitionPointsControl extends ConsumerStatefulWidget {
+class NumericValuesControl extends ConsumerStatefulWidget {
   @override
   ConsumerState<ConsumerStatefulWidget> createState() =>
-      _TransitionPointsControlState();
+      _NumericValuesControlState();
 }
 
-class _TransitionPointsControlState
-    extends ConsumerState<TransitionPointsControl> {
+class _NumericValuesControlState extends ConsumerState<NumericValuesControl> {
   late bool _addMode;
 
   @override
@@ -39,13 +38,7 @@ class _TransitionPointsControlState
 
   @override
   Widget build(BuildContext context) {
-    void handleAddPoint(int value) {
-      ref.read(waveFormStateProvider.notifier).addTransitionPoint(value);
-      _cancelAddMode();
-    }
-
-    final transitionPoints =
-        ref.watch(waveFormStateProvider).values.map((v) => v.tick).toList();
+    final transitionPoints = ref.watch(waveFormStateProvider).values;
     final valueNodeSelected =
         ref.watch(opcDesignerStateProvider).selectedNode is OpcValueNodeModel;
     return Expanded(
@@ -82,8 +75,8 @@ class _TransitionPointsControlState
             ),
           ),
           if (_addMode)
-            TransitionPointAdder(
-              onConfirm: handleAddPoint,
+            NumericValueAdder(
+              onConfirmed: _cancelAddMode,
               onCancel: _cancelAddMode,
             ),
           Expanded(
@@ -91,11 +84,11 @@ class _TransitionPointsControlState
               itemCount: transitionPoints.length,
               itemBuilder: (context, index) => Padding(
                 padding: EdgeInsets.only(bottom: 6),
-                child: TransitionPointControl(
+                child: NumericValueControl(
                   key: Key(
                     index.toString(),
                   ),
-                  pointIndex: index,
+                  waveformValue: transitionPoints[index],
                 ),
               ),
             ),

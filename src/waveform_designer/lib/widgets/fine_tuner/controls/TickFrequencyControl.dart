@@ -32,7 +32,7 @@ class _TickFrequencyControlState extends ErrorConsumerState {
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
-        MultiLabeledInput(
+        MultiLabeledInput<int>(
           onSubmitted: _handleUpdate,
           onFocusLost: _handleUpdate,
           onFocus: clearError,

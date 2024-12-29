@@ -1,23 +1,23 @@
 import 'package:flutter/widgets.dart';
 import 'package:waveform_designer/widgets/input/NumberInput.dart';
 
-class LabeledInput extends StatelessWidget {
-  final Function(int?)? onChanged;
+class LabeledInput<T extends num> extends StatelessWidget {
+  final Function(T?)? onChanged;
   final double? width;
   final String label;
-  final int value;
-  final Function(int?)? onSubmitted;
-  final Function(int?)? onFocusLost;
+  final T value;
+  final Function(T?)? onSubmitted;
+  final Function(T?)? onFocusLost;
   final Function()? onFocus;
 
   const LabeledInput({
     required this.label,
+    required this.value,
     this.onFocusLost,
     this.onFocus,
     this.onChanged,
     this.width,
     this.onSubmitted,
-    this.value = 0,
     super.key,
   });
 
@@ -25,7 +25,7 @@ class LabeledInput extends StatelessWidget {
   Widget build(BuildContext context) {
     return Row(
       children: [
-        NumberInput(
+        NumberInput<T>(
           onChanged: onChanged,
           onFocusLost: onFocusLost,
           onSubmitted: onSubmitted,
@@ -34,7 +34,7 @@ class LabeledInput extends StatelessWidget {
           value: value,
         ),
         Padding(
-          padding: EdgeInsets.only(left: 12),
+          padding: EdgeInsets.only(left: 10),
           child: Text(
             label,
             style: TextStyle(

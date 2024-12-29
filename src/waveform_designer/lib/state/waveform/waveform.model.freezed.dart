@@ -15,29 +15,30 @@ final _privateConstructorUsedError = UnsupportedError(
     'It seems like you constructed your class using `MyClass._()`. This constructor is only meant to be used by freezed and you are not supposed to need it nor use it.\nPlease check the documentation here for more information: https://github.com/rrousselGit/freezed#adding-getters-and-methods-to-our-models');
 
 /// @nodoc
-mixin _$WaveFormValueModel {
+mixin _$WaveFormValueModel<T extends WaveformPointValue> {
   int get tick => throw _privateConstructorUsedError;
-  double get value => throw _privateConstructorUsedError;
+  T get value => throw _privateConstructorUsedError;
 
   /// Create a copy of WaveFormValueModel
   /// with the given fields replaced by the non-null parameter values.
   @JsonKey(includeFromJson: false, includeToJson: false)
-  $WaveFormValueModelCopyWith<WaveFormValueModel> get copyWith =>
+  $WaveFormValueModelCopyWith<T, WaveFormValueModel<T>> get copyWith =>
       throw _privateConstructorUsedError;
 }
 
 /// @nodoc
-abstract class $WaveFormValueModelCopyWith<$Res> {
-  factory $WaveFormValueModelCopyWith(
-          WaveFormValueModel value, $Res Function(WaveFormValueModel) then) =
-      _$WaveFormValueModelCopyWithImpl<$Res, WaveFormValueModel>;
+abstract class $WaveFormValueModelCopyWith<T extends WaveformPointValue, $Res> {
+  factory $WaveFormValueModelCopyWith(WaveFormValueModel<T> value,
+          $Res Function(WaveFormValueModel<T>) then) =
+      _$WaveFormValueModelCopyWithImpl<T, $Res, WaveFormValueModel<T>>;
   @useResult
-  $Res call({int tick, double value});
+  $Res call({int tick, T value});
 }
 
 /// @nodoc
-class _$WaveFormValueModelCopyWithImpl<$Res, $Val extends WaveFormValueModel>
-    implements $WaveFormValueModelCopyWith<$Res> {
+class _$WaveFormValueModelCopyWithImpl<T extends WaveformPointValue, $Res,
+        $Val extends WaveFormValueModel<T>>
+    implements $WaveFormValueModelCopyWith<T, $Res> {
   _$WaveFormValueModelCopyWithImpl(this._value, this._then);
 
   // ignore: unused_field
@@ -61,28 +62,28 @@ class _$WaveFormValueModelCopyWithImpl<$Res, $Val extends WaveFormValueModel>
       value: null == value
           ? _value.value
           : value // ignore: cast_nullable_to_non_nullable
-              as double,
+              as T,
     ) as $Val);
   }
 }
 
 /// @nodoc
-abstract class _$$WaveFormValueImplCopyWith<$Res>
-    implements $WaveFormValueModelCopyWith<$Res> {
-  factory _$$WaveFormValueImplCopyWith(
-          _$WaveFormValueImpl value, $Res Function(_$WaveFormValueImpl) then) =
-      __$$WaveFormValueImplCopyWithImpl<$Res>;
+abstract class _$$WaveFormValueImplCopyWith<T extends WaveformPointValue, $Res>
+    implements $WaveFormValueModelCopyWith<T, $Res> {
+  factory _$$WaveFormValueImplCopyWith(_$WaveFormValueImpl<T> value,
+          $Res Function(_$WaveFormValueImpl<T>) then) =
+      __$$WaveFormValueImplCopyWithImpl<T, $Res>;
   @override
   @useResult
-  $Res call({int tick, double value});
+  $Res call({int tick, T value});
 }
 
 /// @nodoc
-class __$$WaveFormValueImplCopyWithImpl<$Res>
-    extends _$WaveFormValueModelCopyWithImpl<$Res, _$WaveFormValueImpl>
-    implements _$$WaveFormValueImplCopyWith<$Res> {
-  __$$WaveFormValueImplCopyWithImpl(
-      _$WaveFormValueImpl _value, $Res Function(_$WaveFormValueImpl) _then)
+class __$$WaveFormValueImplCopyWithImpl<T extends WaveformPointValue, $Res>
+    extends _$WaveFormValueModelCopyWithImpl<T, $Res, _$WaveFormValueImpl<T>>
+    implements _$$WaveFormValueImplCopyWith<T, $Res> {
+  __$$WaveFormValueImplCopyWithImpl(_$WaveFormValueImpl<T> _value,
+      $Res Function(_$WaveFormValueImpl<T>) _then)
       : super(_value, _then);
 
   /// Create a copy of WaveFormValueModel
@@ -93,7 +94,7 @@ class __$$WaveFormValueImplCopyWithImpl<$Res>
     Object? tick = null,
     Object? value = null,
   }) {
-    return _then(_$WaveFormValueImpl(
+    return _then(_$WaveFormValueImpl<T>(
       tick: null == tick
           ? _value.tick
           : tick // ignore: cast_nullable_to_non_nullable
@@ -101,90 +102,86 @@ class __$$WaveFormValueImplCopyWithImpl<$Res>
       value: null == value
           ? _value.value
           : value // ignore: cast_nullable_to_non_nullable
-              as double,
+              as T,
     ));
   }
 }
 
 /// @nodoc
 
-class _$WaveFormValueImpl implements _WaveFormValue {
-  _$WaveFormValueImpl({required this.tick, required this.value});
+class _$WaveFormValueImpl<T extends WaveformPointValue>
+    extends _WaveFormValue<T> {
+  _$WaveFormValueImpl({required this.tick, required this.value}) : super._();
 
   @override
   final int tick;
   @override
-  final double value;
+  final T value;
 
   @override
   String toString() {
-    return 'WaveFormValueModel(tick: $tick, value: $value)';
+    return 'WaveFormValueModel<$T>(tick: $tick, value: $value)';
   }
-
-  @override
-  bool operator ==(Object other) {
-    return identical(this, other) ||
-        (other.runtimeType == runtimeType &&
-            other is _$WaveFormValueImpl &&
-            (identical(other.tick, tick) || other.tick == tick) &&
-            (identical(other.value, value) || other.value == value));
-  }
-
-  @override
-  int get hashCode => Object.hash(runtimeType, tick, value);
 
   /// Create a copy of WaveFormValueModel
   /// with the given fields replaced by the non-null parameter values.
   @JsonKey(includeFromJson: false, includeToJson: false)
   @override
   @pragma('vm:prefer-inline')
-  _$$WaveFormValueImplCopyWith<_$WaveFormValueImpl> get copyWith =>
-      __$$WaveFormValueImplCopyWithImpl<_$WaveFormValueImpl>(this, _$identity);
+  _$$WaveFormValueImplCopyWith<T, _$WaveFormValueImpl<T>> get copyWith =>
+      __$$WaveFormValueImplCopyWithImpl<T, _$WaveFormValueImpl<T>>(
+          this, _$identity);
 }
 
-abstract class _WaveFormValue implements WaveFormValueModel {
-  factory _WaveFormValue(
-      {required final int tick,
-      required final double value}) = _$WaveFormValueImpl;
+abstract class _WaveFormValue<T extends WaveformPointValue>
+    extends WaveFormValueModel<T> {
+  factory _WaveFormValue({required final int tick, required final T value}) =
+      _$WaveFormValueImpl<T>;
+  _WaveFormValue._() : super._();
 
   @override
   int get tick;
   @override
-  double get value;
+  T get value;
 
   /// Create a copy of WaveFormValueModel
   /// with the given fields replaced by the non-null parameter values.
   @override
   @JsonKey(includeFromJson: false, includeToJson: false)
-  _$$WaveFormValueImplCopyWith<_$WaveFormValueImpl> get copyWith =>
+  _$$WaveFormValueImplCopyWith<T, _$WaveFormValueImpl<T>> get copyWith =>
       throw _privateConstructorUsedError;
 }
 
 /// @nodoc
-mixin _$WaveFormModel {
+mixin _$WaveFormModel<T extends WaveformPointValue> {
   int get duration => throw _privateConstructorUsedError;
   int get tickFrequency => throw _privateConstructorUsedError;
-  List<WaveFormValueModel> get values => throw _privateConstructorUsedError;
+  Type get type => throw _privateConstructorUsedError;
+  List<WaveFormValueModel<T>> get values => throw _privateConstructorUsedError;
 
   /// Create a copy of WaveFormModel
   /// with the given fields replaced by the non-null parameter values.
   @JsonKey(includeFromJson: false, includeToJson: false)
-  $WaveFormModelCopyWith<WaveFormModel> get copyWith =>
+  $WaveFormModelCopyWith<T, WaveFormModel<T>> get copyWith =>
       throw _privateConstructorUsedError;
 }
 
 /// @nodoc
-abstract class $WaveFormModelCopyWith<$Res> {
+abstract class $WaveFormModelCopyWith<T extends WaveformPointValue, $Res> {
   factory $WaveFormModelCopyWith(
-          WaveFormModel value, $Res Function(WaveFormModel) then) =
-      _$WaveFormModelCopyWithImpl<$Res, WaveFormModel>;
+          WaveFormModel<T> value, $Res Function(WaveFormModel<T>) then) =
+      _$WaveFormModelCopyWithImpl<T, $Res, WaveFormModel<T>>;
   @useResult
-  $Res call({int duration, int tickFrequency, List<WaveFormValueModel> values});
+  $Res call(
+      {int duration,
+      int tickFrequency,
+      Type type,
+      List<WaveFormValueModel<T>> values});
 }
 
 /// @nodoc
-class _$WaveFormModelCopyWithImpl<$Res, $Val extends WaveFormModel>
-    implements $WaveFormModelCopyWith<$Res> {
+class _$WaveFormModelCopyWithImpl<T extends WaveformPointValue, $Res,
+    $Val extends WaveFormModel<T>> implements $WaveFormModelCopyWith<T, $Res> {
   _$WaveFormModelCopyWithImpl(this._value, this._then);
 
   // ignore: unused_field
@@ -199,6 +196,7 @@ class _$WaveFormModelCopyWithImpl<$Res, $Val extends WaveFormModel>
   $Res call({
     Object? duration = null,
     Object? tickFrequency = null,
+    Object? type = null,
     Object? values = null,
   }) {
     return _then(_value.copyWith(
@@ -210,31 +208,39 @@ class _$WaveFormModelCopyWithImpl<$Res, $Val extends WaveFormModel>
           ? _value.tickFrequency
           : tickFrequency // ignore: cast_nullable_to_non_nullable
               as int,
+      type: null == type
+          ? _value.type
+          : type // ignore: cast_nullable_to_non_nullable
+              as Type,
       values: null == values
           ? _value.values
           : values // ignore: cast_nullable_to_non_nullable
-              as List<WaveFormValueModel>,
+              as List<WaveFormValueModel<T>>,
     ) as $Val);
   }
 }
 
 /// @nodoc
-abstract class _$$WaveFormModelImplCopyWith<$Res>
-    implements $WaveFormModelCopyWith<$Res> {
-  factory _$$WaveFormModelImplCopyWith(
-          _$WaveFormModelImpl value, $Res Function(_$WaveFormModelImpl) then) =
-      __$$WaveFormModelImplCopyWithImpl<$Res>;
+abstract class _$$WaveFormModelImplCopyWith<T extends WaveformPointValue, $Res>
+    implements $WaveFormModelCopyWith<T, $Res> {
+  factory _$$WaveFormModelImplCopyWith(_$WaveFormModelImpl<T> value,
+          $Res Function(_$WaveFormModelImpl<T>) then) =
+      __$$WaveFormModelImplCopyWithImpl<T, $Res>;
   @override
   @useResult
-  $Res call({int duration, int tickFrequency, List<WaveFormValueModel> values});
+  $Res call(
+      {int duration,
+      int tickFrequency,
+      Type type,
+      List<WaveFormValueModel<T>> values});
 }
 
 /// @nodoc
-class __$$WaveFormModelImplCopyWithImpl<$Res>
-    extends _$WaveFormModelCopyWithImpl<$Res, _$WaveFormModelImpl>
-    implements _$$WaveFormModelImplCopyWith<$Res> {
-  __$$WaveFormModelImplCopyWithImpl(
-      _$WaveFormModelImpl _value, $Res Function(_$WaveFormModelImpl) _then)
+class __$$WaveFormModelImplCopyWithImpl<T extends WaveformPointValue, $Res>
+    extends _$WaveFormModelCopyWithImpl<T, $Res, _$WaveFormModelImpl<T>>
+    implements _$$WaveFormModelImplCopyWith<T, $Res> {
+  __$$WaveFormModelImplCopyWithImpl(_$WaveFormModelImpl<T> _value,
+      $Res Function(_$WaveFormModelImpl<T>) _then)
       : super(_value, _then);
 
   /// Create a copy of WaveFormModel
@@ -244,9 +250,10 @@ class __$$WaveFormModelImplCopyWithImpl<$Res>
   $Res call({
     Object? duration = null,
     Object? tickFrequency = null,
+    Object? type = null,
     Object? values = null,
   }) {
-    return _then(_$WaveFormModelImpl(
+    return _then(_$WaveFormModelImpl<T>(
       duration: null == duration
           ? _value.duration
           : duration // ignore: cast_nullable_to_non_nullable
@@ -255,30 +262,38 @@ class __$$WaveFormModelImplCopyWithImpl<$Res>
           ? _value.tickFrequency
           : tickFrequency // ignore: cast_nullable_to_non_nullable
               as int,
+      type: null == type
+          ? _value.type
+          : type // ignore: cast_nullable_to_non_nullable
+              as Type,
       values: null == values
           ? _value._values
           : values // ignore: cast_nullable_to_non_nullable
-              as List<WaveFormValueModel>,
+              as List<WaveFormValueModel<T>>,
     ));
   }
 }
 
 /// @nodoc
 
-class _$WaveFormModelImpl implements _WaveFormModel {
+class _$WaveFormModelImpl<T extends WaveformPointValue>
+    implements _WaveFormModel<T> {
   _$WaveFormModelImpl(
       {required this.duration,
       required this.tickFrequency,
-      required final List<WaveFormValueModel> values})
+      required this.type,
+      required final List<WaveFormValueModel<T>> values})
       : _values = values;
 
   @override
   final int duration;
   @override
   final int tickFrequency;
-  final List<WaveFormValueModel> _values;
   @override
-  List<WaveFormValueModel> get values {
+  final Type type;
+  final List<WaveFormValueModel<T>> _values;
+  @override
+  List<WaveFormValueModel<T>> get values {
     if (_values is EqualUnmodifiableListView) return _values;
     // ignore: implicit_dynamic_type
     return EqualUnmodifiableListView(_values);
@@ -286,23 +301,24 @@ class _$WaveFormModelImpl implements _WaveFormModel {
 
   @override
   String toString() {
-    return 'WaveFormModel(duration: $duration, tickFrequency: $tickFrequency, values: $values)';
+    return 'WaveFormModel<$T>(duration: $duration, tickFrequency: $tickFrequency, type: $type, values: $values)';
   }
 
   @override
   bool operator ==(Object other) {
     return identical(this, other) ||
         (other.runtimeType == runtimeType &&
-            other is _$WaveFormModelImpl &&
+            other is _$WaveFormModelImpl<T> &&
             (identical(other.duration, duration) ||
                 other.duration == duration) &&
             (identical(other.tickFrequency, tickFrequency) ||
                 other.tickFrequency == tickFrequency) &&
+            (identical(other.type, type) || other.type == type) &&
             const DeepCollectionEquality().equals(other._values, _values));
   }
 
   @override
-  int get hashCode => Object.hash(runtimeType, duration, tickFrequency,
+  int get hashCode => Object.hash(runtimeType, duration, tickFrequency, type,
       const DeepCollectionEquality().hash(_values));
 
   /// Create a copy of WaveFormModel
@@ -310,27 +326,33 @@ class _$WaveFormModelImpl implements _WaveFormModel {
   @JsonKey(includeFromJson: false, includeToJson: false)
   @override
   @pragma('vm:prefer-inline')
-  _$$WaveFormModelImplCopyWith<_$WaveFormModelImpl> get copyWith =>
-      __$$WaveFormModelImplCopyWithImpl<_$WaveFormModelImpl>(this, _$identity);
+  _$$WaveFormModelImplCopyWith<T, _$WaveFormModelImpl<T>> get copyWith =>
+      __$$WaveFormModelImplCopyWithImpl<T, _$WaveFormModelImpl<T>>(
+          this, _$identity);
 }
 
-abstract class _WaveFormModel implements WaveFormModel {
+abstract class _WaveFormModel<T extends WaveformPointValue>
+    implements WaveFormModel<T> {
   factory _WaveFormModel(
-      {required final int duration,
-      required final int tickFrequency,
-      required final List<WaveFormValueModel> values}) = _$WaveFormModelImpl;
+          {required final int duration,
+          required final int tickFrequency,
+          required final Type type,
+          required final List<WaveFormValueModel<T>> values}) =
+      _$WaveFormModelImpl<T>;
 
   @override
   int get duration;
   @override
   int get tickFrequency;
   @override
-  List<WaveFormValueModel> get values;
+  Type get type;
+  @override
+  List<WaveFormValueModel<T>> get values;
 
   /// Create a copy of WaveFormModel
   /// with the given fields replaced by the non-null parameter values.
   @override
   @JsonKey(includeFromJson: false, includeToJson: false)
-  _$$WaveFormModelImplCopyWith<_$WaveFormModelImpl> get copyWith =>
+  _$$WaveFormModelImplCopyWith<T, _$WaveFormModelImpl<T>> get copyWith =>
       throw _privateConstructorUsedError;
 }

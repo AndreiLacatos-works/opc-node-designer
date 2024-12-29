@@ -63,7 +63,7 @@ mixin InteractionMutations<T extends ConsumerStatefulWidget>
   void dragEnd(DragEndDetails details) {
     if (isDraggingTransition) {
       if (tickToSnap != null && hoveredTransitionPointIndex != null) {
-        ref.read(waveFormStateProvider.notifier).updateTransitionPoint(
+        ref.read(waveFormStateProvider.notifier).moveToTick(
               hoveredTransitionPointIndex!,
               tickToSnap!,
             );

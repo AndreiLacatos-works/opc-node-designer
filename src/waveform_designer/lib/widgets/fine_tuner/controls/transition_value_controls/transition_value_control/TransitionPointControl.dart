@@ -1,18 +1,19 @@
 import 'package:flutter/widgets.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
-import 'package:waveform_designer/state/waveform/waveform.state.dart';
+import 'package:waveform_designer/state/waveform/waveform.model.dart';
 import 'package:waveform_designer/theme/AppTheme.dart';
 import 'package:waveform_designer/widgets/fine_tuner/controls/ErrorConsumerState.dart';
+import 'package:waveform_designer/widgets/fine_tuner/controls/transition_value_controls/transition_value_control/TransitionPointControl.Actions.dart';
 import 'package:waveform_designer/widgets/input/LabeledInput.dart';
 import 'package:waveform_designer/widgets/shared/ErrorDisplay.dart';
 import 'package:waveform_designer/widgets/shared/IconButton.dart';
 
 class TransitionPointControl extends ConsumerStatefulWidget {
-  final int pointIndex;
+  final WaveFormValueModel waveformValue;
 
   TransitionPointControl({
-    required this.pointIndex,
+    required this.waveformValue,
     super.key,
   });
 
@@ -22,71 +23,43 @@ class TransitionPointControl extends ConsumerStatefulWidget {
 }
 
 class _TransitionPointControlState
-    extends ErrorConsumerState<TransitionPointControl> {
+    extends ErrorConsumerState<TransitionPointControl>
+    with TransitionPointControlActions {
   @override
   Widget build(BuildContext context) {
-    void handleMove(int? newValue) {
-      if (newValue == null) {
-        return;
-      }
-
-      try {
-        ref
-            .read(waveFormStateProvider.notifier)
-            .updateTransitionPoint(widget.pointIndex, newValue);
-        clearError();
-      } on String catch (e) {
-        setError(e);
-      }
-    }
-
-    void moveLeft() {
-      final waveform = ref.read(waveFormStateProvider);
-      handleMove(
-          waveform.values[widget.pointIndex].tick - waveform.tickFrequency);
-    }
-
-    void moveRight() {
-      final waveform = ref.read(waveFormStateProvider);
-      handleMove(
-          waveform.values[widget.pointIndex].tick + waveform.tickFrequency);
-    }
-
-    void handleRemove() {
-      try {
-        ref
-            .read(waveFormStateProvider.notifier)
-            .removeTransitionPoint(widget.pointIndex);
-        clearError();
-      } on String catch (e) {
-        setError(e);
-      }
-    }
-
-    final transitionPoints =
-        ref.watch(waveFormStateProvider).values.map((v) => v.tick).toList();
-    if (widget.pointIndex >= transitionPoints.length) {
-      return SizedBox.shrink();
-    }
-
-    final point = transitionPoints[widget.pointIndex];
-
     return Column(
       children: [
         Row(
           children: [
-            LabeledInput(
+            LabeledInput<int>(
               label: "ms",
               width: 80,
-              value: point,
-              onFocusLost: handleMove,
-              onSubmitted: handleMove,
+              value: widget.waveformValue.tick,
+              onFocusLost: (val) {
+                handleTickChange(
+                  widget.waveformValue,
+                  val,
+                  ref,
+                );
+              },
+              onSubmitted: (val) {
+                handleTickChange(
+                  widget.waveformValue,
+                  val,
+                  ref,
+                );
+              },
               onFocus: clearError,
             ),
             Padding(
               padding: EdgeInsets.fromLTRB(8, 0, 8, 0),
               child: IconButton(
-                onClick: moveLeft,
+                onClick: () {
+                  moveLeft(
+                    widget.waveformValue,
+                    ref,
+                  );
+                },
                 icon: FaIcon(
                   FontAwesomeIcons.arrowLeft,
                   color: AppTheme.brightGreen,
@@ -96,7 +69,12 @@ class _TransitionPointControlState
             Padding(
               padding: EdgeInsets.fromLTRB(8, 0, 8, 0),
               child: IconButton(
-                onClick: moveRight,
+                onClick: () {
+                  moveRight(
+                    widget.waveformValue,
+                    ref,
+                  );
+                },
                 icon: FaIcon(
                   FontAwesomeIcons.arrowRight,
                   color: AppTheme.brightGreen,
@@ -106,7 +84,12 @@ class _TransitionPointControlState
             Padding(
               padding: EdgeInsets.fromLTRB(8, 0, 8, 0),
               child: IconButton(
-                onClick: handleRemove,
+                onClick: () {
+                  handleRemove(
+                    widget.waveformValue,
+                    ref,
+                  );
+                },
                 icon: FaIcon(
                   FontAwesomeIcons.solidTrashCan,
                   color: AppTheme.danger,

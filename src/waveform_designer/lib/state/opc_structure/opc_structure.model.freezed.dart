@@ -193,7 +193,8 @@ abstract class _OpcContainerNodeModel implements OpcContainerNodeModel {
 mixin _$OpcValueNodeModel {
   String get id => throw _privateConstructorUsedError;
   String get label => throw _privateConstructorUsedError;
-  WaveFormModel get waveform => throw _privateConstructorUsedError;
+  WaveFormModel<WaveformPointValue> get waveform =>
+      throw _privateConstructorUsedError;
 
   /// Create a copy of OpcValueNodeModel
   /// with the given fields replaced by the non-null parameter values.
@@ -208,9 +209,10 @@ abstract class $OpcValueNodeModelCopyWith<$Res> {
           OpcValueNodeModel value, $Res Function(OpcValueNodeModel) then) =
       _$OpcValueNodeModelCopyWithImpl<$Res, OpcValueNodeModel>;
   @useResult
-  $Res call({String id, String label, WaveFormModel waveform});
+  $Res call(
+      {String id, String label, WaveFormModel<WaveformPointValue> waveform});
 
-  $WaveFormModelCopyWith<$Res> get waveform;
+  $WaveFormModelCopyWith<WaveformPointValue, $Res> get waveform;
 }
 
 /// @nodoc
@@ -244,7 +246,7 @@ class _$OpcValueNodeModelCopyWithImpl<$Res, $Val extends OpcValueNodeModel>
       waveform: null == waveform
           ? _value.waveform
           : waveform // ignore: cast_nullable_to_non_nullable
-              as WaveFormModel,
+              as WaveFormModel<WaveformPointValue>,
     ) as $Val);
   }
 
@@ -252,8 +254,9 @@ class _$OpcValueNodeModelCopyWithImpl<$Res, $Val extends OpcValueNodeModel>
   /// with the given fields replaced by the non-null parameter values.
   @override
   @pragma('vm:prefer-inline')
-  $WaveFormModelCopyWith<$Res> get waveform {
-    return $WaveFormModelCopyWith<$Res>(_value.waveform, (value) {
+  $WaveFormModelCopyWith<WaveformPointValue, $Res> get waveform {
+    return $WaveFormModelCopyWith<WaveformPointValue, $Res>(_value.waveform,
+        (value) {
       return _then(_value.copyWith(waveform: value) as $Val);
     });
   }
@@ -267,10 +270,11 @@ abstract class _$$OpcValueNodeModelImplCopyWith<$Res>
       __$$OpcValueNodeModelImplCopyWithImpl<$Res>;
   @override
   @useResult
-  $Res call({String id, String label, WaveFormModel waveform});
+  $Res call(
+      {String id, String label, WaveFormModel<WaveformPointValue> waveform});
 
   @override
-  $WaveFormModelCopyWith<$Res> get waveform;
+  $WaveFormModelCopyWith<WaveformPointValue, $Res> get waveform;
 }
 
 /// @nodoc
@@ -302,7 +306,7 @@ class __$$OpcValueNodeModelImplCopyWithImpl<$Res>
       waveform: null == waveform
           ? _value.waveform
           : waveform // ignore: cast_nullable_to_non_nullable
-              as WaveFormModel,
+              as WaveFormModel<WaveformPointValue>,
     ));
   }
 }
@@ -318,7 +322,7 @@ class _$OpcValueNodeModelImpl implements _OpcValueNodeModel {
   @override
   final String label;
   @override
-  final WaveFormModel waveform;
+  final WaveFormModel<WaveformPointValue> waveform;
 
   @override
   String toString() {
@@ -347,16 +351,17 @@ class _$OpcValueNodeModelImpl implements _OpcValueNodeModel {
 
 abstract class _OpcValueNodeModel implements OpcValueNodeModel {
   factory _OpcValueNodeModel(
-      {required final String id,
-      required final String label,
-      required final WaveFormModel waveform}) = _$OpcValueNodeModelImpl;
+          {required final String id,
+          required final String label,
+          required final WaveFormModel<WaveformPointValue> waveform}) =
+      _$OpcValueNodeModelImpl;
 
   @override
   String get id;
   @override
   String get label;
   @override
-  WaveFormModel get waveform;
+  WaveFormModel<WaveformPointValue> get waveform;
 
   /// Create a copy of OpcValueNodeModel
   /// with the given fields replaced by the non-null parameter values.

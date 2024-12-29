@@ -1,24 +1,24 @@
 import 'package:flutter/widgets.dart';
 import 'package:waveform_designer/widgets/input/LabeledInput.dart';
 
-class MultiLabeledInput extends StatelessWidget {
+class MultiLabeledInput<T extends num> extends StatelessWidget {
   final String mainLabel;
   final String secondaryLabel;
   final double width;
-  final int value;
-  final Function(int?)? onChanged;
-  final Function(int?)? onSubmitted;
-  final Function(int?)? onFocusLost;
+  final T value;
+  final Function(T?)? onChanged;
+  final Function(T?)? onSubmitted;
+  final Function(T?)? onFocusLost;
   final Function()? onFocus;
 
   const MultiLabeledInput({
     required this.mainLabel,
     required this.secondaryLabel,
+    required this.value,
     this.onChanged,
     this.onSubmitted,
     this.onFocusLost,
     this.onFocus,
-    this.value = 0,
     this.width = 160,
     super.key,
   });
@@ -39,7 +39,7 @@ class MultiLabeledInput extends StatelessWidget {
             ),
           ),
         ),
-        LabeledInput(
+        LabeledInput<T>(
           onChanged: onChanged,
           onSubmitted: onSubmitted,
           onFocusLost: onFocusLost,
