@@ -2,7 +2,6 @@ import 'package:flutter/widgets.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:waveform_designer/state/waveform/waveform.model.dart';
-import 'package:waveform_designer/state/waveform/waveform.state.dart';
 import 'package:waveform_designer/theme/AppTheme.dart';
 import 'package:waveform_designer/widgets/fine_tuner/controls/ErrorConsumerState.dart';
 import 'package:waveform_designer/widgets/fine_tuner/controls/transition_value_controls/transition_value_control/TransitionPointControl.Actions.dart';

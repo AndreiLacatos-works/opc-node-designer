@@ -1,10 +1,9 @@
 import 'package:flutter/widgets.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
-import 'package:waveform_designer/state/waveform/waveform.model.dart';
 import 'package:waveform_designer/state/waveform/waveform.state.dart';
 import 'package:waveform_designer/theme/AppTheme.dart';
-import 'package:waveform_designer/widgets/fine_tuner/controls/transition_value_controls/TransitionPointAdder.dart';
+import 'package:waveform_designer/widgets/fine_tuner/controls/transition_value_controls/transition_point_adder/TransitionPointAdder.dart';
 import 'package:waveform_designer/widgets/fine_tuner/controls/transition_value_controls/transition_value_control/TransitionPointControl.dart';
 import 'package:waveform_designer/widgets/shared/SimpleButton.dart';
 import 'package:waveform_designer/state/opc_designer/opc_designer.state.dart';
@@ -40,11 +39,6 @@ class _TransitionPointsControlState
 
   @override
   Widget build(BuildContext context) {
-    void handleAddPoint(WaveFormValueModel value) {
-      ref.read(waveFormStateProvider.notifier).addWaveformValue(value);
-      _cancelAddMode();
-    }
-
     final transitionPoints = ref.watch(waveFormStateProvider).values;
     final valueNodeSelected =
         ref.watch(opcDesignerStateProvider).selectedNode is OpcValueNodeModel;
@@ -83,7 +77,7 @@ class _TransitionPointsControlState
           ),
           if (_addMode)
             TransitionPointAdder(
-              onConfirm: handleAddPoint,
+              onConfirmed: _cancelAddMode,
               onCancel: _cancelAddMode,
             ),
           Expanded(

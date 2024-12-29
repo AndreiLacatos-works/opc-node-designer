@@ -51,8 +51,8 @@ class WaveFormState extends _$WaveFormState {
     if (newTickFrequency > state.duration) {
       throw 'Tick frequency must be less than duration!';
     }
-    var allTransitionPointsAligned =
-        state.values.every((point) => _intersectsTicks(point));
+    var allTransitionPointsAligned = state.values
+        .every((point) => _intersectsTicks(point, newTickFrequency));
     if (!allTransitionPointsAligned) {
       throw 'Some transition points do not intersect with the new tick frequency!';
     }
@@ -103,14 +103,12 @@ class WaveFormState extends _$WaveFormState {
     return values.toSet().toList();
   }
 
-  bool _intersectsTicks(WaveFormValueModel value) {
-    return state.tickFrequency == 0
-        ? false
-        : value.tick % state.tickFrequency == 0;
+  bool _intersectsTicks(WaveFormValueModel value, int tickFrequency) {
+    return state.tickFrequency == 0 ? false : value.tick % tickFrequency == 0;
   }
 
   void _ensureBaseRulesFulfilled(WaveFormValueModel value) {
-    if (!_intersectsTicks(value)) {
+    if (!_intersectsTicks(value, state.tickFrequency)) {
       throw 'Transition point must intersect with a tick!';
     }
     if (value.tick < 0 || value.tick > state.duration) {

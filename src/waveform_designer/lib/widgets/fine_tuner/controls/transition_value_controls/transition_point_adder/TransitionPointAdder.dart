@@ -1,18 +1,18 @@
 import 'package:flutter/widgets.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
-import 'package:waveform_designer/state/waveform/waveform.model.dart';
 import 'package:waveform_designer/theme/AppTheme.dart';
 import 'package:waveform_designer/widgets/fine_tuner/controls/ErrorConsumerState.dart';
+import 'package:waveform_designer/widgets/fine_tuner/controls/transition_value_controls/transition_point_adder/TransitionPointAdder.Actions.dart';
 import 'package:waveform_designer/widgets/input/LabeledInput.dart';
 import 'package:waveform_designer/widgets/shared/ErrorDisplay.dart';
 import 'package:waveform_designer/widgets/shared/IconButton.dart';
 
 class TransitionPointAdder extends ConsumerStatefulWidget {
-  final Function(WaveFormValueModel) onConfirm;
+  final Function() onConfirmed;
   final Function() onCancel;
   TransitionPointAdder({
-    required this.onConfirm,
+    required this.onConfirmed,
     required this.onCancel,
     super.key,
   });
@@ -23,7 +23,8 @@ class TransitionPointAdder extends ConsumerStatefulWidget {
 }
 
 class _TransitionPointAdderState
-    extends ErrorConsumerState<TransitionPointAdder> {
+    extends ErrorConsumerState<TransitionPointAdder>
+    with TransitionPointAdderActions {
   late int? _value;
 
   @override
@@ -36,40 +37,6 @@ class _TransitionPointAdderState
     setState(() {
       _value = newValue;
     });
-  }
-
-  void _handleConfirm() {
-    if (_value != null) {
-      try {
-        widget.onConfirm(
-          WaveFormValueModel(
-            tick: _value!,
-            value: Unit(),
-          ),
-        );
-      } on String catch (e) {
-        setError(e);
-      }
-    }
-  }
-
-  void _handleSubmit(int? val) {
-    if (val != null) {
-      try {
-        widget.onConfirm(
-          WaveFormValueModel(
-            tick: val,
-            value: Unit(),
-          ),
-        );
-      } on String catch (e) {
-        setError(e);
-      }
-    }
-  }
-
-  void _handleCancel() {
-    widget.onCancel();
   }
 
   @override
@@ -85,13 +52,17 @@ class _TransitionPointAdderState
                 width: 80,
                 value: _value ?? 0,
                 onChanged: _handleValueChange,
-                onSubmitted: _handleSubmit,
+                onSubmitted: (val) {
+                  handleConfirm(widget.onConfirmed, val, ref);
+                },
                 onFocus: clearError,
               ),
               Padding(
                 padding: EdgeInsets.fromLTRB(8, 0, 8, 0),
                 child: IconButton(
-                  onClick: _handleConfirm,
+                  onClick: () {
+                    handleConfirm(widget.onConfirmed, _value, ref);
+                  },
                   icon: FaIcon(
                     FontAwesomeIcons.check,
                     color: AppTheme.brightGreen,
@@ -101,7 +72,7 @@ class _TransitionPointAdderState
               Padding(
                 padding: EdgeInsets.fromLTRB(8, 0, 8, 0),
                 child: IconButton(
-                  onClick: _handleCancel,
+                  onClick: widget.onCancel,
                   icon: FaIcon(
                     FontAwesomeIcons.xmark,
                     color: AppTheme.danger,
