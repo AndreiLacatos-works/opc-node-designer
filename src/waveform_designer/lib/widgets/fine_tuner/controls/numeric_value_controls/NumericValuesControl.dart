@@ -5,7 +5,6 @@ import 'package:waveform_designer/state/waveform/waveform.state.dart';
 import 'package:waveform_designer/theme/AppTheme.dart';
 import 'package:waveform_designer/widgets/fine_tuner/controls/numeric_value_controls/numeric_value_adder/NumericValueAdder.dart';
 import 'package:waveform_designer/widgets/fine_tuner/controls/numeric_value_controls/numeric_value_control/NumericValueControl.dart';
-import 'package:waveform_designer/widgets/fine_tuner/controls/transition_value_controls/transition_point_adder/TransitionPointAdder.dart';
 import 'package:waveform_designer/widgets/shared/SimpleButton.dart';
 import 'package:waveform_designer/state/opc_designer/opc_designer.state.dart';
 import 'package:waveform_designer/state/opc_structure/opc_structure.model.dart';
