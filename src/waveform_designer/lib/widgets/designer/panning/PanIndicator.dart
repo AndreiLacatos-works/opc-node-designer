@@ -3,9 +3,11 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:waveform_designer/state/designer/designer.state.dart';
 import 'package:waveform_designer/state/waveform/waveform.state.dart';
 import 'package:waveform_designer/theme/AppTheme.dart';
-import 'package:waveform_designer/widgets/designer/chart/WaveFormPainter.dart';
+import 'package:waveform_designer/widgets/designer/chart/chart_painters/ChartPainter.dart';
+import 'package:waveform_designer/widgets/designer/chart/chart_painters/PainterProvider.dart';
+import 'package:waveform_designer/widgets/designer/chart/chart_painters/WaveFormPainter.dart';
 
-class PanIndicator extends ConsumerStatefulWidget {
+class PanIndicator extends ConsumerStatefulWidget with PainterProvider {
   @override
   ConsumerState<ConsumerStatefulWidget> createState() => _PanIndicator();
 }
@@ -40,13 +42,11 @@ class _PanIndicator extends ConsumerState {
             Container(
               height: 54,
               width: double.infinity,
-              child: CustomPaint(
-                painter: WaveFormPainter(
-                  duration: waveformState.duration,
-                  transitionPoints:
-                      waveformState.values.map((v) => v.tick).toList(),
-                  slice: 1.0,
-                  offset: 0.0,
+              child: ChartPainter(
+                waveform: waveformState,
+                panning: designerState.copyWith(
+                  sliceOffset: 0,
+                  sliceRatio: 1,
                 ),
               ),
             ),
