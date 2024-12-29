@@ -21,7 +21,7 @@ class WaveFormValueModel {
           WaveFormState.WaveFormValueModel state) =>
       WaveFormValueModel(
         tick: state.tick,
-        value: state.value.toDouble(),
+        value: state.value.getValue(),
       );
 
   Map<String, dynamic> toJson() => _$WaveFormValueModelToJson(this);
@@ -33,15 +33,22 @@ class WaveFormValueModel {
       );
 }
 
+enum WaveFormType {
+  transitions,
+  doubleValues,
+}
+
 @JsonSerializable()
 class WaveFormModel {
   final int duration;
   final int tickFrequency;
+  final WaveFormType type;
   final List<WaveFormValueModel> transitionPoints;
 
   WaveFormModel({
     required this.duration,
     required this.tickFrequency,
+    required this.type,
     required this.transitionPoints,
   });
 
@@ -52,6 +59,7 @@ class WaveFormModel {
       WaveFormModel(
         duration: state.duration,
         tickFrequency: state.tickFrequency,
+        type: _mapWaveFormTypeFromState(state),
         transitionPoints:
             state.values.map((n) => WaveFormValueModel.fromState(n)).toList(),
       );
@@ -61,6 +69,7 @@ class WaveFormModel {
   WaveFormState.WaveFormModel toState() => WaveFormState.WaveFormModel(
         duration: this.duration,
         tickFrequency: this.tickFrequency,
+        type: _mapTypeFromWaveFormType(this.type),
         values: this
             .transitionPoints
             .map(
@@ -68,4 +77,20 @@ class WaveFormModel {
             )
             .toList(),
       );
+
+  static WaveFormType _mapWaveFormTypeFromState(
+      WaveFormState.WaveFormModel state) {
+    return switch (state.type) {
+      WaveFormState.DoubleValue => WaveFormType.doubleValues,
+      WaveFormState.Unit => WaveFormType.transitions,
+      Type() => throw "${state.type} is not valid waveform value type!",
+    };
+  }
+
+  static Type _mapTypeFromWaveFormType(WaveFormType type) {
+    return switch (type) {
+      WaveFormType.transitions => WaveFormState.Unit,
+      WaveFormType.doubleValues => WaveFormState.DoubleValue,
+    };
+  }
 }

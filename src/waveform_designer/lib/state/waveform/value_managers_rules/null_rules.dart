@@ -5,7 +5,7 @@ class NullRules extends AbstractManagerRules {
   @override
   void ensureRulesFulfilled(
     WaveFormModel waveform,
-    WaveFormValueModel<DoubleConvertible> value,
+    WaveFormValueModel<WaveformPointValue> value,
   ) {
     return;
   }

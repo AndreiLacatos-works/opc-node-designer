@@ -2,26 +2,26 @@ import 'package:freezed_annotation/freezed_annotation.dart';
 
 part 'waveform.model.freezed.dart';
 
-abstract class DoubleConvertible {
-  double toDouble();
+abstract class WaveformPointValue {
+  double getValue();
 }
 
-class Unit extends DoubleConvertible {
+class Unit extends WaveformPointValue {
   @override
-  double toDouble() => 0.0;
+  double getValue() => 0.0;
 }
 
-class DoubleValue extends DoubleConvertible {
+class DoubleValue extends WaveformPointValue {
   final double value;
 
   DoubleValue(this.value);
 
   @override
-  double toDouble() => 0.0;
+  double getValue() => value;
 }
 
 @freezed
-class WaveFormValueModel<T extends DoubleConvertible>
+class WaveFormValueModel<T extends WaveformPointValue>
     with _$WaveFormValueModel {
   factory WaveFormValueModel({
     required int tick,
@@ -40,10 +40,11 @@ class WaveFormValueModel<T extends DoubleConvertible>
 }
 
 @freezed
-class WaveFormModel with _$WaveFormModel {
+class WaveFormModel<T extends WaveformPointValue> with _$WaveFormModel {
   factory WaveFormModel({
     required int duration,
     required int tickFrequency,
-    required List<WaveFormValueModel> values,
+    required Type type,
+    required List<WaveFormValueModel<T>> values,
   }) = _WaveFormModel;
 }

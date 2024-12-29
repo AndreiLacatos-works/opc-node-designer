@@ -57,7 +57,7 @@ class OpcDesignerState extends _$OpcDesignerState {
     // update the waveform diagram state to show the waveform of the selected node
     var waveformNotifier = ref.read(waveFormStateProvider.notifier);
     if (node is OpcValueNodeModel) {
-      waveformNotifier.initialize(node.waveform, WaveformType.doubleValues);
+      waveformNotifier.initialize(node.waveform);
     } else {
       waveformNotifier.reset();
     }

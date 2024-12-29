@@ -6,11 +6,6 @@ import 'package:waveform_designer/state/waveform/waveform.model.dart';
 
 part 'waveform.state.g.dart';
 
-enum WaveformType {
-  transitions,
-  doubleValues,
-}
-
 @riverpod
 class WaveFormState extends _$WaveFormState {
   AbstractManagerRules _ruleValidator = NullRules();
@@ -18,6 +13,7 @@ class WaveFormState extends _$WaveFormState {
     duration: 0,
     tickFrequency: 0,
     values: [],
+    type: Unit,
   );
 
   @override
@@ -25,13 +21,10 @@ class WaveFormState extends _$WaveFormState {
     return _initialState;
   }
 
-  void initialize(
-    WaveFormModel model,
-    WaveformType type,
-  ) {
+  void initialize(WaveFormModel model) {
     state = model;
-    _ruleValidator = switch (type) {
-      WaveformType.transitions => TransitionValueRules(),
+    _ruleValidator = switch (model.type) {
+      Unit => TransitionValueRules(),
       _ => NullRules(),
     };
   }

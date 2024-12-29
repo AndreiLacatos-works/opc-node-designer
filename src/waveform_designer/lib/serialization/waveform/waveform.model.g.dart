@@ -22,6 +22,7 @@ WaveFormModel _$WaveFormModelFromJson(Map<String, dynamic> json) =>
     WaveFormModel(
       duration: (json['duration'] as num).toInt(),
       tickFrequency: (json['tickFrequency'] as num).toInt(),
+      type: $enumDecode(_$WaveFormTypeEnumMap, json['type']),
       transitionPoints: (json['transitionPoints'] as List<dynamic>)
           .map((e) => WaveFormValueModel.fromJson(e as Map<String, dynamic>))
           .toList(),
@@ -31,5 +32,11 @@ Map<String, dynamic> _$WaveFormModelToJson(WaveFormModel instance) =>
     <String, dynamic>{
       'duration': instance.duration,
       'tickFrequency': instance.tickFrequency,
+      'type': _$WaveFormTypeEnumMap[instance.type]!,
       'transitionPoints': instance.transitionPoints,
     };
+
+const _$WaveFormTypeEnumMap = {
+  WaveFormType.transitions: 'transitions',
+  WaveFormType.doubleValues: 'doubleValues',
+};

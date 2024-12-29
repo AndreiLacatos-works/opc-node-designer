@@ -3,7 +3,7 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:waveform_designer/theme/AppTheme.dart';
 import 'package:waveform_designer/widgets/fine_tuner/controls/DurationControl.dart';
 import 'package:waveform_designer/widgets/fine_tuner/controls/TickFrequencyControl.dart';
-import 'package:waveform_designer/widgets/fine_tuner/controls/transition_value_controls/TransitionPointsControl.dart';
+import 'package:waveform_designer/widgets/fine_tuner/controls/WaveformValuesControl.dart';
 import 'package:waveform_designer/widgets/fine_tuner/project_actions/Closer.dart';
 import 'package:waveform_designer/widgets/fine_tuner/project_actions/Saver.dart';
 
@@ -15,7 +15,7 @@ class FineTuner extends ConsumerWidget {
         color: AppTheme.accentColor,
       ),
       padding: const EdgeInsets.all(25),
-      width: 320,
+      width: 370,
       height: double.infinity,
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
@@ -35,7 +35,7 @@ class FineTuner extends ConsumerWidget {
           SizedBox(height: 80),
           TickFrequencyControl(),
           SizedBox(height: 80),
-          TransitionPointsControl(),
+          WaveformValuesControl(),
         ],
       ),
     );

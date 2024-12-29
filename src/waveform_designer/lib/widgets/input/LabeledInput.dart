@@ -34,7 +34,7 @@ class LabeledInput extends StatelessWidget {
           value: value,
         ),
         Padding(
-          padding: EdgeInsets.only(left: 12),
+          padding: EdgeInsets.only(left: 10),
           child: Text(
             label,
             style: TextStyle(
