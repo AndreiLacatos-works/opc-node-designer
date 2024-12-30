@@ -5,7 +5,7 @@ import 'package:waveform_designer/widgets/designer/chart/chart_painters/ValueNod
 import 'package:waveform_designer/widgets/designer/chart/chart_painters/ValueNodePainter.dart';
 import 'package:waveform_designer/widgets/designer/chart/chart_painters/WaveFormPainter.dart';
 
-mixin PainterProvider {
+mixin ChartPainterProvider {
   List<CustomPainter> providePainters(
     WaveFormModel waveform,
     DesignerModel panning,
@@ -14,10 +14,11 @@ mixin PainterProvider {
       Transition => [
           WaveFormPainter(waveform, panning),
         ],
-      _ => [
+      DoubleValue => [
           ValueNodePainter(waveform, panning),
           ValueNodeConnectorPainter(waveform, panning),
         ],
+      _ => [],
     };
   }
 }

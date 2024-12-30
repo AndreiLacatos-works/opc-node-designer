@@ -18,11 +18,11 @@ class PanPainter extends CustomPainter {
     }
 
     final borderPainter = Paint()
-      ..color = AppTheme.secondarAccent
+      ..color = AppTheme.secondaryAccent
       ..strokeWidth = 3.0
       ..style = PaintingStyle.stroke;
     final fillPainter = Paint()
-      ..color = AppTheme.secondarAccent.withAlpha(62)
+      ..color = AppTheme.secondaryAccent.withAlpha(62)
       ..style = PaintingStyle.fill;
 
     final startOffset = Offset(_start, 5);

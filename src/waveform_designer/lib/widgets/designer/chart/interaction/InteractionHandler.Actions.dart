@@ -55,11 +55,10 @@ mixin InteractionHandlerActions<T extends ConsumerStatefulWidget>
           designer,
         );
       });
-    } else {
-      setState(() {
-        currentDragOffset = details.localPosition;
-      });
     }
+    setState(() {
+      currentDragOffset = details.localPosition;
+    });
   }
 
   void dragEnd(DragEndDetails details) {

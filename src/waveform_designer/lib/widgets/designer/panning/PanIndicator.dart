@@ -4,9 +4,9 @@ import 'package:waveform_designer/state/designer/designer.state.dart';
 import 'package:waveform_designer/state/waveform/waveform.state.dart';
 import 'package:waveform_designer/theme/AppTheme.dart';
 import 'package:waveform_designer/widgets/designer/chart/chart_painters/ChartPainter.dart';
-import 'package:waveform_designer/widgets/designer/chart/chart_painters/PainterProvider.dart';
+import 'package:waveform_designer/widgets/designer/chart/chart_painters/ChartPainterProvider.dart';
 
-class PanIndicator extends ConsumerStatefulWidget with PainterProvider {
+class PanIndicator extends ConsumerStatefulWidget with ChartPainterProvider {
   @override
   ConsumerState<ConsumerStatefulWidget> createState() => _PanIndicator();
 }

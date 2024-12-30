@@ -9,13 +9,15 @@ import 'package:waveform_designer/state/designer/designer.state.dart';
 import 'package:waveform_designer/state/waveform/waveform.model.dart';
 import 'package:waveform_designer/state/waveform/waveform.state.dart';
 import 'package:waveform_designer/widgets/designer/chart/PanPainter.dart';
-import 'package:waveform_designer/widgets/designer/chart/SnapPainter.dart';
+import 'package:waveform_designer/widgets/designer/chart/interaction/move_preview_painters/MovePreviewPainterProvider.dart';
+import 'package:waveform_designer/widgets/designer/chart/interaction/move_preview_painters/SnapPainter.dart';
 import 'package:waveform_designer/widgets/designer/chart/calc/WaveformMinMaxer.dart';
 import 'package:waveform_designer/widgets/designer/chart/interaction/hover_tester/OverlapCalculatorFactory.dart';
 import 'package:waveform_designer/widgets/designer/chart/chart_painters/RangeRestrictorMapper.dart';
 import 'package:waveform_designer/widgets/designer/chart/interaction/InteractionHandler.Actions.dart';
 import 'package:waveform_designer/widgets/designer/chart/interaction/InteractionHandler.State.dart';
 import 'package:waveform_designer/widgets/designer/chart/interaction/move_handler/ValueMoveHandlerFactory.dart';
+import 'package:waveform_designer/widgets/designer/chart/interaction/move_preview_painters/ValueMovePainter.dart';
 import 'package:window_manager/window_manager.dart';
 
 class InteractionHandler extends ConsumerStatefulWidget {
@@ -37,6 +39,7 @@ class _InteractionHandler extends ConsumerState<InteractionHandler>
         RangeRestrictorMapper,
         PointTransformer,
         NeighboringTickCalculator,
+        MovePreviewPainterProvider,
         InteractionHandlerState<InteractionHandler>,
         InteractionHandlerActions<InteractionHandler> {
   final GlobalKey _widgetKey = GlobalKey();
@@ -102,28 +105,51 @@ class _InteractionHandler extends ConsumerState<InteractionHandler>
       children: [
         Stack(
           children: [
-            Container(
-              width: double.infinity,
-              height: double.infinity,
-              child: CustomPaint(
-                painter: SnapPainter(
-                  tick: tickToSnap,
-                  duration: ref.read(waveFormStateProvider).duration,
-                  offset: designer.sliceOffset,
-                  slice: designer.sliceRatio,
+            ...providePainters(waveForm, designer, currentDragOffset).map(
+              (painter) => Container(
+                width: double.infinity,
+                height: double.infinity,
+                child: CustomPaint(
+                  painter: painter,
                 ),
               ),
             ),
-            Container(
-              width: double.infinity,
-              height: double.infinity,
-              child: CustomPaint(
-                painter: PanPainter(
-                  start: dragStartOffset?.dx,
-                  end: currentDragOffset?.dx,
+            // Container(
+            //   width: double.infinity,
+            //   height: double.infinity,
+            //   child: CustomPaint(
+            //     painter: SnapPainter(
+            //       tick: tickToSnap,
+            //       duration: ref.read(waveFormStateProvider).duration,
+            //       offset: designer.sliceOffset,
+            //       slice: designer.sliceRatio,
+            //     ),
+            //   ),
+            // ),
+            // Container(
+            //   width: double.infinity,
+            //   height: double.infinity,
+            //   child: CustomPaint(
+            //     painter: ValueMovePainter(
+            //       panning: designer,
+            //       waveform: waveForm,
+            //       point: currentDragOffset != null && isDraggingValue
+            //           ? ScreenSpacePoint.fromOffset(currentDragOffset!)
+            //           : null,
+            //     ),
+            //   ),
+            // ),
+            if (!isDraggingValue)
+              Container(
+                width: double.infinity,
+                height: double.infinity,
+                child: CustomPaint(
+                  painter: PanPainter(
+                    start: dragStartOffset?.dx,
+                    end: currentDragOffset?.dx,
+                  ),
                 ),
               ),
-            ),
           ],
         ),
         Container(
