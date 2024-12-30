@@ -19,7 +19,7 @@ class Transition extends WaveformPointValue {
 class DoubleValue extends WaveformPointValue {
   final double value;
 
-  DoubleValue(this.value);
+  DoubleValue(double value) : value = double.parse(value.toStringAsFixed(2));
 
   @override
   double getValue() => value;
