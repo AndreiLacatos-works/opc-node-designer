@@ -17,7 +17,7 @@ mixin MovePreviewPainterProvider {
             waveform: waveform,
             panning: panning,
             point: desiredPosition != null
-                ? ScreenSpacePoint.fromOffset(desiredPosition!)
+                ? ScreenSpacePoint.fromOffset(desiredPosition)
                 : null,
           ),
         ],
@@ -26,14 +26,14 @@ mixin MovePreviewPainterProvider {
             waveform: waveform,
             panning: panning,
             point: desiredPosition != null
-                ? ScreenSpacePoint.fromOffset(desiredPosition!)
+                ? ScreenSpacePoint.fromOffset(desiredPosition)
                 : null,
           ),
           ValueMovePainter(
             waveform: waveform,
             panning: panning,
             point: desiredPosition != null
-                ? ScreenSpacePoint.fromOffset(desiredPosition!)
+                ? ScreenSpacePoint.fromOffset(desiredPosition)
                 : null,
           ),
         ],

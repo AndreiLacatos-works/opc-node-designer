@@ -10,14 +10,12 @@ import 'package:waveform_designer/state/waveform/waveform.model.dart';
 import 'package:waveform_designer/state/waveform/waveform.state.dart';
 import 'package:waveform_designer/widgets/designer/chart/PanPainter.dart';
 import 'package:waveform_designer/widgets/designer/chart/interaction/move_preview_painters/MovePreviewPainterProvider.dart';
-import 'package:waveform_designer/widgets/designer/chart/interaction/move_preview_painters/SnapPainter.dart';
 import 'package:waveform_designer/widgets/designer/chart/calc/WaveformMinMaxer.dart';
 import 'package:waveform_designer/widgets/designer/chart/interaction/hover_tester/OverlapCalculatorFactory.dart';
 import 'package:waveform_designer/widgets/designer/chart/chart_painters/RangeRestrictorMapper.dart';
 import 'package:waveform_designer/widgets/designer/chart/interaction/InteractionHandler.Actions.dart';
 import 'package:waveform_designer/widgets/designer/chart/interaction/InteractionHandler.State.dart';
 import 'package:waveform_designer/widgets/designer/chart/interaction/move_handler/ValueMoveHandlerFactory.dart';
-import 'package:waveform_designer/widgets/designer/chart/interaction/move_preview_painters/ValueMovePainter.dart';
 import 'package:window_manager/window_manager.dart';
 
 class InteractionHandler extends ConsumerStatefulWidget {
