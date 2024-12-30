@@ -11,6 +11,7 @@ part 'designer.state.g.dart';
 class DesignerState extends _$DesignerState with ValueRangeMapper {
   static DesignerModel _initialState = DesignerModel(
     designerWidth: 0.0,
+    designerHeight: 0.0,
     sliceOffset: 0.0,
     sliceRatio: 1.0,
     projectPath: null,
@@ -25,8 +26,11 @@ class DesignerState extends _$DesignerState with ValueRangeMapper {
     state = state.copyWith(projectPath: path);
   }
 
-  void updateDesignerWidth(double width) {
-    state = state.copyWith(designerWidth: width);
+  void updateDesignerSize(double width, double height) {
+    state = state.copyWith(
+      designerWidth: width,
+      designerHeight: height,
+    );
   }
 
   void updatePan(double start, double end) {

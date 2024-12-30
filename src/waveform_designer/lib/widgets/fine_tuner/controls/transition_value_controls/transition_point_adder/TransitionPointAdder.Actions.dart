@@ -14,7 +14,7 @@ mixin TransitionPointAdderActions {
         ref.read(waveFormStateProvider.notifier).addWaveformValue(
               WaveFormValueModel(
                 tick: value,
-                value: Unit(),
+                value: Transition(),
               ),
             );
 

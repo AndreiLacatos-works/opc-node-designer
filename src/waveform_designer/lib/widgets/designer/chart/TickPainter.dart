@@ -2,8 +2,10 @@ import 'package:flutter/widgets.dart';
 import 'package:waveform_designer/calc/ValueRangeMapper.dart';
 import 'package:waveform_designer/theme/AppTheme.dart';
 import 'package:waveform_designer/widgets/designer/chart/PanningBehavior.dart';
+import 'package:waveform_designer/widgets/designer/chart/ZoomCompensator.dart';
 
-class TickPainter extends CustomPainter with ValueRangeMapper, PanningBehavior {
+class TickPainter extends CustomPainter
+    with ValueRangeMapper, PanningBehavior, ZoomCompensator {
   final int _frequency;
   final int _duration;
   final double _slice;
@@ -55,10 +57,9 @@ class TickPainter extends CustomPainter with ValueRangeMapper, PanningBehavior {
     int tickIndex,
   ) {
     var dashHeight = 4, dashSpace = 6, startY = 0.0;
-    final zoomRatio = 1.0 / _slice;
     final paint = Paint()
       ..color = AppTheme.textColor.withAlpha(107)
-      ..strokeWidth = 2.0 / zoomRatio
+      ..strokeWidth = compensateZoom(2.0, _slice)
       ..style = PaintingStyle.stroke;
     final bottomOffset = Offset(horizontalOffset, size.height);
 
@@ -81,11 +82,12 @@ class TickPainter extends CustomPainter with ValueRangeMapper, PanningBehavior {
   ) {
     canvas.save();
 
-    final zoomRatio = 1.0 / _slice;
     // apply an inverse canvas transformation to avoid stretching text
-    canvas.transform(Matrix4.identity().scaled(1 / zoomRatio, 1.0).storage);
+    canvas.transform(
+      Matrix4.identity().scaled(compensateZoom(1, _slice), 1.0).storage,
+    );
 
-    final bottomOffset = Offset(horizontalOffset * zoomRatio, size.height);
+    final bottomOffset = Offset(horizontalOffset / _slice, size.height);
     // draw tick text
     const textStyle = TextStyle(
       color: AppTheme.textColor,

@@ -1,7 +1,10 @@
 import 'package:flutter/widgets.dart';
 import 'package:waveform_designer/calc/ValueRangeMapper.dart';
+import 'package:waveform_designer/state/designer/designer.model.dart';
+import 'package:waveform_designer/state/waveform/waveform.model.dart';
 import 'package:waveform_designer/theme/AppTheme.dart';
 import 'package:waveform_designer/widgets/designer/chart/PanningBehavior.dart';
+import 'package:waveform_designer/widgets/designer/chart/ZoomCompensator.dart';
 
 class Range {
   final int start;
@@ -14,21 +17,19 @@ class Range {
 }
 
 class WaveFormPainter extends CustomPainter
-    with ValueRangeMapper, PanningBehavior {
+    with ValueRangeMapper, PanningBehavior, ZoomCompensator {
   final List<int> _transitionPoints;
   final int _duration;
   final double _slice;
   final double _offset;
 
-  WaveFormPainter({
-    required List<int> transitionPoints,
-    required int duration,
-    required double slice,
-    required double offset,
-  })  : _offset = offset,
-        _slice = slice,
-        _transitionPoints = transitionPoints,
-        _duration = duration;
+  WaveFormPainter(
+    WaveFormModel waveform,
+    DesignerModel panning,
+  )   : _offset = panning.sliceOffset,
+        _slice = panning.sliceRatio,
+        _transitionPoints = waveform.values.map((v) => v.tick).toList(),
+        _duration = waveform.duration;
 
   List<Range> _mapToRanges(List<int> input) {
     List<Range> ranges = [];
@@ -47,10 +48,9 @@ class WaveFormPainter extends CustomPainter
     final horizontalLinePainter = Paint()
       ..color = AppTheme.textColor
       ..strokeWidth = strokeWidth;
-    final zoomRatio = 1.0 / _slice;
     final verticalLinePainter = Paint()
       ..color = AppTheme.textColor
-      ..strokeWidth = strokeWidth / zoomRatio;
+      ..strokeWidth = compensateZoom(strokeWidth, _slice);
 
     final intervals = _mapToRanges([0, ..._transitionPoints, _duration]);
 

@@ -13,7 +13,7 @@ class WaveFormState extends _$WaveFormState {
     duration: 0,
     tickFrequency: 0,
     values: [],
-    type: Unit,
+    type: Void,
   );
 
   @override
@@ -24,7 +24,7 @@ class WaveFormState extends _$WaveFormState {
   void initialize(WaveFormModel model) {
     state = model;
     _ruleValidator = switch (model.type) {
-      Unit => TransitionValueRules(),
+      Transition => TransitionValueRules(),
       _ => NullRules(),
     };
   }

@@ -55,10 +55,10 @@ class _NumericValueAdder extends ErrorConsumerState<NumericValueAdder>
             children: [
               Padding(
                 padding: const EdgeInsets.only(right: 10),
-                child: LabeledInput(
+                child: LabeledInput<double>(
                   label: "at",
-                  width: 60,
-                  value: _value?.toInt() ?? 0,
+                  width: 88,
+                  value: _value ?? 0,
                   onChanged: (val) {
                     _handleValueChange(val?.toDouble());
                   },
@@ -70,7 +70,7 @@ class _NumericValueAdder extends ErrorConsumerState<NumericValueAdder>
               ),
               LabeledInput<int>(
                 label: "ms",
-                width: 80,
+                width: 88,
                 value: _tick ?? 0,
                 onChanged: _handleTickChange,
                 onSubmitted: _handleTickChange,

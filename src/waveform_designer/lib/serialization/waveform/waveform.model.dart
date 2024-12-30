@@ -82,14 +82,14 @@ class WaveFormModel {
       WaveFormState.WaveFormModel state) {
     return switch (state.type) {
       WaveFormState.DoubleValue => WaveFormType.doubleValues,
-      WaveFormState.Unit => WaveFormType.transitions,
+      WaveFormState.Transition => WaveFormType.transitions,
       Type() => throw "${state.type} is not valid waveform value type!",
     };
   }
 
   static Type _mapTypeFromWaveFormType(WaveFormType type) {
     return switch (type) {
-      WaveFormType.transitions => WaveFormState.Unit,
+      WaveFormType.transitions => WaveFormState.Transition,
       WaveFormType.doubleValues => WaveFormState.DoubleValue,
     };
   }

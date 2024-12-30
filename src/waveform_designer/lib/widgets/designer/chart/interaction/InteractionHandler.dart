@@ -1,17 +1,21 @@
+import 'package:flutter/services.dart' as DS;
 import 'package:flutter/widgets.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
-import 'package:waveform_designer/calc/NeighboringTickCalculator.dart';
-import 'package:waveform_designer/calc/PointTransformer.dart';
-import 'package:waveform_designer/calc/ScreenSpacePoint.dart';
-import 'package:waveform_designer/calc/TickOverlapCalculator.dart';
+import 'package:waveform_designer/widgets/designer/chart/calc/NeighboringTickCalculator.dart';
+import 'package:waveform_designer/widgets/designer/chart/calc/PointTransformer.dart';
 import 'package:waveform_designer/calc/ValueRangeMapper.dart';
 import 'package:waveform_designer/state/designer/designer.state.dart';
 import 'package:waveform_designer/state/waveform/waveform.model.dart';
 import 'package:waveform_designer/state/waveform/waveform.state.dart';
 import 'package:waveform_designer/widgets/designer/chart/PanPainter.dart';
-import 'package:waveform_designer/widgets/designer/chart/SnapPainter.dart';
-import 'package:waveform_designer/widgets/designer/chart/interaction/InteractionMutations.dart';
-import 'package:waveform_designer/widgets/designer/chart/interaction/InteractionState.dart';
+import 'package:waveform_designer/widgets/designer/chart/interaction/add_handler/AddHandlerFactory.dart';
+import 'package:waveform_designer/widgets/designer/chart/interaction/move_preview_painters/MovePreviewPainterProvider.dart';
+import 'package:waveform_designer/widgets/designer/chart/calc/WaveformMinMaxer.dart';
+import 'package:waveform_designer/widgets/designer/chart/interaction/hover_tester/OverlapCalculatorFactory.dart';
+import 'package:waveform_designer/widgets/designer/chart/chart_painters/RangeRestrictorMapper.dart';
+import 'package:waveform_designer/widgets/designer/chart/interaction/InteractionHandler.Actions.dart';
+import 'package:waveform_designer/widgets/designer/chart/interaction/InteractionHandler.State.dart';
+import 'package:waveform_designer/widgets/designer/chart/interaction/move_handler/ValueMoveHandlerFactory.dart';
 import 'package:window_manager/window_manager.dart';
 
 class InteractionHandler extends ConsumerStatefulWidget {
@@ -29,27 +33,33 @@ class _InteractionHandler extends ConsumerState<InteractionHandler>
     with
         WindowListener,
         ValueRangeMapper,
+        WaveformMinMaxer,
+        RangeRestrictorMapper,
         PointTransformer,
         NeighboringTickCalculator,
-        TickOverlapCalculator,
-        InteractionState<InteractionHandler>,
-        InteractionMutations<InteractionHandler> {
+        MovePreviewPainterProvider,
+        InteractionHandlerState<InteractionHandler>,
+        InteractionHandlerActions<InteractionHandler> {
   final GlobalKey _widgetKey = GlobalKey();
 
   @override
   void initState() {
-    super.initState();
     WidgetsBinding.instance.addPostFrameCallback(
       (_) => updateWidgetSize(
         _widgetKey.currentContext?.findRenderObject() as RenderBox?,
       ),
     );
+    final waveForm = ref.read(waveFormStateProvider);
+    overlapDetector = OverlapCalculatorFactory.getOverlapCalculator(waveForm);
+    valueMoveHandler = ValueMoveHandlerFactory.getMoveHandler(waveForm);
+    valueAddHandler = AddHandlerFactory.getAddHandler(waveForm);
     windowManager.addListener(this);
-    hoveredTransitionPointIndex = null;
-    isDraggingTransition = false;
+    hoveredValue = null;
+    isDraggingValue = false;
     tickToSnap = null;
-    dragStartXOffset = null;
+    dragStartOffset = null;
     currentDragOffset = null;
+    super.initState();
   }
 
   @override
@@ -61,50 +71,50 @@ class _InteractionHandler extends ConsumerState<InteractionHandler>
 
   @override
   Widget build(BuildContext context) {
-    void onClickUp(TapUpDetails details) {
-      final neighbouringTick = getNeighboringTick(
-        ScreenSpacePoint(
-          dx: details.localPosition.dx,
-        ),
-      );
-      ref
-          .read(waveFormStateProvider.notifier)
-          .addWaveformValue(WaveFormValueModel(
-            tick: neighbouringTick,
-            value: Unit(),
-          ));
+    final waveForm = ref.watch(waveFormStateProvider);
+    final designer = ref.watch(designerStateProvider);
+
+    DS.SystemMouseCursor getHoverCursor() {
+      if (hoveredValue == null) {
+        return SystemMouseCursors.basic;
+      }
+
+      return switch (waveForm.type) {
+        Transition => SystemMouseCursors.resizeColumn,
+        DoubleValue => SystemMouseCursors.move,
+        _ => SystemMouseCursors.basic,
+      };
     }
 
-    waveForm = ref.watch(waveFormStateProvider);
-    designer = ref.watch(designerStateProvider);
-
-    return Stack(
-      children: [
-        Stack(
-          children: [
-            Container(
-              width: double.infinity,
-              height: double.infinity,
-              child: CustomPaint(
-                painter: SnapPainter(
-                  tick: tickToSnap,
-                  duration: ref.read(waveFormStateProvider).duration,
-                  offset: designer.sliceOffset,
-                  slice: designer.sliceRatio,
+    final interactionPainters = isDraggingValue
+        ? providePainters(waveForm, designer, currentDragOffset)
+            .map(
+              (painter) => Container(
+                width: double.infinity,
+                height: double.infinity,
+                child: CustomPaint(
+                  painter: painter,
                 ),
               ),
-            ),
+            )
+            .toList()
+        : [
             Container(
               width: double.infinity,
               height: double.infinity,
               child: CustomPaint(
                 painter: PanPainter(
-                  start: dragStartXOffset,
-                  end: currentDragOffset,
+                  start: dragStartOffset?.dx,
+                  end: currentDragOffset?.dx,
                 ),
               ),
-            ),
-          ],
+            )
+          ];
+
+    return Stack(
+      children: [
+        Stack(
+          children: interactionPainters,
         ),
         Container(
           child: MouseRegion(
@@ -113,9 +123,7 @@ class _InteractionHandler extends ConsumerState<InteractionHandler>
               onHover(context, e);
             },
             onExit: onExit,
-            cursor: hoveredTransitionPointIndex != null
-                ? SystemMouseCursors.resizeColumn
-                : SystemMouseCursors.basic,
+            cursor: getHoverCursor(),
             child: GestureDetector(
               onPanStart: dragStart,
               onPanEnd: dragEnd,

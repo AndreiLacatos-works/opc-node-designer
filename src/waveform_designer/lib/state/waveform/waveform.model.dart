@@ -6,7 +6,12 @@ abstract class WaveformPointValue {
   double getValue();
 }
 
-class Unit extends WaveformPointValue {
+class Void extends WaveformPointValue {
+  @override
+  double getValue() => 0.0;
+}
+
+class Transition extends WaveformPointValue {
   @override
   double getValue() => 0.0;
 }
@@ -14,7 +19,7 @@ class Unit extends WaveformPointValue {
 class DoubleValue extends WaveformPointValue {
   final double value;
 
-  DoubleValue(this.value);
+  DoubleValue(double value) : value = double.parse(value.toStringAsFixed(2));
 
   @override
   double getValue() => value;
