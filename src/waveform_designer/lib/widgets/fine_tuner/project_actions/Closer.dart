@@ -16,7 +16,7 @@ class Closer extends ConsumerWidget {
     if (confirmed) {
       ref.read(waveFormStateProvider.notifier).reset();
       ref.read(designerStateProvider.notifier).reset();
-      Navigator.of(context).pushNamed("/");
+      Navigator.of(context).pushNamed("/launcher");
     }
   }
 
