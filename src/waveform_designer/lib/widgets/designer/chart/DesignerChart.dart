@@ -46,11 +46,10 @@ class DesignerChart extends ConsumerWidget {
                       child: Stack(
                         children: isVoidState
                             ? [
-                                Container(
-                                  width: 50,
-                                  height: 50,
-                                  color: AppTheme.brightGreen,
-                                )
+                                AspectRatio(
+                                  aspectRatio: 3.2,
+                                  child: SizedBox.expand(),
+                                ),
                               ]
                             : [
                                 AspectRatio(

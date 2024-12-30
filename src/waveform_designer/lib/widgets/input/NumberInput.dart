@@ -76,7 +76,7 @@ class _NumberInputState<T extends num> extends State<NumberInput<T>> {
           color: AppTheme.foreground,
           borderRadius: BorderRadius.circular(8),
         ),
-        padding: const EdgeInsets.all(12),
+        padding: const EdgeInsets.fromLTRB(4, 8, 4, 8),
         child: EditableText(
           controller: _controller,
           focusNode: _focusNode,

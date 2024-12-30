@@ -35,7 +35,7 @@ class _NumericValueControlState extends ErrorConsumerState<NumericValueControl>
               padding: const EdgeInsets.only(right: 10),
               child: LabeledInput<double>(
                 label: "at",
-                width: 60,
+                width: 88,
                 value: widget.waveformValue.value.getValue(),
                 onFocusLost: (val) {
                   handleValueChange(
@@ -56,7 +56,7 @@ class _NumericValueControlState extends ErrorConsumerState<NumericValueControl>
             ),
             LabeledInput<int>(
               label: "ms",
-              width: 80,
+              width: 88,
               value: widget.waveformValue.tick,
               onFocusLost: (val) {
                 handleTickChange(
@@ -75,7 +75,7 @@ class _NumericValueControlState extends ErrorConsumerState<NumericValueControl>
               onFocus: clearError,
             ),
             Padding(
-              padding: EdgeInsets.fromLTRB(8, 0, 8, 0),
+              padding: EdgeInsets.fromLTRB(4, 0, 4, 0),
               child: IconButton(
                 onClick: () {
                   moveLeft(
@@ -86,11 +86,12 @@ class _NumericValueControlState extends ErrorConsumerState<NumericValueControl>
                 icon: FaIcon(
                   FontAwesomeIcons.arrowLeft,
                   color: AppTheme.brightGreen,
+                  size: 20,
                 ),
               ),
             ),
             Padding(
-              padding: EdgeInsets.fromLTRB(8, 0, 8, 0),
+              padding: EdgeInsets.fromLTRB(4, 0, 4, 0),
               child: IconButton(
                 onClick: () {
                   moveRight(
@@ -101,11 +102,12 @@ class _NumericValueControlState extends ErrorConsumerState<NumericValueControl>
                 icon: FaIcon(
                   FontAwesomeIcons.arrowRight,
                   color: AppTheme.brightGreen,
+                  size: 20,
                 ),
               ),
             ),
             Padding(
-              padding: EdgeInsets.fromLTRB(8, 0, 8, 0),
+              padding: EdgeInsets.fromLTRB(4, 0, 4, 0),
               child: IconButton(
                 onClick: () {
                   handleRemove(
@@ -116,6 +118,7 @@ class _NumericValueControlState extends ErrorConsumerState<NumericValueControl>
                 icon: FaIcon(
                   FontAwesomeIcons.solidTrashCan,
                   color: AppTheme.danger,
+                  size: 20,
                 ),
               ),
             ),
