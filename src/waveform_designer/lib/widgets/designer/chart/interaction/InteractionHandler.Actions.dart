@@ -89,7 +89,7 @@ mixin InteractionHandlerActions<T extends ConsumerStatefulWidget>
   }
 
   void onClickUp(TapUpDetails details) {
-    valueAddHandler.addValue(
+    valueAddHandler.addValueAtDesiredPosition(
       ScreenSpacePoint.fromOffset(details.localPosition),
       ref,
     );

@@ -18,7 +18,7 @@ class TransitionValueAddHandler extends AbstractValueAddHandler
         PointTransformer,
         NeighboringTickCalculator {
   @override
-  void addValue(
+  void addValueAtDesiredPosition(
     ScreenSpacePoint desiredPosition,
     WidgetRef ref,
   ) {
@@ -34,6 +34,19 @@ class TransitionValueAddHandler extends AbstractValueAddHandler
         .addWaveformValue(WaveFormValueModel(
           tick: neighbouringTick,
           value: Transition(),
+        ));
+  }
+
+  @override
+  void addValue(int tick, WaveformPointValue value, WidgetRef ref) {
+    if (!(value is Transition)) {
+      throw 'Received ${value.runtimeType}, value must be Transition';
+    }
+    ref
+        .read(waveFormStateProvider.notifier)
+        .addWaveformValue(WaveFormValueModel(
+          tick: tick,
+          value: value,
         ));
   }
 }
