@@ -1,4 +1,5 @@
 import 'package:riverpod_annotation/riverpod_annotation.dart';
+import 'package:waveform_designer/state/designer/designer.state.dart';
 import 'package:waveform_designer/state/opc_designer/opc_designer.model.dart';
 import 'package:waveform_designer/state/opc_structure/opc_structure.model.dart';
 import 'package:waveform_designer/state/opc_structure/opc_structure.state.dart';
@@ -61,6 +62,7 @@ class OpcDesignerState extends _$OpcDesignerState {
     } else {
       waveformNotifier.reset();
     }
+    ref.read(designerStateProvider.notifier).resetPan();
   }
 
   void expandRoot(OpcContainerNodeModel container) {

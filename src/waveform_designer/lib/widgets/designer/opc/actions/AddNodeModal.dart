@@ -24,7 +24,7 @@ class _AddNodeModalState extends State {
           duration: 1000,
           tickFrequency: 50,
           values: [],
-          type: Transition,
+          type: DoubleValue,
         ),
       );
       Navigator.of(context).pop(node);
