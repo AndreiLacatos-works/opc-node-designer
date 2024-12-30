@@ -15,7 +15,7 @@ mixin InteractionHandlerActions<T extends ConsumerStatefulWidget>
         ValueRangeMapper,
         PointTransformer,
         NeighboringTickCalculator {
-  void onHover(BuildContext context, PointerHoverEvent event) {
+  void onHover(PointerHoverEvent event) {
     final waveForm = ref.read(waveFormStateProvider);
     final designer = ref.read(designerStateProvider);
     setState(() {
