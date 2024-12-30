@@ -5,7 +5,7 @@ import 'package:waveform_designer/widgets/designer/chart/calc/NeighboringTickCal
 import 'package:waveform_designer/widgets/designer/chart/calc/PointTransformer.dart';
 import 'package:waveform_designer/widgets/designer/chart/calc/ScreenSpacePoint.dart';
 import 'package:waveform_designer/widgets/designer/chart/calc/WaveformMinMaxer.dart';
-import 'package:waveform_designer/widgets/designer/chart/calc/hover_tester/AbstractValueOverlapCalculator.dart';
+import 'package:waveform_designer/widgets/designer/chart/interaction/hover_tester/AbstractValueOverlapCalculator.dart';
 import 'package:waveform_designer/widgets/designer/chart/chart_painters/RangeRestrictorMapper.dart';
 
 class TransitionValueOverlapCalculator extends AbstractValueOverlapCalculator

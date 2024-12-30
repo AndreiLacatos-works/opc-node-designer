@@ -11,10 +11,11 @@ import 'package:waveform_designer/state/waveform/waveform.state.dart';
 import 'package:waveform_designer/widgets/designer/chart/PanPainter.dart';
 import 'package:waveform_designer/widgets/designer/chart/SnapPainter.dart';
 import 'package:waveform_designer/widgets/designer/chart/calc/WaveformMinMaxer.dart';
-import 'package:waveform_designer/widgets/designer/chart/calc/hover_tester/OverlapCalculatorFactory.dart';
+import 'package:waveform_designer/widgets/designer/chart/interaction/hover_tester/OverlapCalculatorFactory.dart';
 import 'package:waveform_designer/widgets/designer/chart/chart_painters/RangeRestrictorMapper.dart';
 import 'package:waveform_designer/widgets/designer/chart/interaction/InteractionHandler.Actions.dart';
 import 'package:waveform_designer/widgets/designer/chart/interaction/InteractionHandler.State.dart';
+import 'package:waveform_designer/widgets/designer/chart/interaction/move_handler/ValueMoveHandlerFactory.dart';
 import 'package:window_manager/window_manager.dart';
 
 class InteractionHandler extends ConsumerStatefulWidget {
@@ -49,6 +50,7 @@ class _InteractionHandler extends ConsumerState<InteractionHandler>
     );
     final waveForm = ref.read(waveFormStateProvider);
     overlapDetector = OverlapCalculatorFactory.getOverlapCalculator(waveForm);
+    valueMoveHandler = ValueMoveHandlerFactory.getMoveHandler(waveForm);
     windowManager.addListener(this);
     hoveredValue = null;
     isDraggingValue = false;

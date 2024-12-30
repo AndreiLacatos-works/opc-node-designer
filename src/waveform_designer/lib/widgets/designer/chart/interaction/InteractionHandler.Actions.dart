@@ -19,7 +19,7 @@ mixin InteractionHandlerActions<T extends ConsumerStatefulWidget>
     final waveForm = ref.read(waveFormStateProvider);
     final designer = ref.read(designerStateProvider);
     setState(() {
-      hoveredValue = overlapDetector?.getOverlappingWaveformValue(
+      hoveredValue = overlapDetector.getOverlappingWaveformValue(
         ScreenSpacePoint.fromOffset(event.localPosition),
         waveForm,
         designer,
@@ -65,10 +65,11 @@ mixin InteractionHandlerActions<T extends ConsumerStatefulWidget>
   void dragEnd(DragEndDetails details) {
     if (isDraggingValue) {
       if (tickToSnap != null && hoveredValue != null) {
-        ref.read(waveFormStateProvider.notifier).moveToTick(
-              hoveredValue!,
-              tickToSnap!,
-            );
+        valueMoveHandler.handleMove(
+          hoveredValue!,
+          ScreenSpacePoint.fromOffset(details.localPosition),
+          ref,
+        );
       }
     } else {
       var delta =
