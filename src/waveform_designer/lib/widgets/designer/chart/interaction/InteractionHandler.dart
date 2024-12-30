@@ -1,6 +1,7 @@
 import 'package:flutter/services.dart' as DS;
 import 'package:flutter/widgets.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:waveform_designer/theme/AppTheme.dart';
 import 'package:waveform_designer/widgets/designer/chart/calc/NeighboringTickCalculator.dart';
 import 'package:waveform_designer/widgets/designer/chart/calc/PointTransformer.dart';
 import 'package:waveform_designer/calc/ValueRangeMapper.dart';
@@ -19,12 +20,6 @@ import 'package:waveform_designer/widgets/designer/chart/interaction/move_handle
 import 'package:window_manager/window_manager.dart';
 
 class InteractionHandler extends ConsumerStatefulWidget {
-  final Widget child;
-
-  InteractionHandler({
-    required this.child,
-  });
-
   @override
   ConsumerState<ConsumerStatefulWidget> createState() => _InteractionHandler();
 }
@@ -126,9 +121,7 @@ class _InteractionHandler extends ConsumerState<InteractionHandler>
         Container(
           child: MouseRegion(
             key: _widgetKey,
-            onHover: (e) {
-              onHover(context, e);
-            },
+            onHover: onHover,
             onExit: onExit,
             cursor: getHoverCursor(),
             child: GestureDetector(
@@ -139,7 +132,7 @@ class _InteractionHandler extends ConsumerState<InteractionHandler>
               child: Container(
                 width: double.infinity,
                 height: double.infinity,
-                child: widget.child,
+                color: AppTheme.foreground.withAlpha(0),
               ),
             ),
           ),

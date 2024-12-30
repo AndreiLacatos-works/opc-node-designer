@@ -25,7 +25,7 @@ mixin PointTransformer
     final [waveformMinValue, waveformMaxValue] =
         getWaveformMinMaxValues(waveForm.values);
     final fullRange = (waveformMaxValue - waveformMinValue).abs();
-    final factor = ((1 - availableAreaRation) / 2);
+    final factor = ((1 - availableAreaRatio) / 2);
     final delta = fullRange * factor;
     final newMax = waveformMaxValue + delta;
     final newMin = waveformMinValue - delta;

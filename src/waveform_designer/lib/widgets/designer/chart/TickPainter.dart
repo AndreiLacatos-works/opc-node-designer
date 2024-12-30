@@ -1,52 +1,64 @@
 import 'package:flutter/widgets.dart';
 import 'package:waveform_designer/calc/ValueRangeMapper.dart';
+import 'package:waveform_designer/state/designer/designer.model.dart';
+import 'package:waveform_designer/state/waveform/waveform.model.dart';
 import 'package:waveform_designer/theme/AppTheme.dart';
 import 'package:waveform_designer/widgets/designer/chart/PanningBehavior.dart';
 import 'package:waveform_designer/widgets/designer/chart/ZoomCompensator.dart';
+import 'package:waveform_designer/widgets/designer/chart/calc/WaveformMinMaxer.dart';
+import 'package:waveform_designer/widgets/designer/chart/chart_painters/RangeRestrictorMapper.dart';
 
 class TickPainter extends CustomPainter
-    with ValueRangeMapper, PanningBehavior, ZoomCompensator {
-  final int _frequency;
-  final int _duration;
-  final double _slice;
-  final double _offset;
+    with
+        ValueRangeMapper,
+        PanningBehavior,
+        ZoomCompensator,
+        RangeRestrictorMapper,
+        WaveformMinMaxer {
+  final WaveFormModel _waveform;
+  final DesignerModel _panning;
 
   TickPainter({
-    required int frequency,
-    required int duration,
-    required double slice,
-    required double offset,
-  })  : _offset = offset,
-        _slice = slice,
-        _duration = duration,
-        _frequency = frequency;
+    required WaveFormModel waveform,
+    required DesignerModel panning,
+  })  : _waveform = waveform,
+        _panning = panning;
 
   @override
   void paint(Canvas canvas, Size size) {
     final clipSize = Size(size.width + 40, size.height + 40);
-    zoomAndPan(canvas, size, _slice, _offset, clipSize);
+    zoomAndPan(
+        canvas, size, _panning.sliceRatio, _panning.sliceOffset, clipSize);
 
     // show roughly 20 ticks in the visible viewport
-    final maxTicksToShow = 20 ~/ _slice;
+    final frequency = _waveform.tickFrequency;
+    final duration = _waveform.duration;
+    final maxTicksToShow = 20 ~/ _panning.sliceRatio;
     final alternativeStep =
-        _calculateAlternativeStepSize(_duration, maxTicksToShow, _frequency);
+        _calculateAlternativeStepSize(duration, maxTicksToShow, frequency);
     final ticksToShow =
         List.generate(maxTicksToShow, (i) => i * alternativeStep);
-    final totalTickCount = _duration == 0 || _frequency == 0
+    final totalTickCount = duration == 0 || frequency == 0
         ? 0
-        : (_duration / _frequency + 1).toInt();
+        : (duration / frequency + 1).toInt();
     for (var i = 0; i < totalTickCount; i++) {
-      final tick = i * _frequency;
+      final tick = i * frequency;
       if (ticksToShow.contains(tick)) {
         final horizontalOffset = mapValueToNewRange(
-            0, _duration.toDouble(), i * _frequency.toDouble(), 0, size.width);
+            0, duration.toDouble(), i * frequency.toDouble(), 0, size.width);
         _drawTickAtOffset(canvas, size, horizontalOffset, tick);
       }
     }
 
     // in case the last tick does not align with the duration, draw an extra tick
-    if (_duration & _frequency != 0) {
-      _drawTickAtOffset(canvas, size, size.width, _duration);
+    if (_waveform.tickFrequency != 0 &&
+        _waveform.duration % _waveform.tickFrequency != 0) {
+      _drawTickAtOffset(canvas, size, size.width, _waveform.duration);
+    }
+
+    // draw left marks
+    if (_waveform.type == DoubleValue) {
+      _drawMarks(duration, frequency, canvas, size);
     }
   }
 
@@ -59,7 +71,7 @@ class TickPainter extends CustomPainter
     var dashHeight = 4, dashSpace = 6, startY = 0.0;
     final paint = Paint()
       ..color = AppTheme.textColor.withAlpha(107)
-      ..strokeWidth = compensateZoom(2.0, _slice)
+      ..strokeWidth = compensateZoom(2.0, _panning.sliceRatio)
       ..style = PaintingStyle.stroke;
     final bottomOffset = Offset(horizontalOffset, size.height);
 
@@ -71,30 +83,39 @@ class TickPainter extends CustomPainter
       startY += dashHeight + dashSpace;
     }
 
-    _drawTickText(canvas, size, horizontalOffset, tickIndex);
+    _drawText(
+        canvas,
+        size,
+        Offset(horizontalOffset / _panning.sliceRatio, size.height)
+            .translate(0, 5),
+        tickIndex.toString());
   }
 
-  void _drawTickText(
+  void _drawText(
     Canvas canvas,
     Size size,
-    double horizontalOffset,
-    int tickIndex,
-  ) {
+    Offset offset,
+    // int tickIndex,
+    String text, {
+    bool horizontalCenter = true,
+    bool verticalCenter = false,
+  }) {
     canvas.save();
 
     // apply an inverse canvas transformation to avoid stretching text
     canvas.transform(
-      Matrix4.identity().scaled(compensateZoom(1, _slice), 1.0).storage,
+      Matrix4.identity()
+          .scaled(compensateZoom(1, _panning.sliceRatio), 1.0)
+          .storage,
     );
 
-    final bottomOffset = Offset(horizontalOffset / _slice, size.height);
     // draw tick text
     const textStyle = TextStyle(
       color: AppTheme.textColor,
       fontSize: 14,
     );
     var textSpan = TextSpan(
-      text: (tickIndex).toString(),
+      text: text,
       style: textStyle,
     );
     final textPainter = TextPainter(
@@ -107,7 +128,11 @@ class TickPainter extends CustomPainter
     );
 
     textPainter.paint(
-        canvas, bottomOffset.translate(textPainter.width / 2 * -1, 5));
+        canvas,
+        offset.translate(
+          horizontalCenter ? textPainter.width / 2 * -1 : 0,
+          verticalCenter ? textPainter.height / 2 * -1 : 0,
+        ));
     canvas.restore();
   }
 
@@ -120,6 +145,56 @@ class TickPainter extends CustomPainter
     return stepAlternative <= stepOriginal
         ? stepOriginal
         : (stepAlternative / stepOriginal).ceil() * stepOriginal;
+  }
+
+  void _drawMarks(
+    int duration,
+    int frequency,
+    Canvas canvas,
+    Size size,
+  ) {
+    // draw left hand marks
+    final paint = Paint()
+      ..color = AppTheme.textColor
+      ..strokeWidth = compensateZoom(2.0, _panning.sliceRatio)
+      ..style = PaintingStyle.stroke;
+    final from = Offset(
+        _panning.sliceOffset * size.width - 20 * _panning.sliceRatio, 0.0);
+    final to = Offset(
+        _panning.sliceOffset * size.width - 20 * _panning.sliceRatio,
+        size.height);
+    canvas.drawLine(from, to, paint);
+    paint.strokeWidth = 2.0;
+
+    final markLength = 8;
+    final markCount = 4;
+    final [min, max] = getWaveformMinMaxValues(_waveform.values);
+    for (var i = 0; i <= markCount; i++) {
+      final verticalOffset = size.height * availableAreaRatio / markCount * i +
+          size.height * ((1 - availableAreaRatio) / 2);
+      final baseOffset =
+          _panning.sliceOffset * size.width - 20 * _panning.sliceRatio;
+      final markStart =
+          Offset(baseOffset - markLength * _panning.sliceRatio, verticalOffset);
+      final markEnd =
+          Offset(baseOffset + markLength * _panning.sliceRatio, verticalOffset);
+      canvas.drawLine(markStart, markEnd, paint);
+
+      _drawText(
+        canvas,
+        size,
+        Offset((markEnd.dx / _panning.sliceRatio) + 20, markEnd.dy),
+        mapValueToNewRange(
+          0.0,
+          markCount.toDouble(),
+          i.toDouble(),
+          max,
+          min,
+        ).toStringAsFixed(1),
+        verticalCenter: true,
+        horizontalCenter: false,
+      );
+    }
   }
 
   @override

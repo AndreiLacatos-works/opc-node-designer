@@ -1,7 +1,7 @@
 import 'package:waveform_designer/calc/ValueRangeMapper.dart';
 
 mixin RangeRestrictorMapper on ValueRangeMapper {
-  late double availableAreaRation = .9;
+  late double availableAreaRatio = .9;
 
   // similar to mapValueToNewRange, additionally it adds a restriction to
   // the new range, such that the value is mapped onto the middle percentage
@@ -18,8 +18,8 @@ mixin RangeRestrictorMapper on ValueRangeMapper {
       originalRangeStart,
       originalRangeEnd,
       value,
-      newRangeStart * ((1 - availableAreaRation) / 2),
-      newRangeEnd * ((1 + availableAreaRation) / 2),
+      newRangeStart * ((1 - availableAreaRatio) / 2),
+      newRangeEnd * ((1 + availableAreaRatio) / 2),
     );
   }
 }
