@@ -86,11 +86,9 @@ class _InteractionHandler extends ConsumerState<InteractionHandler>
       };
     }
 
-    return Stack(
-      children: [
-        Stack(
-          children: [
-            ...providePainters(waveForm, designer, currentDragOffset).map(
+    final interactionPainters = isDraggingValue
+        ? providePainters(waveForm, designer, currentDragOffset)
+            .map(
               (painter) => Container(
                 width: double.infinity,
                 height: double.infinity,
@@ -98,19 +96,25 @@ class _InteractionHandler extends ConsumerState<InteractionHandler>
                   painter: painter,
                 ),
               ),
-            ),
-            if (!isDraggingValue)
-              Container(
-                width: double.infinity,
-                height: double.infinity,
-                child: CustomPaint(
-                  painter: PanPainter(
-                    start: dragStartOffset?.dx,
-                    end: currentDragOffset?.dx,
-                  ),
+            )
+            .toList()
+        : [
+            Container(
+              width: double.infinity,
+              height: double.infinity,
+              child: CustomPaint(
+                painter: PanPainter(
+                  start: dragStartOffset?.dx,
+                  end: currentDragOffset?.dx,
                 ),
               ),
-          ],
+            )
+          ];
+
+    return Stack(
+      children: [
+        Stack(
+          children: interactionPainters,
         ),
         Container(
           child: MouseRegion(
