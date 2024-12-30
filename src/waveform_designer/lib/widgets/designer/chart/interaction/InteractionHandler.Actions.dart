@@ -88,6 +88,13 @@ mixin InteractionHandlerActions<T extends ConsumerStatefulWidget>
     });
   }
 
+  void onClickUp(TapUpDetails details) {
+    valueAddHandler.addValue(
+      ScreenSpacePoint.fromOffset(details.localPosition),
+      ref,
+    );
+  }
+
   void updateWidgetSize(RenderBox? renderBox) {
     if (renderBox != null) {
       ref

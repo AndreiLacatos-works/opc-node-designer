@@ -3,12 +3,12 @@ import 'package:flutter/widgets.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:waveform_designer/widgets/designer/chart/calc/NeighboringTickCalculator.dart';
 import 'package:waveform_designer/widgets/designer/chart/calc/PointTransformer.dart';
-import 'package:waveform_designer/widgets/designer/chart/calc/ScreenSpacePoint.dart';
 import 'package:waveform_designer/calc/ValueRangeMapper.dart';
 import 'package:waveform_designer/state/designer/designer.state.dart';
 import 'package:waveform_designer/state/waveform/waveform.model.dart';
 import 'package:waveform_designer/state/waveform/waveform.state.dart';
 import 'package:waveform_designer/widgets/designer/chart/PanPainter.dart';
+import 'package:waveform_designer/widgets/designer/chart/interaction/add_handler/AddHandlerFactory.dart';
 import 'package:waveform_designer/widgets/designer/chart/interaction/move_preview_painters/MovePreviewPainterProvider.dart';
 import 'package:waveform_designer/widgets/designer/chart/calc/WaveformMinMaxer.dart';
 import 'package:waveform_designer/widgets/designer/chart/interaction/hover_tester/OverlapCalculatorFactory.dart';
@@ -52,6 +52,7 @@ class _InteractionHandler extends ConsumerState<InteractionHandler>
     final waveForm = ref.read(waveFormStateProvider);
     overlapDetector = OverlapCalculatorFactory.getOverlapCalculator(waveForm);
     valueMoveHandler = ValueMoveHandlerFactory.getMoveHandler(waveForm);
+    valueAddHandler = AddHandlerFactory.getAddHandler(waveForm);
     windowManager.addListener(this);
     hoveredValue = null;
     isDraggingValue = false;
@@ -72,20 +73,6 @@ class _InteractionHandler extends ConsumerState<InteractionHandler>
   Widget build(BuildContext context) {
     final waveForm = ref.watch(waveFormStateProvider);
     final designer = ref.watch(designerStateProvider);
-
-    void onClickUp(TapUpDetails details) {
-      final neighbouringTick = getNeighboringTick(
-        ScreenSpacePoint.fromOffset(details.localPosition),
-        waveForm,
-        designer,
-      );
-      ref
-          .read(waveFormStateProvider.notifier)
-          .addWaveformValue(WaveFormValueModel(
-            tick: neighbouringTick,
-            value: Transition(),
-          ));
-    }
 
     DS.SystemMouseCursor getHoverCursor() {
       if (hoveredValue == null) {
@@ -112,31 +99,6 @@ class _InteractionHandler extends ConsumerState<InteractionHandler>
                 ),
               ),
             ),
-            // Container(
-            //   width: double.infinity,
-            //   height: double.infinity,
-            //   child: CustomPaint(
-            //     painter: SnapPainter(
-            //       tick: tickToSnap,
-            //       duration: ref.read(waveFormStateProvider).duration,
-            //       offset: designer.sliceOffset,
-            //       slice: designer.sliceRatio,
-            //     ),
-            //   ),
-            // ),
-            // Container(
-            //   width: double.infinity,
-            //   height: double.infinity,
-            //   child: CustomPaint(
-            //     painter: ValueMovePainter(
-            //       panning: designer,
-            //       waveform: waveForm,
-            //       point: currentDragOffset != null && isDraggingValue
-            //           ? ScreenSpacePoint.fromOffset(currentDragOffset!)
-            //           : null,
-            //     ),
-            //   ),
-            // ),
             if (!isDraggingValue)
               Container(
                 width: double.infinity,
