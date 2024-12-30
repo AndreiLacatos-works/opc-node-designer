@@ -92,6 +92,14 @@ class OpcDesignerState extends _$OpcDesignerState {
     final newSelection =
         treeItems.where((n) => n.getId() == currentSelection).firstOrNull;
     state = state.copyWith(selectedNode: newSelection);
+    // update the waveform diagram state to show the waveform of the selected node
+    var waveformNotifier = ref.read(waveFormStateProvider.notifier);
+    if (newSelection is OpcValueNodeModel) {
+      waveformNotifier.initialize(newSelection.waveform);
+    } else {
+      waveformNotifier.reset();
+    }
+    ref.read(designerStateProvider.notifier).resetPan();
   }
 
   List<OpcContainerNodeModel> _listChildContainersRecursively(
