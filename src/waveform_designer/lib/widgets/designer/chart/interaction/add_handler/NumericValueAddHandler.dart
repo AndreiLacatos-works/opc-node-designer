@@ -6,6 +6,7 @@ import 'package:waveform_designer/state/waveform/waveform.state.dart';
 import 'package:waveform_designer/widgets/designer/chart/calc/NeighboringTickCalculator.dart';
 import 'package:waveform_designer/widgets/designer/chart/calc/PointTransformer.dart';
 import 'package:waveform_designer/widgets/designer/chart/calc/ScreenSpacePoint.dart';
+import 'package:waveform_designer/widgets/designer/chart/calc/VerticalOffsetCalculator.dart';
 import 'package:waveform_designer/widgets/designer/chart/calc/WaveformMinMaxer.dart';
 import 'package:waveform_designer/widgets/designer/chart/chart_painters/RangeRestrictorMapper.dart';
 import 'package:waveform_designer/widgets/designer/chart/interaction/add_handler/AbstractValueAddHandler.dart';
@@ -16,7 +17,8 @@ class NumericValueAddHandler extends AbstractValueAddHandler
         RangeRestrictorMapper,
         WaveformMinMaxer,
         PointTransformer,
-        NeighboringTickCalculator {
+        NeighboringTickCalculator,
+        VerticalOffsetCalculator {
   @override
   void addValue(
     ScreenSpacePoint desiredPosition,
@@ -29,7 +31,7 @@ class NumericValueAddHandler extends AbstractValueAddHandler
       waveform,
       designer,
     );
-    final value = toDriagramSpace(desiredPosition, waveform, designer).dy;
+    final value = getNewValue(waveform, designer, desiredPosition);
     ref
         .read(waveFormStateProvider.notifier)
         .addWaveformValue(WaveFormValueModel(

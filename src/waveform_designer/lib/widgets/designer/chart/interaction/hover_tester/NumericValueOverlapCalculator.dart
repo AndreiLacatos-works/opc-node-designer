@@ -26,6 +26,14 @@ class NumericValueOverlapCalculator extends TransitionValueOverlapCalculator {
     final [waveformMinValue, waveformMaxValue] =
         getWaveformMinMaxValues(waveForm.values);
 
+    // in case the min and max are the same, points are drawn in the middle of the canvas
+    if (waveformMinValue == waveformMaxValue) {
+      return (designer.designerHeight / 2 - position.dy).abs() <=
+              tolerancePixels
+          ? overlapByTick
+          : null;
+    }
+
     final fullValueRange = (waveformMinValue - waveformMaxValue).abs();
     final toleranceDistance =
         fullValueRange / designer.designerHeight * tolerancePixels;

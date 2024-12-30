@@ -54,13 +54,17 @@ class ValueMovePainter extends CustomPainter
       0,
       size.width,
     );
-    final verticalOffset = mapValueToRestrictedRange(
-      maxValue,
-      minValue,
-      toDriagramSpace(_point, _waveform, _panning).dy,
-      size.height,
-      size.height,
-    );
+
+    // in case min and max are the same, fallback to mouse position
+    final verticalOffset = minValue == maxValue
+        ? _point.dy
+        : mapValueToRestrictedRange(
+            maxValue,
+            minValue,
+            toDriagramSpace(_point, _waveform, _panning).dy,
+            size.height,
+            size.height,
+          );
     final boundingBox = Rect.fromCenter(
       center: Offset(horizontalOffset, verticalOffset),
       height: circleRadius,

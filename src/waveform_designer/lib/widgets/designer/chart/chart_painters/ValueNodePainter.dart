@@ -5,6 +5,8 @@ import 'package:waveform_designer/state/waveform/waveform.model.dart';
 import 'package:waveform_designer/theme/AppTheme.dart';
 import 'package:waveform_designer/widgets/designer/chart/PanningBehavior.dart';
 import 'package:waveform_designer/widgets/designer/chart/ZoomCompensator.dart';
+import 'package:waveform_designer/widgets/designer/chart/calc/PointTransformer.dart';
+import 'package:waveform_designer/widgets/designer/chart/calc/VerticalOffsetCalculator.dart';
 import 'package:waveform_designer/widgets/designer/chart/calc/WaveformMinMaxer.dart';
 import 'package:waveform_designer/widgets/designer/chart/chart_painters/RangeRestrictorMapper.dart';
 
@@ -14,7 +16,9 @@ class ValueNodePainter extends CustomPainter
         PanningBehavior,
         ZoomCompensator,
         RangeRestrictorMapper,
-        WaveformMinMaxer {
+        WaveformMinMaxer,
+        PointTransformer,
+        VerticalOffsetCalculator {
   final List<WaveFormValueModel> _values;
   final int _duration;
   final double _slice;
@@ -35,7 +39,6 @@ class ValueNodePainter extends CustomPainter
       ..color = AppTheme.accentColor
       ..style = PaintingStyle.fill;
     final circleRadius = 8.0;
-    final [minValue, maxValue] = getWaveformMinMaxValues(_values);
 
     for (final value in _values) {
       final horizontalOffset = mapValueToNewRange(
@@ -45,13 +48,7 @@ class ValueNodePainter extends CustomPainter
         0,
         size.width,
       );
-      final verticalOffset = mapValueToRestrictedRange(
-        maxValue,
-        minValue,
-        value.value.getValue(),
-        size.height,
-        size.height,
-      );
+      final verticalOffset = getVerticalOffset(_values, value, size);
       final boundingBox = Rect.fromCenter(
         center: Offset(horizontalOffset, verticalOffset),
         height: circleRadius,

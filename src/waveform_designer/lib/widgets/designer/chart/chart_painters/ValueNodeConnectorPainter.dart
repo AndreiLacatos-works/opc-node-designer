@@ -5,6 +5,8 @@ import 'package:waveform_designer/state/waveform/waveform.model.dart';
 import 'package:waveform_designer/theme/AppTheme.dart';
 import 'package:waveform_designer/widgets/designer/chart/PanningBehavior.dart';
 import 'package:waveform_designer/widgets/designer/chart/ZoomCompensator.dart';
+import 'package:waveform_designer/widgets/designer/chart/calc/PointTransformer.dart';
+import 'package:waveform_designer/widgets/designer/chart/calc/VerticalOffsetCalculator.dart';
 import 'package:waveform_designer/widgets/designer/chart/calc/WaveformMinMaxer.dart';
 import 'package:waveform_designer/widgets/designer/chart/chart_painters/RangeRestrictorMapper.dart';
 
@@ -14,7 +16,9 @@ class ValueNodeConnectorPainter extends CustomPainter
         PanningBehavior,
         ZoomCompensator,
         RangeRestrictorMapper,
-        WaveformMinMaxer {
+        WaveformMinMaxer,
+        PointTransformer,
+        VerticalOffsetCalculator {
   final List<WaveFormValueModel> _values;
   final int _duration;
   final double _slice;
@@ -35,7 +39,6 @@ class ValueNodeConnectorPainter extends CustomPainter
     }
 
     zoomAndPan(canvas, size, _slice, _offset);
-    final [minValue, maxValue] = getWaveformMinMaxValues(_values);
     var previous = _values.first;
     final paint = Paint()
       ..color = AppTheme.textColor
@@ -51,13 +54,7 @@ class ValueNodeConnectorPainter extends CustomPainter
           0,
           size.width,
         ),
-        mapValueToRestrictedRange(
-          maxValue,
-          minValue,
-          previous.value.getValue(),
-          size.height,
-          size.height,
-        ),
+        getVerticalOffset(_values, previous, size),
       );
       final to = Offset(
         mapValueToNewRange(
@@ -67,13 +64,7 @@ class ValueNodeConnectorPainter extends CustomPainter
           0,
           size.width,
         ),
-        mapValueToRestrictedRange(
-          maxValue,
-          minValue,
-          current.value.getValue(),
-          size.height,
-          size.height,
-        ),
+        getVerticalOffset(_values, current, size),
       );
       canvas.drawLine(from, to, paint);
       previous = current;
