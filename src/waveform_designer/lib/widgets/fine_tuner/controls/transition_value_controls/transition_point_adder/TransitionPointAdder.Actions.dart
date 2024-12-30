@@ -1,6 +1,6 @@
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:waveform_designer/state/waveform/waveform.model.dart';
-import 'package:waveform_designer/state/waveform/waveform.state.dart';
+import 'package:waveform_designer/widgets/designer/chart/interaction/add_handler/TransitionValueAddHandler.dart';
 import 'package:waveform_designer/widgets/fine_tuner/controls/ErrorConsumerState.dart';
 
 mixin TransitionPointAdderActions {
@@ -11,12 +11,7 @@ mixin TransitionPointAdderActions {
   ) {
     if (value != null) {
       try {
-        ref.read(waveFormStateProvider.notifier).addWaveformValue(
-              WaveFormValueModel(
-                tick: value,
-                value: Transition(),
-              ),
-            );
+        TransitionValueAddHandler().addValue(value, Transition(), ref);
 
         callback();
       } on String catch (e) {

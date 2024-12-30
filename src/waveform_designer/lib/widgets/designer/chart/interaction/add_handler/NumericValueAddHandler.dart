@@ -20,7 +20,7 @@ class NumericValueAddHandler extends AbstractValueAddHandler
         NeighboringTickCalculator,
         VerticalOffsetCalculator {
   @override
-  void addValue(
+  void addValueAtDesiredPosition(
     ScreenSpacePoint desiredPosition,
     WidgetRef ref,
   ) {
@@ -37,6 +37,19 @@ class NumericValueAddHandler extends AbstractValueAddHandler
         .addWaveformValue(WaveFormValueModel(
           tick: neighbouringTick,
           value: DoubleValue(value),
+        ));
+  }
+
+  @override
+  void addValue(int tick, WaveformPointValue value, WidgetRef ref) {
+    if (!(value is DoubleValue)) {
+      throw 'Received ${value.runtimeType}, value must be DoubleValue';
+    }
+    ref
+        .read(waveFormStateProvider.notifier)
+        .addWaveformValue(WaveFormValueModel(
+          tick: tick,
+          value: value,
         ));
   }
 }

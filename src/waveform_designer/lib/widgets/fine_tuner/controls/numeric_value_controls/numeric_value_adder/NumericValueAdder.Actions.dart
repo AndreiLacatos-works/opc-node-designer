@@ -1,6 +1,6 @@
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:waveform_designer/state/waveform/waveform.model.dart';
-import 'package:waveform_designer/state/waveform/waveform.state.dart';
+import 'package:waveform_designer/widgets/designer/chart/interaction/add_handler/NumericValueAddHandler.dart';
 import 'package:waveform_designer/widgets/fine_tuner/controls/ErrorConsumerState.dart';
 
 mixin NumericValueAdderActions {
@@ -12,13 +12,7 @@ mixin NumericValueAdderActions {
   ) {
     if (tick != null) {
       try {
-        ref.read(waveFormStateProvider.notifier).addWaveformValue(
-              WaveFormValueModel(
-                tick: tick,
-                value: DoubleValue(value ?? 0),
-              ),
-            );
-
+        NumericValueAddHandler().addValue(tick, DoubleValue(value ?? 0), ref);
         callback();
       } on String catch (e) {
         if (this is ErrorHandler) {
