@@ -1,11 +1,12 @@
 import 'package:flutter/widgets.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:waveform_designer/screens/AppInitializer.dart';
 import 'package:waveform_designer/screens/WaveformDesigner.dart';
 import 'package:waveform_designer/theme/AppTheme.dart';
 import 'package:waveform_designer/screens/WaveformLauncher.dart';
 import 'package:window_manager/window_manager.dart';
 
-void main() async {
+void main(List<String> args) async {
   WidgetsFlutterBinding.ensureInitialized();
 
   await windowManager.ensureInitialized();
@@ -13,13 +14,18 @@ void main() async {
 
   runApp(
     ProviderScope(
-      child: MyApp(),
+      child: MyApp(
+        starterFile: args.firstOrNull,
+      ),
     ),
   );
 }
 
 class MyApp extends StatelessWidget {
+  final String? starterFile;
+
   const MyApp({
+    this.starterFile,
     super.key,
   });
 
@@ -28,7 +34,7 @@ class MyApp extends StatelessWidget {
     return WidgetsApp(
       title: 'Waveform designer',
       color: AppTheme.background,
-      home: WaveformLauncher(),
+      home: AppInitializer(starterFile: starterFile),
       pageRouteBuilder: <T>(RouteSettings settings, WidgetBuilder builder) {
         return PageRouteBuilder<T>(
           settings: settings,
@@ -43,6 +49,7 @@ class MyApp extends StatelessWidget {
       },
       routes: {
         '/designer': (_) => WaveformDesigner(),
+        '/launcher': (_) => WaveformLauncher(),
       },
     );
   }

@@ -20,7 +20,7 @@ class Closer extends ConsumerWidget {
       ref.read(designerStateProvider.notifier).reset();
       ref.read(opcStructureStateProvider.notifier).reset();
       ref.read(opcDesignerStateProvider.notifier).reset();
-      Navigator.of(context).pushNamed("/");
+      Navigator.of(context).pushNamed("/launcher");
     }
   }
 
