@@ -1,4 +1,5 @@
 import 'package:flutter/widgets.dart';
+import 'package:waveform_designer/theme/AppTheme.dart';
 
 class StringFormField extends StatelessWidget {
   final TextEditingController controller;
@@ -28,18 +29,16 @@ class StringFormField extends StatelessWidget {
               padding: const EdgeInsets.all(8.0),
               decoration: BoxDecoration(
                 border: Border.all(
-                  color: state.hasError
-                      ? const Color(0xFFFF0000)
-                      : const Color(0xFF000000),
+                  color: state.hasError ? AppTheme.danger : AppTheme.textColor,
                 ),
                 borderRadius: BorderRadius.circular(8),
               ),
               child: EditableText(
                 controller: controller,
                 focusNode: _focusNode,
-                style: const TextStyle(color: Color(0xFF000000), fontSize: 18),
-                cursorColor: const Color(0xFF000000),
-                backgroundCursorColor: const Color(0xFF000000),
+                style: const TextStyle(color: AppTheme.textColor, fontSize: 18),
+                cursorColor: AppTheme.textColor,
+                backgroundCursorColor: AppTheme.textColor,
               ),
             ),
             if (state.hasError)
@@ -47,7 +46,7 @@ class StringFormField extends StatelessWidget {
                 padding: const EdgeInsets.only(top: 8.0),
                 child: Text(
                   state.errorText ?? "Invalid value",
-                  style: const TextStyle(color: Color(0xFFFF0000)),
+                  style: const TextStyle(color: AppTheme.danger),
                 ),
               ),
           ],
