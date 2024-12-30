@@ -73,7 +73,14 @@ class _InteractionHandler extends ConsumerState<InteractionHandler>
   Widget build(BuildContext context) {
     final waveForm = ref.watch(waveFormStateProvider);
     final designer = ref.watch(designerStateProvider);
-
+    ref.listen(waveFormStateProvider, (_, newWaveForm) {
+      setState(() {
+        overlapDetector =
+            OverlapCalculatorFactory.getOverlapCalculator(newWaveForm);
+        valueMoveHandler = ValueMoveHandlerFactory.getMoveHandler(newWaveForm);
+        valueAddHandler = AddHandlerFactory.getAddHandler(newWaveForm);
+      });
+    });
     DS.SystemMouseCursor getHoverCursor() {
       if (hoveredValue == null) {
         return SystemMouseCursors.basic;
