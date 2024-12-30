@@ -33,7 +33,7 @@ class DesignerChart extends ConsumerWidget {
                 children: [
                   Padding(
                     padding: const EdgeInsets.symmetric(
-                        vertical: 14, horizontal: 20),
+                        vertical: 14, horizontal: 30),
                     child: Column(
                       children: [
                         PanControls(),
@@ -51,10 +51,8 @@ class DesignerChart extends ConsumerWidget {
                               aspectRatio: 3.2,
                               child: CustomPaint(
                                 painter: TickPainter(
-                                  duration: waveformState.duration,
-                                  frequency: waveformState.tickFrequency,
-                                  slice: panningState.sliceRatio,
-                                  offset: panningState.sliceOffset,
+                                  waveform: waveformState,
+                                  panning: panningState,
                                 ),
                               ),
                             ),
