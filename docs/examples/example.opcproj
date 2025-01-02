@@ -1,0 +1,224 @@
+{
+  "root": {
+    "id": "e6ff2336-79aa-40ee-b355-65c7fd4e0b68",
+    "label": "Application root",
+    "type": "container",
+    "children": [
+      {
+        "id": "34fd0b7d-b937-4196-a128-b0cb814f679a",
+        "label": "Container 1",
+        "type": "container",
+        "children": [
+          {
+            "id": "febbd161-8392-4ed5-adfb-fba562500af4",
+            "label": "Container 3",
+            "type": "container",
+            "children": [
+              {
+                "id": "5b449988-b24e-4427-9127-420239adcb98",
+                "label": "Value 7",
+                "type": "value",
+                "children": null,
+                "waveform": {
+                  "duration": 1700,
+                  "tickFrequency": 50,
+                  "type": "doubleValues",
+                  "transitionPoints": [
+                    {
+                      "tick": 0,
+                      "value": 21.0
+                    },
+                    {
+                      "tick": 200,
+                      "value": 69.72
+                    },
+                    {
+                      "tick": 350,
+                      "value": 171.7
+                    },
+                    {
+                      "tick": 500,
+                      "value": 27.0
+                    },
+                    {
+                      "tick": 550,
+                      "value": 145.17
+                    },
+                    {
+                      "tick": 600,
+                      "value": 156.01
+                    },
+                    {
+                      "tick": 650,
+                      "value": 166.88
+                    },
+                    {
+                      "tick": 700,
+                      "value": 125.2
+                    },
+                    {
+                      "tick": 750,
+                      "value": 30.24
+                    },
+                    {
+                      "tick": 800,
+                      "value": 33.94
+                    },
+                    {
+                      "tick": 850,
+                      "value": 51.69
+                    },
+                    {
+                      "tick": 900,
+                      "value": 154.19
+                    },
+                    {
+                      "tick": 950,
+                      "value": 160.72
+                    },
+                    {
+                      "tick": 1000,
+                      "value": 163.44
+                    },
+                    {
+                      "tick": 1050,
+                      "value": 159.63
+                    },
+                    {
+                      "tick": 1100,
+                      "value": 19.72
+                    },
+                    {
+                      "tick": 1250,
+                      "value": 144.72
+                    },
+                    {
+                      "tick": 1400,
+                      "value": 9.0
+                    },
+                    {
+                      "tick": 1550,
+                      "value": 156.7
+                    }
+                  ]
+                }
+              },
+              {
+                "id": "5ceb63ff-fa17-4536-a5e3-72dd25b00216",
+                "label": "Container 4",
+                "type": "container",
+                "children": [],
+                "waveform": null
+              },
+              {
+                "id": "52ef8535-ff15-431d-834d-60d8e57bd6fa",
+                "label": "Value 3",
+                "type": "value",
+                "children": null,
+                "waveform": {
+                  "duration": 800,
+                  "tickFrequency": 50,
+                  "type": "doubleValues",
+                  "transitionPoints": [
+                    {
+                      "tick": 50,
+                      "value": 9.0
+                    },
+                    {
+                      "tick": 100,
+                      "value": 100.0
+                    },
+                    {
+                      "tick": 150,
+                      "value": 100.0
+                    },
+                    {
+                      "tick": 350,
+                      "value": 21.0
+                    },
+                    {
+                      "tick": 500,
+                      "value": 27.0
+                    },
+                    {
+                      "tick": 550,
+                      "value": 156.7
+                    },
+                    {
+                      "tick": 600,
+                      "value": 171.7
+                    },
+                    {
+                      "tick": 750,
+                      "value": 37.7
+                    }
+                  ]
+                }
+              },
+              {
+                "id": "ef24c652-8f52-4776-a05d-91d1e79e5f99",
+                "label": "Boolean",
+                "type": "value",
+                "children": null,
+                "waveform": {
+                  "duration": 1000,
+                  "tickFrequency": 50,
+                  "type": "transitions",
+                  "transitionPoints": [
+                    {
+                      "tick": 250,
+                      "value": 0.0
+                    },
+                    {
+                      "tick": 400,
+                      "value": 0.0
+                    },
+                    {
+                      "tick": 600,
+                      "value": 0.0
+                    },
+                    {
+                      "tick": 750,
+                      "value": 0.0
+                    }
+                  ]
+                }
+              }
+            ],
+            "waveform": null
+          }
+        ],
+        "waveform": null
+      },
+      {
+        "id": "dbd66ba7-60ef-4524-b3c2-2dbc7d1faad5",
+        "label": "Container 2",
+        "type": "container",
+        "children": [],
+        "waveform": null
+      },
+      {
+        "id": "9933bcb8-2689-4818-ad6a-55a74dd4c445",
+        "label": "Value 1",
+        "type": "value",
+        "children": null,
+        "waveform": {
+          "duration": 1000,
+          "tickFrequency": 100,
+          "type": "doubleValues",
+          "transitionPoints": [
+            {
+              "tick": 400,
+              "value": 83.0
+            },
+            {
+              "tick": 600,
+              "value": 171.7
+            }
+          ]
+        }
+      }
+    ],
+    "waveform": null
+  }
+}

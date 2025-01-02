@@ -2,13 +2,15 @@
 
 ## What is this project about?
 
-This project offers an intuitive user interface for designing and defining digital signal waveforms.
+This project offers an intuitive user interface for designing and defining the structure of simulated OPC UA server. It allows you to define the evolution of values of nodes over time.
 
 ## How
 
-An interactive signal plot is provided, enabling users to create transition points by clicking on the desired tick. For greater precision, transition points can also be defined manually.
+It allows the creation & organization of value nodes.
 
-Waveforms are saved and exported in a JSON format. These exported files enable easy sharing and allow waveforms to be edited later.
+An interactive plot is provided, enabling the definition of value transition points by clicking on the desired tick. For greater precision, transition points can also be defined manually.
+
+The project can be saved for easy sharing and later editing. It can also be directly imported into [OPC Node simulator](https://github.com/AndreiLacatos-works/opc-engine) to simulate an OPC UA server according to the node structure defined here.
 
 ![Waveform editor](docs/ss/designer.png)
 
