@@ -1,4 +1,4 @@
-import 'package:waveform_designer/calc/ValueRangeMapper.dart';
+import 'package:opc_node_designer/calc/ValueRangeMapper.dart';
 
 mixin RangeRestrictorMapper on ValueRangeMapper {
   late double availableAreaRatio = .9;

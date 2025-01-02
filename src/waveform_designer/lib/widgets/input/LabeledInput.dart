@@ -1,5 +1,5 @@
 import 'package:flutter/widgets.dart';
-import 'package:waveform_designer/widgets/input/NumberInput.dart';
+import 'package:opc_node_designer/widgets/input/NumberInput.dart';
 
 class LabeledInput<T extends num> extends StatelessWidget {
   final Function(T?)? onChanged;

@@ -1,9 +1,9 @@
 import 'package:flutter/widgets.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
-import 'package:waveform_designer/screens/AppInitializer.dart';
-import 'package:waveform_designer/screens/WaveformDesigner.dart';
-import 'package:waveform_designer/theme/AppTheme.dart';
-import 'package:waveform_designer/screens/WaveformLauncher.dart';
+import 'package:opc_node_designer/screens/AppInitializer.dart';
+import 'package:opc_node_designer/screens/WaveformDesigner.dart';
+import 'package:opc_node_designer/theme/AppTheme.dart';
+import 'package:opc_node_designer/screens/WaveformLauncher.dart';
 import 'package:window_manager/window_manager.dart';
 
 void main(List<String> args) async {

@@ -1,13 +1,13 @@
 import 'package:flutter/widgets.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
-import 'package:waveform_designer/state/waveform/waveform.state.dart';
-import 'package:waveform_designer/theme/AppTheme.dart';
-import 'package:waveform_designer/widgets/fine_tuner/controls/transition_value_controls/transition_point_adder/TransitionPointAdder.dart';
-import 'package:waveform_designer/widgets/fine_tuner/controls/transition_value_controls/transition_value_control/TransitionPointControl.dart';
-import 'package:waveform_designer/widgets/shared/SimpleButton.dart';
-import 'package:waveform_designer/state/opc_designer/opc_designer.state.dart';
-import 'package:waveform_designer/state/opc_structure/opc_structure.model.dart';
+import 'package:opc_node_designer/state/waveform/waveform.state.dart';
+import 'package:opc_node_designer/theme/AppTheme.dart';
+import 'package:opc_node_designer/widgets/fine_tuner/controls/transition_value_controls/transition_point_adder/TransitionPointAdder.dart';
+import 'package:opc_node_designer/widgets/fine_tuner/controls/transition_value_controls/transition_value_control/TransitionPointControl.dart';
+import 'package:opc_node_designer/widgets/shared/SimpleButton.dart';
+import 'package:opc_node_designer/state/opc_designer/opc_designer.state.dart';
+import 'package:opc_node_designer/state/opc_structure/opc_structure.model.dart';
 
 class TransitionPointsControl extends ConsumerStatefulWidget {
   @override

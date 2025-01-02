@@ -1,11 +1,11 @@
 import 'package:flutter/widgets.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
-import 'package:waveform_designer/theme/AppTheme.dart';
-import 'package:waveform_designer/widgets/fine_tuner/controls/DurationControl.dart';
-import 'package:waveform_designer/widgets/fine_tuner/controls/TickFrequencyControl.dart';
-import 'package:waveform_designer/widgets/fine_tuner/controls/WaveformValuesControl.dart';
-import 'package:waveform_designer/widgets/fine_tuner/project_actions/Closer.dart';
-import 'package:waveform_designer/widgets/fine_tuner/project_actions/Saver.dart';
+import 'package:opc_node_designer/theme/AppTheme.dart';
+import 'package:opc_node_designer/widgets/fine_tuner/controls/DurationControl.dart';
+import 'package:opc_node_designer/widgets/fine_tuner/controls/TickFrequencyControl.dart';
+import 'package:opc_node_designer/widgets/fine_tuner/controls/WaveformValuesControl.dart';
+import 'package:opc_node_designer/widgets/fine_tuner/project_actions/Closer.dart';
+import 'package:opc_node_designer/widgets/fine_tuner/project_actions/Saver.dart';
 
 class FineTuner extends ConsumerWidget {
   @override

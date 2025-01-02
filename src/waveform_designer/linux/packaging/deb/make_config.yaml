@@ -1,5 +1,5 @@
-display_name: Waveform designer
-package_name: waveformdesigner
+display_name: OPC Node designer
+package_name: opcnodedesigner
 
 maintainer:
   name: Andrei Lacatos
@@ -11,7 +11,7 @@ section: x11
 
 essential: false
 installed_size: 23720
-generic_name: Waveform designer
+generic_name: OPC Node designer
 
 categories:
   - Development

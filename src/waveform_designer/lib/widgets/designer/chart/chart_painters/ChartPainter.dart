@@ -1,7 +1,7 @@
 import 'package:flutter/widgets.dart';
-import 'package:waveform_designer/state/designer/designer.model.dart';
-import 'package:waveform_designer/state/waveform/waveform.model.dart';
-import 'package:waveform_designer/widgets/designer/chart/chart_painters/ChartPainterProvider.dart';
+import 'package:opc_node_designer/state/designer/designer.model.dart';
+import 'package:opc_node_designer/state/waveform/waveform.model.dart';
+import 'package:opc_node_designer/widgets/designer/chart/chart_painters/ChartPainterProvider.dart';
 
 class ChartPainter extends StatelessWidget with ChartPainterProvider {
   final WaveFormModel waveform;

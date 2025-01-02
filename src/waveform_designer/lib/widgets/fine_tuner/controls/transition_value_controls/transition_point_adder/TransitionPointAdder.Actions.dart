@@ -1,7 +1,7 @@
 import 'package:flutter_riverpod/flutter_riverpod.dart';
-import 'package:waveform_designer/state/waveform/waveform.model.dart';
-import 'package:waveform_designer/widgets/designer/chart/interaction/add_handler/TransitionValueAddHandler.dart';
-import 'package:waveform_designer/widgets/fine_tuner/controls/ErrorConsumerState.dart';
+import 'package:opc_node_designer/state/waveform/waveform.model.dart';
+import 'package:opc_node_designer/widgets/designer/chart/interaction/add_handler/TransitionValueAddHandler.dart';
+import 'package:opc_node_designer/widgets/fine_tuner/controls/ErrorConsumerState.dart';
 
 mixin TransitionPointAdderActions {
   void handleConfirm(

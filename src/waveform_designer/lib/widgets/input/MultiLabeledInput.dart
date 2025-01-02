@@ -1,5 +1,5 @@
 import 'package:flutter/widgets.dart';
-import 'package:waveform_designer/widgets/input/LabeledInput.dart';
+import 'package:opc_node_designer/widgets/input/LabeledInput.dart';
 
 class MultiLabeledInput<T extends num> extends StatelessWidget {
   final String mainLabel;

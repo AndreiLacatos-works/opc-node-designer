@@ -1,12 +1,12 @@
 import 'package:flutter/widgets.dart';
-import 'package:waveform_designer/calc/ValueRangeMapper.dart';
-import 'package:waveform_designer/state/designer/designer.model.dart';
-import 'package:waveform_designer/state/waveform/waveform.model.dart';
-import 'package:waveform_designer/theme/AppTheme.dart';
-import 'package:waveform_designer/widgets/designer/chart/PanningBehavior.dart';
-import 'package:waveform_designer/widgets/designer/chart/ZoomCompensator.dart';
-import 'package:waveform_designer/widgets/designer/chart/calc/WaveformMinMaxer.dart';
-import 'package:waveform_designer/widgets/designer/chart/chart_painters/RangeRestrictorMapper.dart';
+import 'package:opc_node_designer/calc/ValueRangeMapper.dart';
+import 'package:opc_node_designer/state/designer/designer.model.dart';
+import 'package:opc_node_designer/state/waveform/waveform.model.dart';
+import 'package:opc_node_designer/theme/AppTheme.dart';
+import 'package:opc_node_designer/widgets/designer/chart/PanningBehavior.dart';
+import 'package:opc_node_designer/widgets/designer/chart/ZoomCompensator.dart';
+import 'package:opc_node_designer/widgets/designer/chart/calc/WaveformMinMaxer.dart';
+import 'package:opc_node_designer/widgets/designer/chart/chart_painters/RangeRestrictorMapper.dart';
 
 class TickPainter extends CustomPainter
     with

@@ -1,12 +1,12 @@
-import 'package:waveform_designer/calc/ValueRangeMapper.dart';
-import 'package:waveform_designer/state/designer/designer.model.dart';
-import 'package:waveform_designer/state/waveform/waveform.model.dart';
-import 'package:waveform_designer/widgets/designer/chart/calc/NeighboringTickCalculator.dart';
-import 'package:waveform_designer/widgets/designer/chart/calc/PointTransformer.dart';
-import 'package:waveform_designer/widgets/designer/chart/calc/ScreenSpacePoint.dart';
-import 'package:waveform_designer/widgets/designer/chart/calc/WaveformMinMaxer.dart';
-import 'package:waveform_designer/widgets/designer/chart/interaction/hover_tester/AbstractValueOverlapCalculator.dart';
-import 'package:waveform_designer/widgets/designer/chart/chart_painters/RangeRestrictorMapper.dart';
+import 'package:opc_node_designer/calc/ValueRangeMapper.dart';
+import 'package:opc_node_designer/state/designer/designer.model.dart';
+import 'package:opc_node_designer/state/waveform/waveform.model.dart';
+import 'package:opc_node_designer/widgets/designer/chart/calc/NeighboringTickCalculator.dart';
+import 'package:opc_node_designer/widgets/designer/chart/calc/PointTransformer.dart';
+import 'package:opc_node_designer/widgets/designer/chart/calc/ScreenSpacePoint.dart';
+import 'package:opc_node_designer/widgets/designer/chart/calc/WaveformMinMaxer.dart';
+import 'package:opc_node_designer/widgets/designer/chart/interaction/hover_tester/AbstractValueOverlapCalculator.dart';
+import 'package:opc_node_designer/widgets/designer/chart/chart_painters/RangeRestrictorMapper.dart';
 
 class TransitionValueOverlapCalculator extends AbstractValueOverlapCalculator
     with

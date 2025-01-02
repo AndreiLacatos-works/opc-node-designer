@@ -1,9 +1,9 @@
 import 'package:flutter/widgets.dart';
-import 'package:waveform_designer/state/designer/designer.model.dart';
-import 'package:waveform_designer/state/waveform/waveform.model.dart';
-import 'package:waveform_designer/widgets/designer/chart/calc/ScreenSpacePoint.dart';
-import 'package:waveform_designer/widgets/designer/chart/interaction/move_preview_painters/SnapPainter.dart';
-import 'package:waveform_designer/widgets/designer/chart/interaction/move_preview_painters/ValueMovePainter.dart';
+import 'package:opc_node_designer/state/designer/designer.model.dart';
+import 'package:opc_node_designer/state/waveform/waveform.model.dart';
+import 'package:opc_node_designer/widgets/designer/chart/calc/ScreenSpacePoint.dart';
+import 'package:opc_node_designer/widgets/designer/chart/interaction/move_preview_painters/SnapPainter.dart';
+import 'package:opc_node_designer/widgets/designer/chart/interaction/move_preview_painters/ValueMovePainter.dart';
 
 mixin MovePreviewPainterProvider {
   List<CustomPainter> providePainters(

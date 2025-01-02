@@ -1,5 +1,5 @@
 import 'package:flutter/widgets.dart';
-import 'package:waveform_designer/theme/AppTheme.dart';
+import 'package:opc_node_designer/theme/AppTheme.dart';
 
 class ErrorDisplay extends StatelessWidget {
   final String? error;

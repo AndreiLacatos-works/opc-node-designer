@@ -1,9 +1,9 @@
 import 'dart:math';
 
 import 'package:riverpod_annotation/riverpod_annotation.dart';
-import 'package:waveform_designer/calc/ValueRangeMapper.dart';
-import 'package:waveform_designer/state/designer/designer.model.dart';
-import 'package:waveform_designer/state/waveform/waveform.state.dart';
+import 'package:opc_node_designer/calc/ValueRangeMapper.dart';
+import 'package:opc_node_designer/state/designer/designer.model.dart';
+import 'package:opc_node_designer/state/waveform/waveform.state.dart';
 
 part 'designer.state.g.dart';
 

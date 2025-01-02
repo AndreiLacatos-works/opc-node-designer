@@ -1,10 +1,10 @@
 import 'dart:ui';
 
 import 'package:flutter_riverpod/flutter_riverpod.dart';
-import 'package:waveform_designer/state/waveform/waveform.model.dart';
-import 'package:waveform_designer/widgets/designer/chart/interaction/add_handler/AbstractValueAddHandler.dart';
-import 'package:waveform_designer/widgets/designer/chart/interaction/hover_tester/AbstractValueOverlapCalculator.dart';
-import 'package:waveform_designer/widgets/designer/chart/interaction/move_handler/AbstractMoveHandler.dart';
+import 'package:opc_node_designer/state/waveform/waveform.model.dart';
+import 'package:opc_node_designer/widgets/designer/chart/interaction/add_handler/AbstractValueAddHandler.dart';
+import 'package:opc_node_designer/widgets/designer/chart/interaction/hover_tester/AbstractValueOverlapCalculator.dart';
+import 'package:opc_node_designer/widgets/designer/chart/interaction/move_handler/AbstractMoveHandler.dart';
 
 mixin InteractionHandlerState<T extends ConsumerStatefulWidget>
     on ConsumerState<T> {

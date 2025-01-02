@@ -1,5 +1,5 @@
 import 'package:json_annotation/json_annotation.dart';
-import 'package:waveform_designer/state/waveform/waveform.model.dart'
+import 'package:opc_node_designer/state/waveform/waveform.model.dart'
     as WaveFormState;
 
 part 'waveform.model.g.dart';

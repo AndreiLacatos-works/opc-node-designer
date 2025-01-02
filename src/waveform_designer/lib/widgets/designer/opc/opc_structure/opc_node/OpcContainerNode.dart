@@ -1,13 +1,13 @@
 import 'package:flutter/widgets.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
-import 'package:waveform_designer/state/opc_structure/opc_structure.model.dart';
-import 'package:waveform_designer/theme/AppTheme.dart';
-import 'package:waveform_designer/widgets/designer/opc/opc_structure/opc_node/OpcContainerNode.State.dart';
-import 'package:waveform_designer/widgets/designer/opc/opc_structure/opc_node/OpcNode.Actions.dart';
-import 'package:waveform_designer/widgets/designer/opc/opc_structure/opc_node/OpcNode.State.dart';
-import 'package:waveform_designer/widgets/designer/opc/opc_structure/opc_node/OpcValueNode.dart';
-import 'package:waveform_designer/widgets/shared/SimpleButton.dart';
+import 'package:opc_node_designer/state/opc_structure/opc_structure.model.dart';
+import 'package:opc_node_designer/theme/AppTheme.dart';
+import 'package:opc_node_designer/widgets/designer/opc/opc_structure/opc_node/OpcContainerNode.State.dart';
+import 'package:opc_node_designer/widgets/designer/opc/opc_structure/opc_node/OpcNode.Actions.dart';
+import 'package:opc_node_designer/widgets/designer/opc/opc_structure/opc_node/OpcNode.State.dart';
+import 'package:opc_node_designer/widgets/designer/opc/opc_structure/opc_node/OpcValueNode.dart';
+import 'package:opc_node_designer/widgets/shared/SimpleButton.dart';
 
 class OpcContainerNode extends ConsumerWidget
     with OpcNodeState, OpcContainerNodeState, OpcNodeActions {

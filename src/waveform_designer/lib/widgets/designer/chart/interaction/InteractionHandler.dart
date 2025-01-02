@@ -1,22 +1,22 @@
 import 'package:flutter/services.dart' as DS;
 import 'package:flutter/widgets.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
-import 'package:waveform_designer/theme/AppTheme.dart';
-import 'package:waveform_designer/widgets/designer/chart/calc/NeighboringTickCalculator.dart';
-import 'package:waveform_designer/widgets/designer/chart/calc/PointTransformer.dart';
-import 'package:waveform_designer/calc/ValueRangeMapper.dart';
-import 'package:waveform_designer/state/designer/designer.state.dart';
-import 'package:waveform_designer/state/waveform/waveform.model.dart';
-import 'package:waveform_designer/state/waveform/waveform.state.dart';
-import 'package:waveform_designer/widgets/designer/chart/PanPainter.dart';
-import 'package:waveform_designer/widgets/designer/chart/interaction/add_handler/AddHandlerFactory.dart';
-import 'package:waveform_designer/widgets/designer/chart/interaction/move_preview_painters/MovePreviewPainterProvider.dart';
-import 'package:waveform_designer/widgets/designer/chart/calc/WaveformMinMaxer.dart';
-import 'package:waveform_designer/widgets/designer/chart/interaction/hover_tester/OverlapCalculatorFactory.dart';
-import 'package:waveform_designer/widgets/designer/chart/chart_painters/RangeRestrictorMapper.dart';
-import 'package:waveform_designer/widgets/designer/chart/interaction/InteractionHandler.Actions.dart';
-import 'package:waveform_designer/widgets/designer/chart/interaction/InteractionHandler.State.dart';
-import 'package:waveform_designer/widgets/designer/chart/interaction/move_handler/ValueMoveHandlerFactory.dart';
+import 'package:opc_node_designer/theme/AppTheme.dart';
+import 'package:opc_node_designer/widgets/designer/chart/calc/NeighboringTickCalculator.dart';
+import 'package:opc_node_designer/widgets/designer/chart/calc/PointTransformer.dart';
+import 'package:opc_node_designer/calc/ValueRangeMapper.dart';
+import 'package:opc_node_designer/state/designer/designer.state.dart';
+import 'package:opc_node_designer/state/waveform/waveform.model.dart';
+import 'package:opc_node_designer/state/waveform/waveform.state.dart';
+import 'package:opc_node_designer/widgets/designer/chart/PanPainter.dart';
+import 'package:opc_node_designer/widgets/designer/chart/interaction/add_handler/AddHandlerFactory.dart';
+import 'package:opc_node_designer/widgets/designer/chart/interaction/move_preview_painters/MovePreviewPainterProvider.dart';
+import 'package:opc_node_designer/widgets/designer/chart/calc/WaveformMinMaxer.dart';
+import 'package:opc_node_designer/widgets/designer/chart/interaction/hover_tester/OverlapCalculatorFactory.dart';
+import 'package:opc_node_designer/widgets/designer/chart/chart_painters/RangeRestrictorMapper.dart';
+import 'package:opc_node_designer/widgets/designer/chart/interaction/InteractionHandler.Actions.dart';
+import 'package:opc_node_designer/widgets/designer/chart/interaction/InteractionHandler.State.dart';
+import 'package:opc_node_designer/widgets/designer/chart/interaction/move_handler/ValueMoveHandlerFactory.dart';
 import 'package:window_manager/window_manager.dart';
 
 class InteractionHandler extends ConsumerStatefulWidget {

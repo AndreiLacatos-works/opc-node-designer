@@ -1,13 +1,13 @@
 import 'package:flutter/widgets.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
-import 'package:waveform_designer/state/waveform/waveform.model.dart';
-import 'package:waveform_designer/theme/AppTheme.dart';
-import 'package:waveform_designer/widgets/fine_tuner/controls/ErrorConsumerState.dart';
-import 'package:waveform_designer/widgets/fine_tuner/controls/transition_value_controls/transition_value_control/TransitionPointControl.Actions.dart';
-import 'package:waveform_designer/widgets/input/LabeledInput.dart';
-import 'package:waveform_designer/widgets/shared/ErrorDisplay.dart';
-import 'package:waveform_designer/widgets/shared/IconButton.dart';
+import 'package:opc_node_designer/state/waveform/waveform.model.dart';
+import 'package:opc_node_designer/theme/AppTheme.dart';
+import 'package:opc_node_designer/widgets/fine_tuner/controls/ErrorConsumerState.dart';
+import 'package:opc_node_designer/widgets/fine_tuner/controls/transition_value_controls/transition_value_control/TransitionPointControl.Actions.dart';
+import 'package:opc_node_designer/widgets/input/LabeledInput.dart';
+import 'package:opc_node_designer/widgets/shared/ErrorDisplay.dart';
+import 'package:opc_node_designer/widgets/shared/IconButton.dart';
 
 class TransitionPointControl extends ConsumerStatefulWidget {
   final WaveFormValueModel waveformValue;

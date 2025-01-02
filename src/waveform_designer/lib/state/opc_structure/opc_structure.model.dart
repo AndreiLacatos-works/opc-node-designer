@@ -1,5 +1,5 @@
 import 'package:freezed_annotation/freezed_annotation.dart';
-import 'package:waveform_designer/state/waveform/waveform.model.dart';
+import 'package:opc_node_designer/state/waveform/waveform.model.dart';
 
 part 'opc_structure.model.freezed.dart';
 

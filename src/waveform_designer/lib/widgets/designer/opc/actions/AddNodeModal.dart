@@ -1,11 +1,11 @@
 import 'package:flutter/widgets.dart';
 import 'package:uuid/uuid.dart';
-import 'package:waveform_designer/state/opc_structure/opc_structure.model.dart';
-import 'package:waveform_designer/state/waveform/waveform.model.dart';
-import 'package:waveform_designer/theme/AppTheme.dart';
-import 'package:waveform_designer/widgets/input/Dropdown.dart';
-import 'package:waveform_designer/widgets/shared/StringFormField.dart';
-import 'package:waveform_designer/widgets/shared/TextButton.dart';
+import 'package:opc_node_designer/state/opc_structure/opc_structure.model.dart';
+import 'package:opc_node_designer/state/waveform/waveform.model.dart';
+import 'package:opc_node_designer/theme/AppTheme.dart';
+import 'package:opc_node_designer/widgets/input/Dropdown.dart';
+import 'package:opc_node_designer/widgets/shared/StringFormField.dart';
+import 'package:opc_node_designer/widgets/shared/TextButton.dart';
 
 class AddNodeModal extends StatefulWidget {
   @override

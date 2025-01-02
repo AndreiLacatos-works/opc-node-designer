@@ -1,4 +1,4 @@
-import 'package:waveform_designer/state/waveform/waveform.model.dart';
+import 'package:opc_node_designer/state/waveform/waveform.model.dart';
 
 mixin WaveformMinMaxer {
   List<double> getWaveformMinMaxValues(List<WaveFormValueModel> values) {

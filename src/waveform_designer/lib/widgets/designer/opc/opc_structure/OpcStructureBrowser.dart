@@ -1,8 +1,8 @@
 import 'package:flutter/widgets.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
-import 'package:waveform_designer/state/opc_designer/opc_designer.state.dart';
-import 'package:waveform_designer/state/opc_structure/opc_structure.state.dart';
-import 'package:waveform_designer/widgets/designer/opc/opc_structure/opc_node/OpcContainerNode.dart';
+import 'package:opc_node_designer/state/opc_designer/opc_designer.state.dart';
+import 'package:opc_node_designer/state/opc_structure/opc_structure.state.dart';
+import 'package:opc_node_designer/widgets/designer/opc/opc_structure/opc_node/OpcContainerNode.dart';
 
 class OpcStructureBrowser extends ConsumerStatefulWidget {
   @override

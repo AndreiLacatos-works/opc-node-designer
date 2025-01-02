@@ -1,10 +1,10 @@
 import 'package:flutter/widgets.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
-import 'package:waveform_designer/state/designer/designer.state.dart';
-import 'package:waveform_designer/state/waveform/waveform.state.dart';
-import 'package:waveform_designer/theme/AppTheme.dart';
-import 'package:waveform_designer/widgets/designer/chart/chart_painters/ChartPainter.dart';
-import 'package:waveform_designer/widgets/designer/chart/chart_painters/ChartPainterProvider.dart';
+import 'package:opc_node_designer/state/designer/designer.state.dart';
+import 'package:opc_node_designer/state/waveform/waveform.state.dart';
+import 'package:opc_node_designer/theme/AppTheme.dart';
+import 'package:opc_node_designer/widgets/designer/chart/chart_painters/ChartPainter.dart';
+import 'package:opc_node_designer/widgets/designer/chart/chart_painters/ChartPainterProvider.dart';
 
 class PanIndicator extends ConsumerStatefulWidget with ChartPainterProvider {
   @override

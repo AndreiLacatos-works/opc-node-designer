@@ -1,12 +1,12 @@
 import 'package:flutter/widgets.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
-import 'package:waveform_designer/state/opc_designer/opc_designer.state.dart';
-import 'package:waveform_designer/state/opc_structure/opc_structure.model.dart';
-import 'package:waveform_designer/state/opc_structure/opc_structure.state.dart';
-import 'package:waveform_designer/widgets/designer/opc/actions/AddContainerModal.dart';
-import 'package:waveform_designer/widgets/designer/opc/actions/AddNodeModal.dart';
-import 'package:waveform_designer/widgets/shared/confirmation_dialog.dart';
-import 'package:waveform_designer/widgets/shared/custom_overlay.dart';
+import 'package:opc_node_designer/state/opc_designer/opc_designer.state.dart';
+import 'package:opc_node_designer/state/opc_structure/opc_structure.model.dart';
+import 'package:opc_node_designer/state/opc_structure/opc_structure.state.dart';
+import 'package:opc_node_designer/widgets/designer/opc/actions/AddContainerModal.dart';
+import 'package:opc_node_designer/widgets/designer/opc/actions/AddNodeModal.dart';
+import 'package:opc_node_designer/widgets/shared/confirmation_dialog.dart';
+import 'package:opc_node_designer/widgets/shared/custom_overlay.dart';
 
 mixin OpcStructureMutationsActions {
   Future handleRemove(

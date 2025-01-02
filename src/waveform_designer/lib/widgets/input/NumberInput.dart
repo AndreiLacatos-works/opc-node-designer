@@ -1,6 +1,6 @@
 import 'package:flutter/services.dart';
 import 'package:flutter/widgets.dart';
-import 'package:waveform_designer/theme/AppTheme.dart';
+import 'package:opc_node_designer/theme/AppTheme.dart';
 
 class NumberInput<T extends num> extends StatefulWidget {
   final Function(T?)? onChanged;

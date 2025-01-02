@@ -1,4 +1,4 @@
-# waveform_designer
+# opc_node_designer
 
 A new Flutter project.
 

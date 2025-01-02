@@ -1,7 +1,7 @@
 import 'package:flutter/widgets.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
-import 'package:waveform_designer/screens/WaveformLauncher.dart';
-import 'package:waveform_designer/state/init/init_from_file.dart';
+import 'package:opc_node_designer/screens/WaveformLauncher.dart';
+import 'package:opc_node_designer/state/init/init_from_file.dart';
 
 class AppInitializer extends ConsumerWidget with InitFromFile {
   final String? starterFile;

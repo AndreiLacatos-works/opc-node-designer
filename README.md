@@ -21,7 +21,7 @@ The project can be saved for easy sharing and later editing. It can also be dire
 On `debian` based systems install the utility via the provided `.deb` package:
 
 ```sh
-dpkg -i waveform_designer-<version>.deb
+dpkg -i opc_node_designer-<version>.deb
 ```
 
 ### Windows

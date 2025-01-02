@@ -1,6 +1,6 @@
 import 'package:flutter/widgets.dart';
-import 'package:waveform_designer/theme/AppTheme.dart';
-import 'package:waveform_designer/widgets/shared/SimpleButton.dart';
+import 'package:opc_node_designer/theme/AppTheme.dart';
+import 'package:opc_node_designer/widgets/shared/SimpleButton.dart';
 
 class IconButton extends StatelessWidget {
   final void Function() onClick;

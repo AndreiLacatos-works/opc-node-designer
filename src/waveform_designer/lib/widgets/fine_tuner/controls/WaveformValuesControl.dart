@@ -1,9 +1,9 @@
 import 'package:flutter/widgets.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
-import 'package:waveform_designer/state/waveform/waveform.model.dart';
-import 'package:waveform_designer/state/waveform/waveform.state.dart';
-import 'package:waveform_designer/widgets/fine_tuner/controls/numeric_value_controls/NumericValuesControl.dart';
-import 'package:waveform_designer/widgets/fine_tuner/controls/transition_value_controls/TransitionPointsControl.dart';
+import 'package:opc_node_designer/state/waveform/waveform.model.dart';
+import 'package:opc_node_designer/state/waveform/waveform.state.dart';
+import 'package:opc_node_designer/widgets/fine_tuner/controls/numeric_value_controls/NumericValuesControl.dart';
+import 'package:opc_node_designer/widgets/fine_tuner/controls/transition_value_controls/TransitionPointsControl.dart';
 
 class WaveformValuesControl extends ConsumerWidget {
   @override

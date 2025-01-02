@@ -1,13 +1,13 @@
 import 'package:flutter/gestures.dart';
 import 'package:flutter/widgets.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
-import 'package:waveform_designer/widgets/designer/chart/calc/NeighboringTickCalculator.dart';
-import 'package:waveform_designer/widgets/designer/chart/calc/PointTransformer.dart';
-import 'package:waveform_designer/widgets/designer/chart/calc/ScreenSpacePoint.dart';
-import 'package:waveform_designer/calc/ValueRangeMapper.dart';
-import 'package:waveform_designer/state/designer/designer.state.dart';
-import 'package:waveform_designer/state/waveform/waveform.state.dart';
-import 'package:waveform_designer/widgets/designer/chart/interaction/InteractionHandler.State.dart';
+import 'package:opc_node_designer/widgets/designer/chart/calc/NeighboringTickCalculator.dart';
+import 'package:opc_node_designer/widgets/designer/chart/calc/PointTransformer.dart';
+import 'package:opc_node_designer/widgets/designer/chart/calc/ScreenSpacePoint.dart';
+import 'package:opc_node_designer/calc/ValueRangeMapper.dart';
+import 'package:opc_node_designer/state/designer/designer.state.dart';
+import 'package:opc_node_designer/state/waveform/waveform.state.dart';
+import 'package:opc_node_designer/widgets/designer/chart/interaction/InteractionHandler.State.dart';
 
 mixin InteractionHandlerActions<T extends ConsumerStatefulWidget>
     on

@@ -1,9 +1,9 @@
 import 'package:riverpod_annotation/riverpod_annotation.dart';
-import 'package:waveform_designer/state/designer/designer.state.dart';
-import 'package:waveform_designer/state/opc_designer/opc_designer.model.dart';
-import 'package:waveform_designer/state/opc_structure/opc_structure.model.dart';
-import 'package:waveform_designer/state/opc_structure/opc_structure.state.dart';
-import 'package:waveform_designer/state/waveform/waveform.state.dart';
+import 'package:opc_node_designer/state/designer/designer.state.dart';
+import 'package:opc_node_designer/state/opc_designer/opc_designer.model.dart';
+import 'package:opc_node_designer/state/opc_structure/opc_structure.model.dart';
+import 'package:opc_node_designer/state/opc_structure/opc_structure.state.dart';
+import 'package:opc_node_designer/state/waveform/waveform.state.dart';
 
 part 'opc_designer.state.g.dart';
 

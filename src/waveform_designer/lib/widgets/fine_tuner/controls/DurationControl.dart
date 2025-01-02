@@ -1,9 +1,9 @@
 import 'package:flutter/widgets.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
-import 'package:waveform_designer/state/waveform/waveform.state.dart';
-import 'package:waveform_designer/widgets/fine_tuner/controls/ErrorConsumerState.dart';
-import 'package:waveform_designer/widgets/input/MultiLabeledInput.dart';
-import 'package:waveform_designer/widgets/shared/ErrorDisplay.dart';
+import 'package:opc_node_designer/state/waveform/waveform.state.dart';
+import 'package:opc_node_designer/widgets/fine_tuner/controls/ErrorConsumerState.dart';
+import 'package:opc_node_designer/widgets/input/MultiLabeledInput.dart';
+import 'package:opc_node_designer/widgets/shared/ErrorDisplay.dart';
 
 class DurationControl extends ConsumerStatefulWidget {
   @override

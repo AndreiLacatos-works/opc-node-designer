@@ -1,7 +1,7 @@
 import 'package:freezed_annotation/freezed_annotation.dart';
 import 'package:json_annotation/json_annotation.dart';
-import 'package:waveform_designer/serialization/waveform/waveform.model.dart';
-import 'package:waveform_designer/state/opc_structure/opc_structure.model.dart'
+import 'package:opc_node_designer/serialization/waveform/waveform.model.dart';
+import 'package:opc_node_designer/state/opc_structure/opc_structure.model.dart'
     as OpcStructureState;
 
 part 'opc_structure.model.g.dart';

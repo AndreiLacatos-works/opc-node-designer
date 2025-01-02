@@ -90,12 +90,12 @@ BEGIN
         BLOCK "040904e4"
         BEGIN
             VALUE "CompanyName", "com.example" "\0"
-            VALUE "FileDescription", "waveform_designer" "\0"
+            VALUE "FileDescription", "opc_node_designer" "\0"
             VALUE "FileVersion", VERSION_AS_STRING "\0"
-            VALUE "InternalName", "waveform_designer" "\0"
+            VALUE "InternalName", "opc_node_designer" "\0"
             VALUE "LegalCopyright", "Copyright (C) 2024 com.example. All rights reserved." "\0"
-            VALUE "OriginalFilename", "waveform_designer.exe" "\0"
-            VALUE "ProductName", "waveform_designer" "\0"
+            VALUE "OriginalFilename", "opc_node_designer.exe" "\0"
+            VALUE "ProductName", "opc_node_designer" "\0"
             VALUE "ProductVersion", VERSION_AS_STRING "\0"
         END
     END
