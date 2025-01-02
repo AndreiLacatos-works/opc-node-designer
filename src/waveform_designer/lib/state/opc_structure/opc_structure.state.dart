@@ -11,7 +11,7 @@ class OpcStructureState extends _$OpcStructureState {
     root: OpcContainerNodeModel(
       children: [],
       id: Uuid().v4(),
-      label: "Root",
+      label: "Application root",
     ),
   );
 
