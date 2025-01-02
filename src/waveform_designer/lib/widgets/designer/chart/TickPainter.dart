@@ -38,9 +38,8 @@ class TickPainter extends CustomPainter
         _calculateAlternativeStepSize(duration, maxTicksToShow, frequency);
     final ticksToShow =
         List.generate(maxTicksToShow, (i) => i * alternativeStep);
-    final totalTickCount = duration == 0 || frequency == 0
-        ? 0
-        : (duration / frequency + 1).toInt();
+    final totalTickCount =
+        duration == 0 || frequency == 0 ? 0 : duration ~/ frequency + 1;
     for (var i = 0; i < totalTickCount; i++) {
       final tick = i * frequency;
       if (ticksToShow.contains(tick)) {
@@ -50,11 +49,7 @@ class TickPainter extends CustomPainter
       }
     }
 
-    // in case the last tick does not align with the duration, draw an extra tick
-    if (_waveform.tickFrequency != 0 &&
-        _waveform.duration % _waveform.tickFrequency != 0) {
-      _drawTickAtOffset(canvas, size, size.width, _waveform.duration);
-    }
+    _drawTickAtOffset(canvas, size, size.width, _waveform.duration);
 
     // draw left marks
     if (_waveform.type == DoubleValue) {
