@@ -99,7 +99,6 @@ class OpcDesignerState extends _$OpcDesignerState {
     } else {
       waveformNotifier.reset();
     }
-    ref.read(designerStateProvider.notifier).resetPan();
   }
 
   List<OpcContainerNodeModel> _listChildContainersRecursively(
