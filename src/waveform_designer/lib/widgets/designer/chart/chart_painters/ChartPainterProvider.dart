@@ -1,8 +1,8 @@
 import 'package:flutter/widgets.dart';
 import 'package:opc_node_designer/state/designer/designer.model.dart';
 import 'package:opc_node_designer/state/waveform/waveform.model.dart';
-import 'package:opc_node_designer/widgets/designer/chart/chart_painters/ValueNodeConnectorPainter.dart';
 import 'package:opc_node_designer/widgets/designer/chart/chart_painters/ValueNodePainter.dart';
+import 'package:opc_node_designer/widgets/designer/chart/chart_painters/ValueNodeStepConnectorPainter.dart';
 import 'package:opc_node_designer/widgets/designer/chart/chart_painters/WaveFormPainter.dart';
 
 mixin ChartPainterProvider {
@@ -16,7 +16,7 @@ mixin ChartPainterProvider {
         ],
       DoubleValue => [
           ValueNodePainter(waveform, panning),
-          ValueNodeConnectorPainter(waveform, panning),
+          ValueNodeStepConnectorPainter(waveform, panning),
         ],
       _ => [],
     };
