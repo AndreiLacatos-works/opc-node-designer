@@ -14,6 +14,7 @@ class WaveFormState extends _$WaveFormState {
     tickFrequency: 0,
     values: [],
     type: Void,
+    meta: null,
   );
 
   @override

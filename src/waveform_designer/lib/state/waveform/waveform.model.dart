@@ -44,6 +44,17 @@ class WaveFormValueModel<T extends WaveformPointValue>
   int get hashCode => tick.hashCode;
 }
 
+enum SmoothingStrategy { step, linear, cubic }
+
+abstract class WaveformMeta {}
+
+@freezed
+class NumericWaveformMeta extends WaveformMeta with _$NumericWaveformMeta {
+  factory NumericWaveformMeta({
+    required SmoothingStrategy smoothing,
+  }) = _NumericWaveformMeta;
+}
+
 @freezed
 class WaveFormModel<T extends WaveformPointValue> with _$WaveFormModel {
   factory WaveFormModel({
@@ -51,5 +62,6 @@ class WaveFormModel<T extends WaveformPointValue> with _$WaveFormModel {
     required int tickFrequency,
     required Type type,
     required List<WaveFormValueModel<T>> values,
+    required WaveformMeta? meta,
   }) = _WaveFormModel;
 }

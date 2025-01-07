@@ -153,11 +153,143 @@ abstract class _WaveFormValue<T extends WaveformPointValue>
 }
 
 /// @nodoc
+mixin _$NumericWaveformMeta {
+  SmoothingStrategy get smoothing => throw _privateConstructorUsedError;
+
+  /// Create a copy of NumericWaveformMeta
+  /// with the given fields replaced by the non-null parameter values.
+  @JsonKey(includeFromJson: false, includeToJson: false)
+  $NumericWaveformMetaCopyWith<NumericWaveformMeta> get copyWith =>
+      throw _privateConstructorUsedError;
+}
+
+/// @nodoc
+abstract class $NumericWaveformMetaCopyWith<$Res> {
+  factory $NumericWaveformMetaCopyWith(
+          NumericWaveformMeta value, $Res Function(NumericWaveformMeta) then) =
+      _$NumericWaveformMetaCopyWithImpl<$Res, NumericWaveformMeta>;
+  @useResult
+  $Res call({SmoothingStrategy smoothing});
+}
+
+/// @nodoc
+class _$NumericWaveformMetaCopyWithImpl<$Res, $Val extends NumericWaveformMeta>
+    implements $NumericWaveformMetaCopyWith<$Res> {
+  _$NumericWaveformMetaCopyWithImpl(this._value, this._then);
+
+  // ignore: unused_field
+  final $Val _value;
+  // ignore: unused_field
+  final $Res Function($Val) _then;
+
+  /// Create a copy of NumericWaveformMeta
+  /// with the given fields replaced by the non-null parameter values.
+  @pragma('vm:prefer-inline')
+  @override
+  $Res call({
+    Object? smoothing = null,
+  }) {
+    return _then(_value.copyWith(
+      smoothing: null == smoothing
+          ? _value.smoothing
+          : smoothing // ignore: cast_nullable_to_non_nullable
+              as SmoothingStrategy,
+    ) as $Val);
+  }
+}
+
+/// @nodoc
+abstract class _$$NumericWaveformMetaImplCopyWith<$Res>
+    implements $NumericWaveformMetaCopyWith<$Res> {
+  factory _$$NumericWaveformMetaImplCopyWith(_$NumericWaveformMetaImpl value,
+          $Res Function(_$NumericWaveformMetaImpl) then) =
+      __$$NumericWaveformMetaImplCopyWithImpl<$Res>;
+  @override
+  @useResult
+  $Res call({SmoothingStrategy smoothing});
+}
+
+/// @nodoc
+class __$$NumericWaveformMetaImplCopyWithImpl<$Res>
+    extends _$NumericWaveformMetaCopyWithImpl<$Res, _$NumericWaveformMetaImpl>
+    implements _$$NumericWaveformMetaImplCopyWith<$Res> {
+  __$$NumericWaveformMetaImplCopyWithImpl(_$NumericWaveformMetaImpl _value,
+      $Res Function(_$NumericWaveformMetaImpl) _then)
+      : super(_value, _then);
+
+  /// Create a copy of NumericWaveformMeta
+  /// with the given fields replaced by the non-null parameter values.
+  @pragma('vm:prefer-inline')
+  @override
+  $Res call({
+    Object? smoothing = null,
+  }) {
+    return _then(_$NumericWaveformMetaImpl(
+      smoothing: null == smoothing
+          ? _value.smoothing
+          : smoothing // ignore: cast_nullable_to_non_nullable
+              as SmoothingStrategy,
+    ));
+  }
+}
+
+/// @nodoc
+
+class _$NumericWaveformMetaImpl implements _NumericWaveformMeta {
+  _$NumericWaveformMetaImpl({required this.smoothing});
+
+  @override
+  final SmoothingStrategy smoothing;
+
+  @override
+  String toString() {
+    return 'NumericWaveformMeta(smoothing: $smoothing)';
+  }
+
+  @override
+  bool operator ==(Object other) {
+    return identical(this, other) ||
+        (other.runtimeType == runtimeType &&
+            other is _$NumericWaveformMetaImpl &&
+            (identical(other.smoothing, smoothing) ||
+                other.smoothing == smoothing));
+  }
+
+  @override
+  int get hashCode => Object.hash(runtimeType, smoothing);
+
+  /// Create a copy of NumericWaveformMeta
+  /// with the given fields replaced by the non-null parameter values.
+  @JsonKey(includeFromJson: false, includeToJson: false)
+  @override
+  @pragma('vm:prefer-inline')
+  _$$NumericWaveformMetaImplCopyWith<_$NumericWaveformMetaImpl> get copyWith =>
+      __$$NumericWaveformMetaImplCopyWithImpl<_$NumericWaveformMetaImpl>(
+          this, _$identity);
+}
+
+abstract class _NumericWaveformMeta implements NumericWaveformMeta {
+  factory _NumericWaveformMeta({required final SmoothingStrategy smoothing}) =
+      _$NumericWaveformMetaImpl;
+
+  @override
+  SmoothingStrategy get smoothing;
+
+  /// Create a copy of NumericWaveformMeta
+  /// with the given fields replaced by the non-null parameter values.
+  @override
+  @JsonKey(includeFromJson: false, includeToJson: false)
+  _$$NumericWaveformMetaImplCopyWith<_$NumericWaveformMetaImpl> get copyWith =>
+      throw _privateConstructorUsedError;
+}
+
+/// @nodoc
 mixin _$WaveFormModel<T extends WaveformPointValue> {
   int get duration => throw _privateConstructorUsedError;
   int get tickFrequency => throw _privateConstructorUsedError;
   Type get type => throw _privateConstructorUsedError;
   List<WaveFormValueModel<T>> get values => throw _privateConstructorUsedError;
+  WaveformMeta? get meta => throw _privateConstructorUsedError;
 
   /// Create a copy of WaveFormModel
   /// with the given fields replaced by the non-null parameter values.
@@ -176,7 +308,8 @@ abstract class $WaveFormModelCopyWith<T extends WaveformPointValue, $Res> {
       {int duration,
       int tickFrequency,
       Type type,
-      List<WaveFormValueModel<T>> values});
+      List<WaveFormValueModel<T>> values,
+      WaveformMeta? meta});
 }
 
 /// @nodoc
@@ -198,6 +331,7 @@ class _$WaveFormModelCopyWithImpl<T extends WaveformPointValue, $Res,
     Object? tickFrequency = null,
     Object? type = null,
     Object? values = null,
+    Object? meta = freezed,
   }) {
     return _then(_value.copyWith(
       duration: null == duration
@@ -216,6 +350,10 @@ class _$WaveFormModelCopyWithImpl<T extends WaveformPointValue, $Res,
           ? _value.values
           : values // ignore: cast_nullable_to_non_nullable
               as List<WaveFormValueModel<T>>,
+      meta: freezed == meta
+          ? _value.meta
+          : meta // ignore: cast_nullable_to_non_nullable
+              as WaveformMeta?,
     ) as $Val);
   }
 }
@@ -232,7 +370,8 @@ abstract class _$$WaveFormModelImplCopyWith<T extends WaveformPointValue, $Res>
       {int duration,
       int tickFrequency,
       Type type,
-      List<WaveFormValueModel<T>> values});
+      List<WaveFormValueModel<T>> values,
+      WaveformMeta? meta});
 }
 
 /// @nodoc
@@ -252,6 +391,7 @@ class __$$WaveFormModelImplCopyWithImpl<T extends WaveformPointValue, $Res>
     Object? tickFrequency = null,
     Object? type = null,
     Object? values = null,
+    Object? meta = freezed,
   }) {
     return _then(_$WaveFormModelImpl<T>(
       duration: null == duration
@@ -270,6 +410,10 @@ class __$$WaveFormModelImplCopyWithImpl<T extends WaveformPointValue, $Res>
           ? _value._values
           : values // ignore: cast_nullable_to_non_nullable
               as List<WaveFormValueModel<T>>,
+      meta: freezed == meta
+          ? _value.meta
+          : meta // ignore: cast_nullable_to_non_nullable
+              as WaveformMeta?,
     ));
   }
 }
@@ -282,7 +426,8 @@ class _$WaveFormModelImpl<T extends WaveformPointValue>
       {required this.duration,
       required this.tickFrequency,
       required this.type,
-      required final List<WaveFormValueModel<T>> values})
+      required final List<WaveFormValueModel<T>> values,
+      required this.meta})
       : _values = values;
 
   @override
@@ -300,8 +445,11 @@ class _$WaveFormModelImpl<T extends WaveformPointValue>
   }
 
   @override
+  final WaveformMeta? meta;
+
+  @override
   String toString() {
-    return 'WaveFormModel<$T>(duration: $duration, tickFrequency: $tickFrequency, type: $type, values: $values)';
+    return 'WaveFormModel<$T>(duration: $duration, tickFrequency: $tickFrequency, type: $type, values: $values, meta: $meta)';
   }
 
   @override
@@ -314,12 +462,13 @@ class _$WaveFormModelImpl<T extends WaveformPointValue>
             (identical(other.tickFrequency, tickFrequency) ||
                 other.tickFrequency == tickFrequency) &&
             (identical(other.type, type) || other.type == type) &&
-            const DeepCollectionEquality().equals(other._values, _values));
+            const DeepCollectionEquality().equals(other._values, _values) &&
+            (identical(other.meta, meta) || other.meta == meta));
   }
 
   @override
   int get hashCode => Object.hash(runtimeType, duration, tickFrequency, type,
-      const DeepCollectionEquality().hash(_values));
+      const DeepCollectionEquality().hash(_values), meta);
 
   /// Create a copy of WaveFormModel
   /// with the given fields replaced by the non-null parameter values.
@@ -334,11 +483,11 @@ class _$WaveFormModelImpl<T extends WaveformPointValue>
 abstract class _WaveFormModel<T extends WaveformPointValue>
     implements WaveFormModel<T> {
   factory _WaveFormModel(
-          {required final int duration,
-          required final int tickFrequency,
-          required final Type type,
-          required final List<WaveFormValueModel<T>> values}) =
-      _$WaveFormModelImpl<T>;
+      {required final int duration,
+      required final int tickFrequency,
+      required final Type type,
+      required final List<WaveFormValueModel<T>> values,
+      required final WaveformMeta? meta}) = _$WaveFormModelImpl<T>;
 
   @override
   int get duration;
@@ -348,6 +497,8 @@ abstract class _WaveFormModel<T extends WaveformPointValue>
   Type get type;
   @override
   List<WaveFormValueModel<T>> get values;
+  @override
+  WaveformMeta? get meta;
 
   /// Create a copy of WaveFormModel
   /// with the given fields replaced by the non-null parameter values.

@@ -70,6 +70,7 @@ class WaveFormModel {
         duration: this.duration,
         tickFrequency: this.tickFrequency,
         type: _mapTypeFromWaveFormType(this.type),
+        meta: null,
         values: this
             .transitionPoints
             .map(
