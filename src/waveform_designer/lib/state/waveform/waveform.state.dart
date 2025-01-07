@@ -88,6 +88,10 @@ class WaveFormState extends _$WaveFormState {
     state = state.copyWith(values: _sortAndUniqueByTick(newPoints));
   }
 
+  void updateMeta(NumericWaveformMeta meta) {
+    state = state.copyWith(meta: meta);
+  }
+
   void reset() {
     state = _initialState;
     _ruleValidator = NullRules();

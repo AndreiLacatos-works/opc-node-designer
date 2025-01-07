@@ -5,11 +5,13 @@ class Dropdown extends StatefulWidget {
   final List<String> items;
   final String selectedItem;
   final Function(String) onChanged;
+  final bool border;
 
   Dropdown({
     required this.items,
     required this.onChanged,
     required this.selectedItem,
+    this.border = true,
   });
 
   @override
@@ -59,33 +61,43 @@ class _CustomDropdownState extends State<Dropdown> {
           link: _layerLink,
           showWhenUnlinked: false,
           offset: Offset(0, size.height),
-          child: Column(
-            crossAxisAlignment: CrossAxisAlignment.stretch,
-            children: widget.items.map((item) {
-              return MouseRegion(
-                cursor: SystemMouseCursors.click,
-                child: GestureDetector(
-                  onTap: () {
-                    widget.onChanged(item);
-                    _closeDropdown();
-                  },
-                  child: Container(
-                    padding: EdgeInsets.all(8),
-                    decoration: BoxDecoration(
-                      borderRadius: BorderRadius.circular(6),
-                      color: AppTheme.foreground,
-                    ),
-                    child: Text(
-                      item,
-                      style: TextStyle(
-                        color: AppTheme.textColor,
-                        fontSize: 18,
+          child: Container(
+            decoration: BoxDecoration(
+              border: Border.all(
+                color: AppTheme.textColor,
+                width: 1,
+              ),
+              borderRadius: BorderRadius.circular(6),
+              color: AppTheme.foreground,
+            ),
+            child: Column(
+              crossAxisAlignment: CrossAxisAlignment.stretch,
+              children: widget.items.map((item) {
+                return MouseRegion(
+                  cursor: SystemMouseCursors.click,
+                  child: GestureDetector(
+                    onTap: () {
+                      widget.onChanged(item);
+                      _closeDropdown();
+                    },
+                    child: Container(
+                      padding: EdgeInsets.all(8),
+                      decoration: BoxDecoration(
+                        borderRadius: BorderRadius.circular(6),
+                        color: AppTheme.foreground,
+                      ),
+                      child: Text(
+                        item,
+                        style: TextStyle(
+                          color: AppTheme.textColor,
+                          fontSize: 18,
+                        ),
                       ),
                     ),
                   ),
-                ),
-              );
-            }).toList(),
+                );
+              }).toList(),
+            ),
           ),
         ),
       ),
@@ -104,8 +116,12 @@ class _CustomDropdownState extends State<Dropdown> {
             width: double.infinity,
             padding: EdgeInsets.all(8),
             decoration: BoxDecoration(
-              border: Border.all(color: AppTheme.textColor),
+              border: Border.all(
+                color:
+                    widget.border ? AppTheme.textColor : AppTheme.transparent,
+              ),
               borderRadius: BorderRadius.circular(6),
+              color: AppTheme.foreground,
             ),
             child: Text(
               widget.selectedItem,
