@@ -32,6 +32,7 @@ class _AddNodeModalState extends State {
           tickFrequency: 50,
           values: [],
           type: _optionTypeMap[_nodeType]!,
+          meta: null,
         ),
       );
       Navigator.of(context).pop(node);

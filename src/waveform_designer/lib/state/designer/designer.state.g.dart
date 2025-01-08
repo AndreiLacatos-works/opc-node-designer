@@ -6,7 +6,7 @@ part of 'designer.state.dart';
 // RiverpodGenerator
 // **************************************************************************
 
-String _$designerStateHash() => r'8bbf3a501dbba4f5ec9102d680311d0779274784';
+String _$designerStateHash() => r'328682673a50daa430cb11c1debcb624a8686ce1';
 
 /// See also [DesignerState].
 @ProviderFor(DesignerState)

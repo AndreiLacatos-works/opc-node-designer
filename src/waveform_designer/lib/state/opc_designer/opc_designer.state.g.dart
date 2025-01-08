@@ -6,7 +6,7 @@ part of 'opc_designer.state.dart';
 // RiverpodGenerator
 // **************************************************************************
 
-String _$opcDesignerStateHash() => r'722094b35ee5c98294a7b9409c310740dd0651bc';
+String _$opcDesignerStateHash() => r'abce35b1ba9288c9c38acf3440d17a6c8f67efe0';
 
 /// See also [OpcDesignerState].
 @ProviderFor(OpcDesignerState)

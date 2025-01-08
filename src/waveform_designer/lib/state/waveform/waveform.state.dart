@@ -14,6 +14,7 @@ class WaveFormState extends _$WaveFormState {
     tickFrequency: 0,
     values: [],
     type: Void,
+    meta: null,
   );
 
   @override
@@ -85,6 +86,10 @@ class WaveFormState extends _$WaveFormState {
       value,
     ];
     state = state.copyWith(values: _sortAndUniqueByTick(newPoints));
+  }
+
+  void updateMeta(NumericWaveformMeta meta) {
+    state = state.copyWith(meta: meta);
   }
 
   void reset() {

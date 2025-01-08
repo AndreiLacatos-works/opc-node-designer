@@ -21,7 +21,7 @@
                 "children": null,
                 "waveform": {
                   "duration": 1700,
-                  "tickFrequency": 50,
+                  "tickFrequency": 25,
                   "type": "doubleValues",
                   "transitionPoints": [
                     {
@@ -100,7 +100,10 @@
                       "tick": 1550,
                       "value": 156.7
                     }
-                  ]
+                  ],
+                  "meta": {
+                    "smoothing": "cubic"
+                  }
                 }
               },
               {
@@ -152,7 +155,10 @@
                       "tick": 750,
                       "value": 37.7
                     }
-                  ]
+                  ],
+                  "meta": {
+                    "smoothing": "linear"
+                  }
                 }
               },
               {
@@ -215,7 +221,10 @@
               "tick": 600,
               "value": 171.7
             }
-          ]
+          ],
+          "meta": {
+            "smoothing": "step"
+          }
         }
       }
     ],

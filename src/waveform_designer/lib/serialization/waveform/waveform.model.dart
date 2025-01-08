@@ -38,18 +38,64 @@ enum WaveFormType {
   doubleValues,
 }
 
-@JsonSerializable()
+@JsonSerializable(includeIfNull: false)
+class WaveformMetaModel {
+  final String? smoothing;
+
+  WaveformMetaModel({
+    this.smoothing,
+  });
+
+  static final Map<String, WaveFormState.SmoothingStrategy> _strategyMap = {
+    "step": WaveFormState.SmoothingStrategy.step,
+    "linear": WaveFormState.SmoothingStrategy.linear,
+    "cubic": WaveFormState.SmoothingStrategy.cubic,
+  };
+
+  factory WaveformMetaModel.fromJson(Map<String, dynamic> json) =>
+      _$WaveformMetaModelFromJson(json);
+
+  factory WaveformMetaModel.fromState(WaveFormState.WaveformMeta state) {
+    return switch (state.getType()) {
+      WaveFormState.NumericWaveformMeta => WaveformMetaModel(
+          smoothing: _strategyMap.entries
+                  .where((entry) =>
+                      entry.value ==
+                      (state as WaveFormState.NumericWaveformMeta).smoothing)
+                  .firstOrNull
+                  ?.key ??
+              _strategyMap.keys.first,
+        ),
+      _ => WaveformMetaModel(),
+    };
+  }
+
+  Map<String, dynamic> toJson() => _$WaveformMetaModelToJson(this);
+
+  WaveFormState.WaveformMeta? toState(WaveFormType type) {
+    return switch (type) {
+      WaveFormType.doubleValues => WaveFormState.NumericWaveformMeta(
+          smoothing: _strategyMap[smoothing] ?? _strategyMap.values.first,
+        ),
+      _ => null,
+    };
+  }
+}
+
+@JsonSerializable(includeIfNull: false)
 class WaveFormModel {
   final int duration;
   final int tickFrequency;
   final WaveFormType type;
   final List<WaveFormValueModel> transitionPoints;
+  final WaveformMetaModel? meta;
 
   WaveFormModel({
     required this.duration,
     required this.tickFrequency,
     required this.type,
     required this.transitionPoints,
+    this.meta,
   });
 
   factory WaveFormModel.fromJson(Map<String, dynamic> json) =>
@@ -62,6 +108,9 @@ class WaveFormModel {
         type: _mapWaveFormTypeFromState(state),
         transitionPoints:
             state.values.map((n) => WaveFormValueModel.fromState(n)).toList(),
+        meta: state.meta == null
+            ? null
+            : WaveformMetaModel.fromState(state.meta!),
       );
 
   Map<String, dynamic> toJson() => _$WaveFormModelToJson(this);
@@ -70,6 +119,7 @@ class WaveFormModel {
         duration: this.duration,
         tickFrequency: this.tickFrequency,
         type: _mapTypeFromWaveFormType(this.type),
+        meta: this.meta?.toState(type),
         values: this
             .transitionPoints
             .map(
