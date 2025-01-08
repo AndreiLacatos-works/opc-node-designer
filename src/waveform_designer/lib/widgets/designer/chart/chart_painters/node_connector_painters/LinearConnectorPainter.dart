@@ -8,6 +8,7 @@ import 'package:opc_node_designer/widgets/designer/chart/calc/PointTransformer.d
 import 'package:opc_node_designer/widgets/designer/chart/calc/VerticalOffsetCalculator.dart';
 import 'package:opc_node_designer/widgets/designer/chart/calc/WaveformMinMaxer.dart';
 import 'package:opc_node_designer/widgets/designer/chart/chart_painters/RangeRestrictorMapper.dart';
+import 'package:opc_node_designer/widgets/designer/chart/chart_painters/node_connector_painters/SegmentDrawer.dart';
 
 class _Section {
   final WaveFormValueModel from;
@@ -27,7 +28,8 @@ class LinearConnectorPainter extends CustomPainter
         RangeRestrictorMapper,
         WaveformMinMaxer,
         PointTransformer,
-        VerticalOffsetCalculator {
+        VerticalOffsetCalculator,
+        SegmentDrawer {
   final List<WaveFormValueModel> _values;
   final int _duration;
   final int _tickFrequency;
@@ -114,71 +116,13 @@ class LinearConnectorPainter extends CustomPainter
         ),
       );
 
-      _drawHorizontalSection(prev, cur, canvas, size, horizontalLinePainter);
-      _drawVerticalSection(prev, cur, canvas, size, verticalLinePainter);
+      drawHorizontalSection(
+          prev, cur, _duration, _values, canvas, size, horizontalLinePainter);
+      drawVerticalSection(
+          prev, cur, _duration, _values, canvas, size, verticalLinePainter);
 
       prev = cur;
     }
-  }
-
-  void _drawHorizontalSection(
-    WaveFormValueModel previous,
-    WaveFormValueModel current,
-    Canvas canvas,
-    Size size,
-    Paint paint,
-  ) {
-    var from = Offset(
-      mapValueToNewRange(
-        0,
-        _duration.toDouble(),
-        previous.tick.toDouble(),
-        0,
-        size.width,
-      ),
-      getVerticalOffset(_values, previous, size),
-    );
-    var to = Offset(
-      mapValueToNewRange(
-        0,
-        _duration.toDouble(),
-        current.tick.toDouble(),
-        0,
-        size.width,
-      ),
-      getVerticalOffset(_values, previous, size),
-    );
-    canvas.drawLine(from, to, paint);
-  }
-
-  void _drawVerticalSection(
-    WaveFormValueModel previous,
-    WaveFormValueModel current,
-    Canvas canvas,
-    Size size,
-    Paint paint,
-  ) {
-    var from = Offset(
-      mapValueToNewRange(
-        0,
-        _duration.toDouble(),
-        current.tick.toDouble(),
-        0,
-        size.width,
-      ),
-      getVerticalOffset(_values, previous, size),
-    );
-    var to = Offset(
-      mapValueToNewRange(
-        0,
-        _duration.toDouble(),
-        current.tick.toDouble(),
-        0,
-        size.width,
-      ),
-      getVerticalOffset(_values, current, size),
-    );
-    canvas.drawLine(from, to, paint);
   }
 
   @override
