@@ -9,7 +9,7 @@ import 'package:opc_node_designer/widgets/designer/chart/calc/VerticalOffsetCalc
 import 'package:opc_node_designer/widgets/designer/chart/calc/WaveformMinMaxer.dart';
 import 'package:opc_node_designer/widgets/designer/chart/chart_painters/RangeRestrictorMapper.dart';
 
-class ValueNodeStepConnectorPainter extends CustomPainter
+class StepConnectorPainter extends CustomPainter
     with
         ValueRangeMapper,
         PanningBehavior,
@@ -23,7 +23,7 @@ class ValueNodeStepConnectorPainter extends CustomPainter
   final double _slice;
   final double _offset;
 
-  ValueNodeStepConnectorPainter(
+  StepConnectorPainter(
     WaveFormModel waveform,
     DesignerModel panning,
   )   : _offset = panning.sliceOffset,
