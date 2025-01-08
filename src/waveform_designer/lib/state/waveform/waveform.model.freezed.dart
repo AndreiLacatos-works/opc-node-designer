@@ -238,6 +238,8 @@ class __$$NumericWaveformMetaImplCopyWithImpl<$Res>
 class _$NumericWaveformMetaImpl implements _NumericWaveformMeta {
   _$NumericWaveformMetaImpl({required this.smoothing});
 
+  Type getType() => NumericWaveformMeta;
+
   @override
   final SmoothingStrategy smoothing;
 

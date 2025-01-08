@@ -52,18 +52,12 @@ class WaveformMetaModel {
     "cubic": WaveFormState.SmoothingStrategy.cubic,
   };
 
-  WaveFormState.WaveformMeta? toState(WaveFormType type) {
-    return switch (type) {
-      WaveFormType.doubleValues => WaveFormState.NumericWaveformMeta(
-          smoothing: _strategyMap[smoothing]!,
-        ),
-      _ => null,
-    };
-  }
+  factory WaveformMetaModel.fromJson(Map<String, dynamic> json) =>
+      _$WaveformMetaModelFromJson(json);
 
   factory WaveformMetaModel.fromState(WaveFormState.WaveformMeta state) {
-    return switch (state.runtimeType) {
-      WaveFormState.NumericWaveformMeta() => WaveformMetaModel(
+    return switch (state.getType()) {
+      WaveFormState.NumericWaveformMeta => WaveformMetaModel(
           smoothing: _strategyMap.entries
                   .where((entry) =>
                       entry.value ==
@@ -75,9 +69,20 @@ class WaveformMetaModel {
       _ => WaveformMetaModel(),
     };
   }
+
+  Map<String, dynamic> toJson() => _$WaveformMetaModelToJson(this);
+
+  WaveFormState.WaveformMeta? toState(WaveFormType type) {
+    return switch (type) {
+      WaveFormType.doubleValues => WaveFormState.NumericWaveformMeta(
+          smoothing: _strategyMap[smoothing] ?? _strategyMap.values.first,
+        ),
+      _ => null,
+    };
+  }
 }
 
-@JsonSerializable()
+@JsonSerializable(includeIfNull: false)
 class WaveFormModel {
   final int duration;
   final int tickFrequency;

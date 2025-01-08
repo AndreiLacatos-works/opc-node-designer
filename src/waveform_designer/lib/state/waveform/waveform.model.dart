@@ -46,13 +46,17 @@ class WaveFormValueModel<T extends WaveformPointValue>
 
 enum SmoothingStrategy { step, linear, cubic }
 
-abstract class WaveformMeta {}
+abstract class WaveformMeta {
+  Type getType();
+}
 
 @freezed
 class NumericWaveformMeta extends WaveformMeta with _$NumericWaveformMeta {
   factory NumericWaveformMeta({
     required SmoothingStrategy smoothing,
   }) = _NumericWaveformMeta;
+
+  Type getType() => NumericWaveformMeta;
 }
 
 @freezed

@@ -70,9 +70,6 @@ class CubicSplineConnectorPainter extends CustomPainter
     var x = _values.map((val) => val.tick.toDouble()).toList();
     var y = _values.map((val) => val.value.getValue()).toList();
 
-    var pina = y.where((v) => v.isNaN).toList();
-    print("found ${pina.length} NaN");
-
     // add two additional entries for X = 0 & X = waveform.Duration
     if (x.first != 0) {
       x.insert(0, 0);
@@ -88,13 +85,9 @@ class CubicSplineConnectorPainter extends CustomPainter
     final ticks = List.generate(tickCount, (i) => i * _tickFrequency).toList();
     var prev = WaveFormValueModel(tick: 0, value: _values.first.value);
     for (final tick in ticks.sublist(1)) {
-      final v = _interpolate(coeff, x, tick);
-      if (v.isNaN) {
-        print("interpolate yieldid NaN for tick ${tick}");
-      }
       final cur = WaveFormValueModel<DoubleValue>(
         tick: tick,
-        value: DoubleValue(v),
+        value: DoubleValue(_interpolate(coeff, x, tick)),
       );
 
       drawHorizontalSection(
