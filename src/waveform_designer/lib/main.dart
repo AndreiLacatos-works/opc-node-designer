@@ -4,6 +4,7 @@ import 'package:opc_node_designer/screens/AppInitializer.dart';
 import 'package:opc_node_designer/screens/WaveformDesigner.dart';
 import 'package:opc_node_designer/theme/AppTheme.dart';
 import 'package:opc_node_designer/screens/WaveformLauncher.dart';
+import 'package:opc_node_designer/widgets/spinner/SpinnerOverlay.dart';
 import 'package:window_manager/window_manager.dart';
 
 void main(List<String> args) async {
@@ -43,7 +44,12 @@ class MyApp extends StatelessWidget {
             Animation<double> animation,
             Animation<double> secondaryAnimation,
           ) {
-            return builder(context);
+            return Stack(
+              children: [
+                builder(context),
+                SpinnerOverlay(),
+              ],
+            );
           },
         );
       },
