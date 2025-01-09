@@ -13,4 +13,9 @@ class ServerResponse {
         success: model.status.toLowerCase() == "success",
         errorReason: model.reason,
       );
+
+  factory ServerResponse.failure(String reason) => ServerResponse(
+        success: false,
+        errorReason: reason,
+      );
 }

@@ -6,7 +6,7 @@ part of 'spinner.state.dart';
 // RiverpodGenerator
 // **************************************************************************
 
-String _$spinnerStateHash() => r'eb7090bb14f0ea9e3ce20a4e24c5dffedda80649';
+String _$spinnerStateHash() => r'86eb5c889657073843884cd866e3a27a25f20ccb';
 
 /// See also [SpinnerState].
 @ProviderFor(SpinnerState)
