@@ -71,7 +71,6 @@ class _NumberInputState<T extends num> extends State<NumberInput<T>> {
   @override
   Widget build(BuildContext context) {
     _controller.text = widget.value.toString();
-
     return SizedBox(
       width: widget.width ?? 100,
       child: Container(
@@ -99,6 +98,9 @@ class _NumberInputState<T extends num> extends State<NumberInput<T>> {
             fontSize: 14,
             fontWeight: FontWeight.w600,
           ),
+          enableInteractiveSelection: true,
+          selectionColor: AppTheme.accentColor.withAlpha(120),
+          showSelectionHandles: false,
         ),
       ),
     );
