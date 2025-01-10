@@ -31,7 +31,10 @@ class _NumberInputState<T extends num> extends State<NumberInput<T>> {
   @override
   void initState() {
     _focusNode.addListener(() {
-      if (_focusNode.hasFocus && widget.onFocus != null) {
+      if (!_focusNode.hasFocus) {
+        final val = _controller.text;
+        widget.onFocusLost?.call(parseValue(val));
+      } else if (_focusNode.hasFocus && widget.onFocus != null) {
         widget.onFocus!();
       }
     });
@@ -89,11 +92,6 @@ class _NumberInputState<T extends num> extends State<NumberInput<T>> {
           onSubmitted: (String val) {
             _focusNode.unfocus();
             widget.onSubmitted?.call(parseValue(val));
-          },
-          onTapOutside: (_) {
-            _focusNode.unfocus();
-            final val = _controller.text;
-            widget.onFocusLost?.call(parseValue(val));
           },
           textAlign: TextAlign.right,
           style: TextStyle(
