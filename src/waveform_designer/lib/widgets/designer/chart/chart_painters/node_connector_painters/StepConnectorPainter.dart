@@ -2,15 +2,15 @@ import 'package:flutter/widgets.dart';
 import 'package:opc_node_designer/calc/ValueRangeMapper.dart';
 import 'package:opc_node_designer/state/designer/designer.model.dart';
 import 'package:opc_node_designer/state/waveform/waveform.model.dart';
-import 'package:opc_node_designer/theme/AppTheme.dart';
 import 'package:opc_node_designer/widgets/designer/chart/PanningBehavior.dart';
 import 'package:opc_node_designer/widgets/designer/chart/ZoomCompensator.dart';
 import 'package:opc_node_designer/widgets/designer/chart/calc/PointTransformer.dart';
 import 'package:opc_node_designer/widgets/designer/chart/calc/VerticalOffsetCalculator.dart';
 import 'package:opc_node_designer/widgets/designer/chart/calc/WaveformMinMaxer.dart';
 import 'package:opc_node_designer/widgets/designer/chart/chart_painters/RangeRestrictorMapper.dart';
+import 'package:opc_node_designer/widgets/designer/chart/chart_painters/node_connector_painters/SegmentDrawer.dart';
 
-class ValueNodeConnectorPainter extends CustomPainter
+class StepConnectorPainter extends CustomPainter
     with
         ValueRangeMapper,
         PanningBehavior,
@@ -18,13 +18,14 @@ class ValueNodeConnectorPainter extends CustomPainter
         RangeRestrictorMapper,
         WaveformMinMaxer,
         PointTransformer,
-        VerticalOffsetCalculator {
+        VerticalOffsetCalculator,
+        SegmentDrawer {
   final List<WaveFormValueModel> _values;
   final int _duration;
   final double _slice;
   final double _offset;
 
-  ValueNodeConnectorPainter(
+  StepConnectorPainter(
     WaveFormModel waveform,
     DesignerModel panning,
   )   : _offset = panning.sliceOffset,
@@ -39,34 +40,35 @@ class ValueNodeConnectorPainter extends CustomPainter
     }
 
     zoomAndPan(canvas, size, _slice, _offset);
-    var previous = _values.first;
-    final paint = Paint()
-      ..color = AppTheme.textColor
+    final horizontalLinePainter = Paint()
       ..style = PaintingStyle.stroke
+      ..strokeWidth = 1
+      ..isAntiAlias = true;
+    final verticalLinePainter = Paint()
+      ..style = PaintingStyle.stroke
+      ..strokeWidth = compensateZoom(1, _slice)
       ..isAntiAlias = true;
 
+    var previous = _values.first;
     for (final current in _values.sublist(1)) {
-      final from = Offset(
-        mapValueToNewRange(
-          0,
-          _duration.toDouble(),
-          previous.tick.toDouble(),
-          0,
-          size.width,
-        ),
-        getVerticalOffset(_values, previous, size),
+      drawHorizontalSection(
+        previous,
+        current,
+        _duration,
+        _values,
+        canvas,
+        size,
+        horizontalLinePainter,
       );
-      final to = Offset(
-        mapValueToNewRange(
-          0,
-          _duration.toDouble(),
-          current.tick.toDouble(),
-          0,
-          size.width,
-        ),
-        getVerticalOffset(_values, current, size),
+      drawVerticalSection(
+        previous,
+        current,
+        _duration,
+        _values,
+        canvas,
+        size,
+        verticalLinePainter,
       );
-      canvas.drawLine(from, to, paint);
       previous = current;
     }
   }

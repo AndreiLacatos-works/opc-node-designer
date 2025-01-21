@@ -1,39 +1,24 @@
 import 'package:flutter/widgets.dart';
-import 'package:uuid/uuid.dart';
-import 'package:opc_node_designer/state/opc_structure/opc_structure.model.dart';
-import 'package:opc_node_designer/state/waveform/waveform.model.dart';
+import 'package:opc_node_designer/widgets/connections/OpcConnectionInfo.dart';
 import 'package:opc_node_designer/theme/AppTheme.dart';
-import 'package:opc_node_designer/widgets/input/Dropdown.dart';
 import 'package:opc_node_designer/widgets/shared/StringFormField.dart';
 import 'package:opc_node_designer/widgets/shared/TextButton.dart';
 
-class AddNodeModal extends StatefulWidget {
+class ConnectionInfoModal extends StatefulWidget {
   @override
-  State<StatefulWidget> createState() => _AddNodeModalState();
+  State<StatefulWidget> createState() => _ConnectionInfoModal();
 }
 
-class _AddNodeModalState extends State {
+class _ConnectionInfoModal extends State {
   final _formKey = GlobalKey<FormState>();
-  final _labelController = TextEditingController();
-  var _nodeType = _optionTypeMap.keys.first;
+  final _addressController = TextEditingController();
+  final _portController = TextEditingController();
 
-  static const _optionTypeMap = {
-    'Transitions': Transition,
-    'Numeric values': DoubleValue,
-  };
-
-  void _handleAdd(BuildContext context) {
+  void _handlePush(BuildContext context) {
     if (_formKey.currentState!.validate()) {
-      final node = OpcValueNodeModel(
-        id: Uuid().v4(),
-        label: _labelController.text,
-        waveform: WaveFormModel(
-          duration: 1000,
-          tickFrequency: 50,
-          values: [],
-          type: _optionTypeMap[_nodeType]!,
-          meta: null,
-        ),
+      final node = OpcConnectionInfo(
+        address: _addressController.text,
+        port: int.parse(_portController.text),
       );
       Navigator.of(context).pop(node);
     }
@@ -43,15 +28,17 @@ class _AddNodeModalState extends State {
     Navigator.of(context).pop(null);
   }
 
-  void _handleTypeChange(String type) {
-    setState(() {
-      _nodeType = type;
-    });
+  @override
+  void initState() {
+    _addressController.text = "127.0.0.1";
+    _portController.text = "39057";
+    super.initState();
   }
 
   @override
   void dispose() {
-    _labelController.dispose();
+    _addressController.dispose();
+    _portController.dispose();
     super.dispose();
   }
 
@@ -79,7 +66,7 @@ class _AddNodeModalState extends State {
                   Padding(
                     padding: const EdgeInsets.only(top: 16.0),
                     child: Text(
-                      "Add node",
+                      "Push configuration to OPC server",
                       style: const TextStyle(
                         fontSize: 22,
                         color: AppTheme.textColor,
@@ -93,7 +80,7 @@ class _AddNodeModalState extends State {
                     width: double.infinity,
                     padding: const EdgeInsets.only(bottom: 4),
                     child: Text(
-                      "Label",
+                      "Server address",
                       style: const TextStyle(
                         fontSize: 18,
                         color: AppTheme.textColor,
@@ -103,10 +90,10 @@ class _AddNodeModalState extends State {
                     ),
                   ),
                   StringFormField(
-                    controller: _labelController,
-                    validator: (label) {
-                      if (label?.isEmpty ?? true) {
-                        return "Label is required";
+                    controller: _addressController,
+                    validator: (address) {
+                      if (address?.isEmpty ?? true) {
+                        return "Server address is required";
                       }
                       return null;
                     },
@@ -116,7 +103,7 @@ class _AddNodeModalState extends State {
                     width: double.infinity,
                     padding: const EdgeInsets.only(bottom: 4),
                     child: Text(
-                      "Type",
+                      "Port",
                       style: const TextStyle(
                         fontSize: 18,
                         color: AppTheme.textColor,
@@ -125,10 +112,17 @@ class _AddNodeModalState extends State {
                       textAlign: TextAlign.start,
                     ),
                   ),
-                  Dropdown(
-                    items: _optionTypeMap.keys.toList(),
-                    onChanged: _handleTypeChange,
-                    selectedItem: _nodeType,
+                  StringFormField(
+                    controller: _portController,
+                    validator: (portString) {
+                      if (portString?.isEmpty ?? true) {
+                        return "Port is required";
+                      }
+                      if (int.tryParse(portString!) == null) {
+                        return "Invalid port";
+                      }
+                      return null;
+                    },
                   ),
                 ],
               ),
@@ -138,14 +132,14 @@ class _AddNodeModalState extends State {
               children: [
                 TextButton(
                   onClick: () {
-                    _handleAdd(context);
+                    _handlePush(context);
                   },
                   padding: const EdgeInsets.symmetric(
                     horizontal: 16,
                     vertical: 8,
                   ),
                   color: AppTheme.brightGreen,
-                  text: "Add",
+                  text: "Push",
                 ),
                 SizedBox.square(dimension: 6),
                 TextButton(
