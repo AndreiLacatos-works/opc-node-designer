@@ -2,7 +2,7 @@
 ; SEE THE DOCUMENTATION FOR DETAILS ON CREATING INNO SETUP SCRIPT FILES!
 
 #define MyAppName "OPC Node designer"
-#define MyAppVersion "0.2.0"
+#define MyAppVersion "0.2.1"
 #define MyAppPublisher "Andrei Lacatos"
 #define MyAppURL "https://github.com/AndreiLacatos-works/opc-node-designer"
 #define MyAppExeName "opc_node_designer.exe"
@@ -37,7 +37,7 @@ LicenseFile=C:\Users\gkap\opc-node-designer\LICENSE
 ; Uncomment the following line to run in non administrative install mode (install for current user only.)
 ;PrivilegesRequired=lowest
 OutputDir=C:\Users\gkap\Desktop
-OutputBaseFilename=opc-node-designer-0.2.0.exe
+OutputBaseFilename=opc-node-designer-0.2.1.exe
 Compression=lzma
 SolidCompression=yes
 WizardStyle=modern
