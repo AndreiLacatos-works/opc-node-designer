@@ -31,7 +31,10 @@ class _NumberInputState<T extends num> extends State<NumberInput<T>> {
   @override
   void initState() {
     _focusNode.addListener(() {
-      if (_focusNode.hasFocus && widget.onFocus != null) {
+      if (!_focusNode.hasFocus) {
+        final val = _controller.text;
+        widget.onFocusLost?.call(parseValue(val));
+      } else if (_focusNode.hasFocus && widget.onFocus != null) {
         widget.onFocus!();
       }
     });
@@ -68,7 +71,6 @@ class _NumberInputState<T extends num> extends State<NumberInput<T>> {
   @override
   Widget build(BuildContext context) {
     _controller.text = widget.value.toString();
-
     return SizedBox(
       width: widget.width ?? 100,
       child: Container(
@@ -90,17 +92,15 @@ class _NumberInputState<T extends num> extends State<NumberInput<T>> {
             _focusNode.unfocus();
             widget.onSubmitted?.call(parseValue(val));
           },
-          onTapOutside: (_) {
-            _focusNode.unfocus();
-            final val = _controller.text;
-            widget.onFocusLost?.call(parseValue(val));
-          },
           textAlign: TextAlign.right,
           style: TextStyle(
             color: Color(0xFF000000),
             fontSize: 14,
             fontWeight: FontWeight.w600,
           ),
+          enableInteractiveSelection: true,
+          selectionColor: AppTheme.accentColor.withAlpha(120),
+          showSelectionHandles: false,
         ),
       ),
     );
