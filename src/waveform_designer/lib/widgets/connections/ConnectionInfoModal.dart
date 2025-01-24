@@ -23,10 +23,21 @@ class _ConnectionInfoModal extends ConsumerState<ConnectionInfoModal> {
   late String _selectedConnectionName;
 
   void _handlePush(BuildContext context) {
+    final name = _nameController.text;
+    final host = _addressController.text;
+    final port = int.parse(_portController.text);
+    final notifier = ref.read(connectionListStateProvider.notifier);
+    final action = _selectedConnectionName == defaultSelection
+        ? _nameController.text.isNotEmpty
+            ? notifier.addConnection
+            : null
+        : notifier.updateConnection;
+    action?.call(name, host, port);
+
     if (_formKey.currentState!.validate()) {
       final node = OpcConnectionInfo(
-        address: _addressController.text,
-        port: int.parse(_portController.text),
+        address: host,
+        port: port,
       );
       Navigator.of(context).pop(node);
     }
@@ -147,7 +158,7 @@ class _ConnectionInfoModal extends ConsumerState<ConnectionInfoModal> {
                   Dropdown(
                     items: connectionOptions,
                     onChanged: _handleConnectionChange,
-                    selectedItem: _selectedConnectionName ?? defaultSelection,
+                    selectedItem: _selectedConnectionName,
                   ),
                   SizedBox.square(dimension: 22),
                   if (_selectedConnectionName == defaultSelection) ...nameInput,

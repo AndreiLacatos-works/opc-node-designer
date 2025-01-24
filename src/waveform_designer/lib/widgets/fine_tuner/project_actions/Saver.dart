@@ -3,11 +3,15 @@ import 'dart:io';
 
 import 'package:flutter/widgets.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:opc_node_designer/state/connection_management/connection_list.model.dart';
+import 'package:opc_node_designer/state/connection_management/connection_list.state.dart';
 import 'package:opc_node_designer/state/designer/designer.state.dart';
 import 'package:opc_node_designer/state/opc_structure/opc_structure.model.dart';
 import 'package:opc_node_designer/state/opc_structure/opc_structure.state.dart';
 import 'package:opc_node_designer/serialization/ops_structure/opc_structure.model.dart'
     as OpcStructureSerialization;
+import 'package:opc_node_designer/serialization/connections/connection_list.model.dart'
+    as ConnectionListSerialization;
 import 'package:file_picker/file_picker.dart';
 import 'package:opc_node_designer/theme/AppTheme.dart';
 import 'package:opc_node_designer/widgets/shared/TextButton.dart';
@@ -15,12 +19,13 @@ import 'package:opc_node_designer/widgets/shared/TextButton.dart';
 class Saver extends ConsumerWidget {
   Future _handleSave(WidgetRef ref) async {
     final opcStructure = ref.read(opcStructureStateProvider);
+    final connections = ref.read(connectionListStateProvider);
     var saveLocation = ref.read(designerStateProvider).projectPath;
     if (saveLocation == null) {
       saveLocation = await promptSaveLocation();
     }
     if (saveLocation != null) {
-      await writeWaveform(opcStructure, saveLocation);
+      await writeWaveform(opcStructure, connections, saveLocation);
       ref.read(designerStateProvider.notifier).setProjectPath(saveLocation);
     }
   }
@@ -35,11 +40,20 @@ class Saver extends ConsumerWidget {
 
   Future writeWaveform(
     OpcStructureModel opcStructureRoot,
+    ConnectionListModel connectionList,
     String saveLocation,
   ) async {
     final file = File(saveLocation);
-    final serializationObject =
+    final opcSerializationObject =
         OpcStructureSerialization.OpcStructureModel.fromState(opcStructureRoot);
+    final connectionListSerializationObject =
+        ConnectionListSerialization.ConnectionListModel.fromState(
+      connectionList,
+    );
+    final serializationObject = Map<String, dynamic>()
+      ..addAll(connectionListSerializationObject.toJson())
+      ..addAll(opcSerializationObject.toJson());
+
     try {
       final jsonString =
           const JsonEncoder.withIndent('  ').convert(serializationObject);
