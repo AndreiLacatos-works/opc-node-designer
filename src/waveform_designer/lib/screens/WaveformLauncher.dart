@@ -2,6 +2,7 @@ import 'package:file_picker/file_picker.dart';
 import 'package:flutter/widgets.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:opc_node_designer/screens/AppScreen.dart';
+import 'package:opc_node_designer/state/connection_management/connection_list.state.dart';
 import 'package:opc_node_designer/state/designer/designer.state.dart';
 import 'package:opc_node_designer/state/opc_designer/opc_designer.state.dart';
 import 'package:opc_node_designer/state/opc_structure/opc_structure.state.dart';
@@ -32,6 +33,7 @@ class WaveformLauncher extends ConsumerWidget with InitFromFile {
     ref.watch(designerStateProvider);
     ref.watch(opcStructureStateProvider);
     ref.watch(opcDesignerStateProvider);
+    ref.watch(connectionListStateProvider);
     return AppScreen(
       child: Column(
         children: [

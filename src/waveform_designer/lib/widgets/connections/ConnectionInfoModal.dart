@@ -1,18 +1,26 @@
 import 'package:flutter/widgets.dart';
+import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:opc_node_designer/state/connection_management/connection_list.state.dart';
 import 'package:opc_node_designer/widgets/connections/OpcConnectionInfo.dart';
 import 'package:opc_node_designer/theme/AppTheme.dart';
+import 'package:opc_node_designer/widgets/input/Dropdown.dart';
 import 'package:opc_node_designer/widgets/shared/StringFormField.dart';
 import 'package:opc_node_designer/widgets/shared/TextButton.dart';
 
-class ConnectionInfoModal extends StatefulWidget {
+class ConnectionInfoModal extends ConsumerStatefulWidget {
   @override
-  State<StatefulWidget> createState() => _ConnectionInfoModal();
+  ConsumerState<ConnectionInfoModal> createState() => _ConnectionInfoModal();
 }
 
-class _ConnectionInfoModal extends State {
+class _ConnectionInfoModal extends ConsumerState<ConnectionInfoModal> {
+  static const String defaultHost = "127.0.0.1";
+  static const String defaultPort = "39057";
+  static const String defaultSelection = "New connection";
   final _formKey = GlobalKey<FormState>();
   final _addressController = TextEditingController();
   final _portController = TextEditingController();
+  final _nameController = TextEditingController();
+  late String _selectedConnectionName;
 
   void _handlePush(BuildContext context) {
     if (_formKey.currentState!.validate()) {
@@ -30,8 +38,10 @@ class _ConnectionInfoModal extends State {
 
   @override
   void initState() {
-    _addressController.text = "127.0.0.1";
-    _portController.text = "39057";
+    _addressController.text = defaultHost;
+    _portController.text = defaultPort;
+    _nameController.text = "";
+    _selectedConnectionName = defaultSelection;
     super.initState();
   }
 
@@ -39,15 +49,60 @@ class _ConnectionInfoModal extends State {
   void dispose() {
     _addressController.dispose();
     _portController.dispose();
+    _nameController.dispose();
     super.dispose();
+  }
+
+  void _handleConnectionChange(String selectedConnectionName) {
+    final connection = ref
+        .read(connectionListStateProvider)
+        .connections
+        .where((con) => con.name == selectedConnectionName)
+        .firstOrNull;
+
+    setState(() {
+      _nameController.text = "";
+      _selectedConnectionName = selectedConnectionName;
+      _addressController.text = connection?.host ?? defaultHost;
+      _portController.text = connection?.port.toString() ?? defaultPort;
+    });
+  }
+
+  List<String> get connectionOptions {
+    return [
+      defaultSelection,
+      ...ref
+          .read(connectionListStateProvider)
+          .connections
+          .map((con) => con.name)
+    ];
   }
 
   @override
   Widget build(BuildContext context) {
+    var nameInput = [
+      Container(
+        width: double.infinity,
+        padding: const EdgeInsets.only(bottom: 4),
+        child: const Text(
+          "Name",
+          style: TextStyle(
+            fontSize: 18,
+            color: AppTheme.textColor,
+            fontWeight: FontWeight.w500,
+          ),
+          textAlign: TextAlign.start,
+        ),
+      ),
+      StringFormField(
+        controller: _nameController,
+      ),
+      SizedBox.square(dimension: 22),
+    ];
     return Center(
       child: Container(
         width: 470,
-        height: 330,
+        height: _selectedConnectionName == defaultSelection ? 460 : 390,
         decoration: const BoxDecoration(
           borderRadius: BorderRadius.all(
             Radius.circular(6),
@@ -76,6 +131,26 @@ class _ConnectionInfoModal extends State {
                     ),
                   ),
                   SizedBox.square(dimension: 32),
+                  Container(
+                    width: double.infinity,
+                    padding: const EdgeInsets.only(bottom: 4),
+                    child: Text(
+                      "Connection",
+                      style: const TextStyle(
+                        fontSize: 18,
+                        color: AppTheme.textColor,
+                        fontWeight: FontWeight.w500,
+                      ),
+                      textAlign: TextAlign.start,
+                    ),
+                  ),
+                  Dropdown(
+                    items: connectionOptions,
+                    onChanged: _handleConnectionChange,
+                    selectedItem: _selectedConnectionName ?? defaultSelection,
+                  ),
+                  SizedBox.square(dimension: 22),
+                  if (_selectedConnectionName == defaultSelection) ...nameInput,
                   Container(
                     width: double.infinity,
                     padding: const EdgeInsets.only(bottom: 4),
